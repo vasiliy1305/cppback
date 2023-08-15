@@ -72,6 +72,7 @@ StringResponse MakeStringResponse(http::status status, std::string_view body, un
     response.body() = body;
     response.content_length(body.size());
     response.keep_alive(keep_alive);
+    response.set(http::field::allow, "GET, HEAD");
     return response;
 }
 
@@ -98,7 +99,7 @@ StringResponse HandleRequest(StringRequest &&req)
     }
     else
     {
-        return text_response(http::status::method_not_allowed, ""sv);
+        return text_response(http::status::method_not_allowed, "Invalid method"sv);
     }
 }
 
