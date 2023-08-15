@@ -88,7 +88,8 @@ StringResponse HandleRequest(StringRequest &&req)
         auto target_bsv = req.target();
         std::string  target_str(target_bsv.begin(), target_bsv.end());
         target_str = target_str.substr(1, target_str.size());
-        std::string text = "<strong>Hello, "s + target_str +  "</strong>"s;
+        // std::string text = "<strong>Hello, "s + target_str +  "</strong>"s;
+        std::string text = "Hello, "s + target_str;
         return text_response(http::status::ok, text);
     }
     else if (req.method() == http::verb::head)
