@@ -73,15 +73,20 @@ private:
     bool bread_done = false;
     bool sausage_done = false;
 
+    std::chrono::milliseconds bake_time_ = 1050ms;
+    std::chrono::milliseconds fry_time_ = 1550ms;
+
     Logger logger_{std::to_string(id_)};
-    Timer bake_timer_{io_, 1100ms};
-    Timer fry_timer_{io_, 1600ms};
+    Timer bake_timer_{io_, bake_time_};
+    Timer fry_timer_{io_, fry_time_};
 
     void BakeBread()
     {
+
         Bread::Handler bh = [self = shared_from_this()]()
         {
             self->logger_.LogMessage("Start Bake Bread"sv);
+            self->bake_timer_.expires_after(self->bake_time_);
             self->bake_timer_.async_wait(net::bind_executor(self->strand_, [self = self->shared_from_this()](sys::error_code ec)
                                                             { self->OnBaked(ec); }));
         };
@@ -90,8 +95,10 @@ private:
 
     void FrySausage()
     {
+
         Sausage::Handler sh = [self = shared_from_this()]()
         {
+            self->fry_timer_.expires_after(self->fry_time_);
             self->logger_.LogMessage("Start Fry Sausage"sv);
             self->fry_timer_.async_wait(net::bind_executor(self->strand_, [self = self->shared_from_this()](sys::error_code ec)
                                                            { self->OnFried(ec); }));
@@ -140,7 +147,7 @@ public:
 
     // Асинхронно готовит хот-дог и вызывает handler, как только хот-дог будет готов.
     // Этот метод может быть вызван из произвольного потока
-    void  OrderHotDog(HotDogHandler handler)
+    void OrderHotDog(HotDogHandler handler)
     {
         // TODO: Реализуйте метод самостоятельно
         // При необходимости реализуйте дополнительные классы
