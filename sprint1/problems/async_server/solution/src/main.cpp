@@ -40,31 +40,32 @@ namespace
         return response;
     }
 
-    StringResponse HandleRequest(StringRequest &&req)
+StringResponse HandleRequest(StringRequest &&req)
+{
+    const auto text_response = [&req](http::status status, std::string_view text)
     {
-        const auto text_response = [&req](http::status status, std::string_view text)
-        {
-            return MakeStringResponse(status, text, req.version(), req.keep_alive());
-        };
+        return MakeStringResponse(status, text, req.version(), req.keep_alive());
+    };
 
-        // Здесь можно обработать запрос и сформировать ответ, но пока всегда отвечаем: Hello
-        if (req.method() == http::verb::get)
-        {
-            auto target_bsv = req.target();
-            std::string target_str(target_bsv.begin(), target_bsv.end());
-            target_str = target_str.substr(1, target_str.size());
-            std::string text = "<strong>Hello, "s + target_str + "</strong>"s;
-            return text_response(http::status::ok, text);
-        }
-        else if (req.method() == http::verb::head)
-        {
-            return text_response(http::status::ok, ""sv);
-        }
-        else
-        {
-            return text_response(http::status::method_not_allowed, ""sv);
-        }
+    // Здесь можно обработать запрос и сформировать ответ, но пока всегда отвечаем: Hello
+    if (req.method() == http::verb::get)
+    {
+        auto target_bsv = req.target();
+        std::string  target_str(target_bsv.begin(), target_bsv.end());
+        target_str = target_str.substr(1, target_str.size());
+        // std::string text = "<strong>Hello, "s + target_str +  "</strong>"s;
+        std::string text = "Hello, "s + target_str;
+        return text_response(http::status::ok, text);
     }
+    else if (req.method() == http::verb::head)
+    {
+        return text_response(http::status::ok, ""sv);
+    }
+    else
+    {
+        return text_response(http::status::method_not_allowed, "Invalid method"sv);
+    }
+}
 
     // Запускает функцию fn на n потоках, включая текущий
     template <typename Fn>
