@@ -32,7 +32,7 @@ namespace http_server
     protected:
         using HttpRequest = http::request<http::string_body>;
 
-        ~SessionBase() = default;
+        virtual ~SessionBase() = default;
 
         explicit SessionBase(tcp::socket &&socket)
             : stream_(std::move(socket))
@@ -59,44 +59,13 @@ namespace http_server
         beast::flat_buffer buffer_;
         HttpRequest request_;
 
-        void Read()
-        {
-            using namespace std::literals;
-            // Очищаем запрос от прежнего значения (метод Read может быть вызван несколько раз)
-            request_ = {};
-            stream_.expires_after(30s);
-            // Считываем request_ из stream_, используя buffer_ для хранения считанных данных
-            http::async_read(stream_, buffer_, request_,
-                             // По окончании операции будет вызван метод OnRead
-                             beast::bind_front_handler(&SessionBase::OnRead, GetSharedThis()));
-        }
-
-        void OnRead(beast::error_code ec, [[maybe_unused]] std::size_t bytes_read)
-        {
-            using namespace std::literals;
-            if (ec == http::error::end_of_stream)
-            {
-                // Нормальная ситуация - клиент закрыл соединение
-                return Close();
-            }
-            if (ec)
-            {
-                return ReportError(ec, "read"sv);
-            }
-            HandleRequest(std::move(request_));
-        }
-
-        void Close()
-        {
-            beast::error_code ec;
-            stream_.socket().shutdown(tcp::socket::shutdown_send, ec);
-        }
-
+        void Read();
+        void OnRead(beast::error_code ec, [[maybe_unused]] std::size_t bytes_read);
+        void Close();
         void OnWrite(bool close, beast::error_code ec, [[maybe_unused]] std::size_t bytes_written);
 
         // Обработку запроса делегируем подклассу
         virtual void HandleRequest(HttpRequest &&request) = 0;
-
         virtual std::shared_ptr<SessionBase> GetSharedThis() = 0;
     };
 

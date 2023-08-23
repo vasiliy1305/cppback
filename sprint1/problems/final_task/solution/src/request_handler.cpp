@@ -1,5 +1,4 @@
 #include "request_handler.h"
-#include <boost/json.hpp>
 
 #include <algorithm>
 #include <iterator>
@@ -44,7 +43,7 @@ namespace http_handler
             result.type = RequestType::Maps;
             return result;
         }
-        else if (result.parts.size() == 4 && result.parts.at(0) == "api" && result.parts.at(1) == "v1" && result.parts.at(2) == "maps")
+        else if ((result.parts.size() == 4) && (result.parts.at(0) == "api") && (result.parts.at(1) == "v1") && result.parts.at(2) == "maps")
         {
             result.type = RequestType::Map;
             return result;
@@ -94,6 +93,33 @@ namespace http_handler
         }
         auto map = *map_it;
 
+        return boost::json::serialize(MapToJsonObj(map));
+    }
+
+    boost::json::value RequestHandler::RoadToJsonObj(const model::Road &road)
+    {
+        if (road.IsHorizontal())
+        {
+            return {{"x0", road.GetStart().x}, {"y0", road.GetStart().y}, {"x1", road.GetEnd().x}};
+        }
+        else
+        {
+            return {{"x0", road.GetStart().x}, {"y0", road.GetStart().y}, {"y1", road.GetEnd().y}};
+        }
+    }
+
+    boost::json::value RequestHandler::BuildingToJsonObj(const model::Building &building)
+    {
+        return {{"x", building.GetBounds().position.x}, {"y", building.GetBounds().position.y}, {"w", building.GetBounds().size.width}, {"h", building.GetBounds().size.height}};
+    }
+
+    boost::json::value RequestHandler::OfficeToJsonObj(const model::Office &office)
+    {
+        return {{"id", *office.GetId()}, {"x", office.GetPosition().x}, {"y", office.GetPosition().y}, {"offsetX", office.GetOffset().dx}, {"offsetY", office.GetOffset().dy}};
+    }
+
+    boost::json::value RequestHandler::MapToJsonObj(const model::Map &map)
+    {
         boost::json::object map_obj;
         map_obj["id"] = *map.GetId();
         map_obj["name"] = map.GetName();
@@ -102,14 +128,7 @@ namespace http_handler
         boost::json::array roads_obj;
         for (const auto &road : map.GetRoads())
         {
-            if (road.IsHorizontal())
-            {
-                roads_obj.push_back({{"x0", road.GetStart().x}, {"y0", road.GetStart().y}, {"x1", road.GetEnd().x}});
-            }
-            else
-            {
-                roads_obj.push_back({{"x0", road.GetStart().x}, {"y0", road.GetStart().y}, {"y1", road.GetEnd().y}});
-            }
+            roads_obj.push_back(RoadToJsonObj(road));
         }
         map_obj["roads"] = roads_obj;
 
@@ -117,7 +136,7 @@ namespace http_handler
         boost::json::array buildings;
         for (const auto &building : map.GetBuildings())
         {
-            buildings.push_back({{"x", building.GetBounds().position.x}, {"y", building.GetBounds().position.y}, {"w", building.GetBounds().size.width}, {"h", building.GetBounds().size.height}});
+            buildings.push_back(BuildingToJsonObj(building));
         }
         map_obj["buildings"] = buildings;
 
@@ -125,11 +144,10 @@ namespace http_handler
         boost::json::array offices;
         for (const auto &office : map.GetOffices())
         {
-            offices.push_back({{"id", *office.GetId()}, {"x", office.GetPosition().x}, {"y", office.GetPosition().y}, {"offsetX", office.GetOffset().dx}, {"offsetY", office.GetOffset().dy}});
+            offices.push_back(OfficeToJsonObj(office));
         }
         map_obj["offices"] = offices;
-
-        return boost::json::serialize(map_obj);
+        return map_obj;
     }
 
 } // namespace http_handler

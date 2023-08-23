@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string_view>
 #include <vector>
+#include <boost/json.hpp>
 
 namespace http_handler
 {
@@ -109,6 +110,10 @@ namespace http_handler
         model::Game &game_;
 
         std::string GetMapsAsJS();
+        boost::json::value RoadToJsonObj(const model::Road &road);
+        boost::json::value BuildingToJsonObj(const model::Building &building);
+        boost::json::value OfficeToJsonObj(const model::Office &office);
+        boost::json::value MapToJsonObj(const model::Map &map);
         bool IsMapExist(std::string id);
         std::string GetMapAsJS(std::string id);
     };
