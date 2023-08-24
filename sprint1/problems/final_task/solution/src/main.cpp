@@ -18,15 +18,6 @@ namespace
 {
     // Запускает функцию fn на n потоках, включая текущий
     template <typename Fn>
-<<<<<<< HEAD
-    void RunWorkers(unsigned n, const Fn &fn)
-    {
-        n = std::max(1u, n);
-        std::vector<std::jthread> workers;
-        workers.reserve(n - 1);
-        // Запускаем n-1 рабочих потоков, выполняющих функцию fn
-        while (--n)
-=======
     void RunWorkers(unsigned thread_number, const Fn &fn)
     {
         thread_number = std::max(1u, thread_number);
@@ -34,7 +25,6 @@ namespace
         workers.reserve(thread_number - 1);
         // Запускаем n-1 рабочих потоков, выполняющих функцию fn
         while (--thread_number)
->>>>>>> review_final_1
         {
             workers.emplace_back(fn);
         }
@@ -96,8 +86,5 @@ int main(int argc, const char *argv[])
         std::cerr << ex.what() << std::endl;
         return EXIT_FAILURE;
     }
-<<<<<<< HEAD
-=======
     return 0;
->>>>>>> review_final_1
 }
