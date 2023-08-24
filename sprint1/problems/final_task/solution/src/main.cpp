@@ -86,4 +86,5 @@ int main(int argc, const char *argv[])
         std::cerr << ex.what() << std::endl;
         return EXIT_FAILURE;
     }
+    return 0;
 }
