@@ -39,7 +39,7 @@ namespace
 
 int main(int argc, const char *argv[])
 {
-    if (argc != 2)
+    if (argc != 3)
     {
         std::cerr << "Usage: game_server <game-config-json>"sv << std::endl;
         return EXIT_FAILURE;
@@ -65,7 +65,7 @@ int main(int argc, const char *argv[])
         } });
 
         // 4. Создаём обработчик HTTP-запросов и связываем его с моделью игры
-        http_handler::RequestHandler handler{game};
+        http_handler::RequestHandler handler{game, argv[2]};
 
         // 5. Запустить обработчик HTTP-запросов, делегируя их обработчику запросов
 
