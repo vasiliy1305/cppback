@@ -24,29 +24,28 @@ namespace http_handler
                                   unsigned http_version,
                                   bool keep_alive)
     {
-        FileResponse response(status, http_version);
-        
-        // response.body() = body;
-        // response.content_length(body.size());
-        // response.keep_alive(keep_alive);
-        auto file_name = file_path.filename();
-        auto file_ext = getFileExtension(file_name);
-        auto content_type = FileExtensionToContentType(file_ext);
-        response.set(http::field::content_type, content_type);
-
         http::file_body::value_type file;
-
         if (sys::error_code ec; file.open(file_path.c_str(), beast::file_mode::read, ec), ec)
         {
             std::cout << "faleed to open file" << std::endl;
+            FileResponse response(http::status::not_found, http_version);
+            response.keep_alive(keep_alive);
+            response.set(http::field::content_type, ContentType::TEXT_PLAIN);
+            response.prepare_payload();
+            return response;
         }
         else
         {
+            FileResponse response(status, http_version);
+            response.keep_alive(keep_alive);
             response.body() = std::move(file);
+            auto file_name = file_path.filename();
+            auto file_ext = getFileExtension(file_name);
+            auto content_type = FileExtensionToContentType(file_ext);
+            response.set(http::field::content_type, content_type);
             response.prepare_payload();
+            return response;
         }
-
-        return response;
     }
 
     Request ParsePath(const std::string &path)
@@ -55,7 +54,7 @@ namespace http_handler
         std::stringstream ss(path);
         std::string token;
 
-        while (std::getline(ss, token, '/'))
+        while (std::getline(ss, token, '/')) // сделать констаной /
         {
             if (!token.empty())
             {

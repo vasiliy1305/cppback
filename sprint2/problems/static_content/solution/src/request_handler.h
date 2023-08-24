@@ -129,19 +129,34 @@ namespace http_handler
                 }
                 else if (request.type == RequestType::Static)
                 {
+
                     auto target_file_path = buildPath(static_dir_, request.parts);
+                    // проверить что таргет не корневая директория
+                    if (target_file_path == static_dir_)
+                    {
+                        target_file_path = buildPath(static_dir_, {"index.html"}); // поменять на index
+                    }
+
                     // проверить что файл находится в поддиректории статик
                     if (IsSubPath(target_file_path, static_dir_))
                     {
-                        if (target_file_path == static_dir_)
+                        // проверить что файл существует
+                        if (fs::exists(target_file_path))
                         {
-                            target_file_path = buildPath(static_dir_, {"index.html"});
                             send(MakeFileResponse(http::status::ok, target_file_path, req.version(), req.keep_alive()));
                         }
                         else
                         {
-                            send(MakeFileResponse(http::status::ok, target_file_path, req.version(), req.keep_alive()));
+                            // send error 404 Not Found text/plain
+                            // std::cout << 404 << std::endl;
+                            send(MakeStringResponse(http::status::not_found, "wrong page", req.version(), req.keep_alive(), ContentType::TEXT_PLAIN));
                         }
+                    }
+                    else
+                    {
+                        // 400 bad request
+                        // std::cout << 400 << std::endl;
+                        send(MakeStringResponse(http::status::bad_request, "xxx", req.version(), req.keep_alive(), ContentType::TEXT_PLAIN));
                     }
                 }
                 else if (request.type == RequestType::Index)
@@ -158,19 +173,7 @@ namespace http_handler
 
             else if (req.method() == http::verb::head)
             {
-                auto target_bsv = req.target();
-                std::string target_str(target_bsv.begin(), target_bsv.end());
-                auto request = ParsePath(target_str);
-
-                if (request.type == RequestType::Index)
-                {
-                    auto target_file_path = buildPath(static_dir_, {"index.html"});
-                    // проверить что файл находится в поддиректории статик
-                    if (IsSubPath(target_file_path, static_dir_))
-                    {
-                        send(MakeFileResponse(http::status::ok, target_file_path, req.version(), req.keep_alive()));
-                    }
-                }
+                std::cout << "head" << std::endl;
             }
             else
             {
