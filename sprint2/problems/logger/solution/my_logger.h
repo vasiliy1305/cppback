@@ -30,7 +30,7 @@ class Logger
     auto GetTimeStamp() const
     {
         auto now = GetTime();
-        if(manual_ts_)
+        if (manual_ts_)
         {
             now = *manual_ts_;
         }
@@ -41,11 +41,16 @@ class Logger
     // Для имени файла возьмите дату с форматом "%Y_%m_%d"
     std::string GetFileTimeStamp() const
     {
-        auto tt = std::chrono::system_clock::to_time_t(*manual_ts_);
+        auto now = GetTime();
+        if (manual_ts_)
+        {
+            now = *manual_ts_;
+        }
+        auto tt = std::chrono::system_clock::to_time_t(now);
         std::tm tm = *std::localtime(&tt);
 
         std::stringstream ss;
-        ss << std::put_time(&tm, "%Y_%m_%d");
+        ss << "/var/log/sample_log_" << std::put_time(&tm, "%Y_%m_%d") << ".log";
         return ss.str();
     }
 
@@ -63,10 +68,12 @@ public:
     template <class... Ts>
     void Log(const Ts &...args)
     {
-        std::cout << GetTimeStamp() << ": ";
+        std::ofstream log_file_{GetFileTimeStamp()};
+        log_file_ << GetTimeStamp() << ": ";
         // Используем initializer_list и лямбду для вывода каждого аргумента
-        (void)std::initializer_list<int>{(std::cout << args, 0)...};
-        std::cout << std::endl;
+        (void)std::initializer_list<int>{(log_file_ << args, 0)...};
+        log_file_ << std::endl;
+        log_file_.close();
     }
 
     // Установите manual_ts_. Учтите, что эта операция может выполняться
