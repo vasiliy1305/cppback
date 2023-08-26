@@ -30,10 +30,6 @@ class Logger
     auto GetTimeStamp() const
     {
         auto now = GetTime();
-        if (manual_ts_)
-        {
-            now = *manual_ts_;
-        }
         const auto t_c = std::chrono::system_clock::to_time_t(now);
         return std::put_time(std::localtime(&t_c), "%F %T");
     }
@@ -68,12 +64,12 @@ public:
     template <class... Ts>
     void Log(const Ts &...args)
     {
-        std::ofstream log_file_{GetFileTimeStamp()};
+        std::lock_guard<std::mutex> lock(mtx); 
+        OpenFile();
         log_file_ << GetTimeStamp() << ": ";
         // Используем initializer_list и лямбду для вывода каждого аргумента
         (void)std::initializer_list<int>{(log_file_ << args, 0)...};
         log_file_ << std::endl;
-        log_file_.close();
     }
 
     // Установите manual_ts_. Учтите, что эта операция может выполняться
@@ -81,9 +77,23 @@ public:
     // синхронизацию.
     void SetTimestamp(std::chrono::system_clock::time_point ts)
     {
+        std::lock_guard<std::mutex> lock(mtx); 
         manual_ts_ = ts; // add mutex?
     }
 
 private:
     std::optional<std::chrono::system_clock::time_point> manual_ts_;
+    std::ofstream log_file_;
+    std::string curr_file_path_;
+    std::mutex mtx;
+
+    void OpenFile()
+    {
+        auto file_path = GetFileTimeStamp();
+        if (curr_file_path_ != file_path)
+        {
+            curr_file_path_ = file_path;
+            std::ofstream log_file_{curr_file_path_, std::ios::app}; 
+        }
+    }
 };
