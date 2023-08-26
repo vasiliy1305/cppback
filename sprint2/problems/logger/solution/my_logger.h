@@ -93,7 +93,8 @@ private:
         if (curr_file_path_ != file_path)
         {
             curr_file_path_ = file_path;
-            std::ofstream log_file_{curr_file_path_, std::ios::app}; 
+            log_file_.close();
+            log_file_.open(curr_file_path_, std::ios::app);
         }
     }
 };
