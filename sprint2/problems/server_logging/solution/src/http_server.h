@@ -3,13 +3,14 @@
 // boost.beast будет использовать std::string_view вместо boost::string_view
 #define BOOST_BEAST_USE_STD_STRING_VIEW
 
+#include <filesystem>
+#include <iostream>
+
+#include <boost/asio/dispatch.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/strand.hpp>
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
-#include <filesystem>
-
-#include <iostream>
 
 #include <boost/log/trivial.hpp>     // для BOOST_LOG_TRIVIAL
 #include <boost/log/core.hpp>        // для logging::core
@@ -32,6 +33,8 @@ namespace http_server
     namespace sinks = boost::log::sinks;
     namespace logging = boost::log;
     namespace sys = boost::system;
+
+    using namespace std::literals;
 
     void LogJson(std::string msg, boost::json::object data);
     void LogServerStarted(net::ip::address addres, net::ip::port_type port);

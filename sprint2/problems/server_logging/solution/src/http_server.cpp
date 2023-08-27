@@ -1,11 +1,8 @@
 #include "http_server.h"
 
-#include <boost/asio/dispatch.hpp>
-#include <iostream>
-
 namespace http_server
 {
-    using namespace std::literals;
+    
 
     void MyFormatter(logging::record_view const &rec, logging::formatting_ostream &strm)
     {
