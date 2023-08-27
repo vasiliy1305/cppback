@@ -7,12 +7,28 @@
 #include <vector>
 #include <boost/json.hpp>
 
+
+
+#include <string_view>
+
+using namespace std::literals;
+namespace logging = boost::log;
+namespace keywords = boost::log::keywords;
+namespace sinks = boost::log::sinks;
+
+BOOST_LOG_ATTRIBUTE_KEYWORD(line_id, "LineID", unsigned int)
+BOOST_LOG_ATTRIBUTE_KEYWORD(timestamp, "TimeStamp", boost::posix_time::ptime)
+
+BOOST_LOG_ATTRIBUTE_KEYWORD(file, "File", std::string)
+BOOST_LOG_ATTRIBUTE_KEYWORD(line, "Line", int)
+
 namespace http_handler
 {
     namespace beast = boost::beast;
     namespace http = beast::http;
     namespace fs = std::filesystem;
     namespace sys = boost::system;
+    namespace net = boost::asio;
 
     using namespace std::literals;
 
@@ -79,10 +95,44 @@ namespace http_handler
                                   unsigned http_version,
                                   bool keep_alive);
 
+
+
     fs::path buildPath(const fs::path &base, const std::vector<std::string> &dirs);
 
     // Возвращает true, если каталог p содержится внутри base_path.
     bool IsSubPath(fs::path path, fs::path base);
+
+    // template <class SomeRequestHandler>
+    // class LoggingRequestHandler
+    // {
+    //     template <typename Body, typename Allocator>
+    //     static void LogRequest(http::request<Body, http::basic_fields<Allocator>> &req)
+    //     {
+    //         std::cout << "LogRequest" << std::endl;
+    //     }
+
+    //     static void LogResponse()
+    //     {
+    //         std::cout << "LogResponse" << std::endl;
+    //     }
+
+    // public:
+    //     LoggingRequestHandler(SomeRequestHandler &decorated) : decorated_(decorated)
+    //     {
+    //     }
+
+    //     template <typename Body, typename Allocator, typename Send>
+    //     void operator()(http::request<Body, http::basic_fields<Allocator>> &&req, Send &&send)
+    //     {
+    //         LogRequest(req);
+    //         decorated_(std::move(req), send);
+    //         LogResponse();
+    //         // return resp;
+    //     }
+
+    // private:
+    //     SomeRequestHandler &decorated_;
+    // };
 
     class RequestHandler
     {

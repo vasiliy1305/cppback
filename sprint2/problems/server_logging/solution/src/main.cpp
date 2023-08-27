@@ -46,6 +46,9 @@ int main(int argc, const char *argv[])
     }
     try
     {
+        // 0. init log
+        http_server::InitBoostLog();
+
         // 1. Загружаем карту из файла и построить модель игры
         model::Game game = json_loader::LoadGame(argv[1]);
 
@@ -66,6 +69,7 @@ int main(int argc, const char *argv[])
 
         // 4. Создаём обработчик HTTP-запросов и связываем его с моделью игры
         http_handler::RequestHandler handler{game, argv[2]};
+        // http_handler::LoggingRequestHandler logging_handler{handler};
 
         // 5. Запустить обработчик HTTP-запросов, делегируя их обработчику запросов
 
@@ -75,7 +79,8 @@ int main(int argc, const char *argv[])
                                { handler(std::forward<decltype(req)>(req), std::forward<decltype(send)>(send)); });
 
         // Эта надпись сообщает тестам о том, что сервер запущен и готов обрабатывать запросы
-        std::cout << "Server has started..."sv << std::endl;
+        http_server::LogServerStarted(address, port);
+        
 
         // 6. Запускаем обработку асинхронных операций
         RunWorkers(std::max(1u, num_threads), [&ioc]
@@ -83,9 +88,10 @@ int main(int argc, const char *argv[])
     }
     catch (const std::exception &ex)
     {
-        std::cerr << ex.what() << std::endl;
+        http_server::LogServerExited(EXIT_FAILURE, ex.what());
         return EXIT_FAILURE;
     }
+    http_server::LogServerExited(0, "");
     return 0;
 }
 

@@ -11,6 +11,16 @@
 
 #include <iostream>
 
+#include <boost/log/trivial.hpp>     // для BOOST_LOG_TRIVIAL
+#include <boost/log/core.hpp>        // для logging::core
+#include <boost/log/expressions.hpp> // для выражения, задающего фильтр
+#include <boost/log/utility/setup/file.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
+#include <boost/log/utility/setup/console.hpp>
+#include <boost/date_time.hpp>
+
+#include <boost/json.hpp>
+
 namespace http_server
 {
     namespace net = boost::asio;
@@ -18,7 +28,19 @@ namespace http_server
     namespace beast = boost::beast;
     namespace http = beast::http;
 
+    namespace keywords = boost::log::keywords;
+    namespace sinks = boost::log::sinks;
+    namespace logging = boost::log;
     namespace sys = boost::system;
+
+    void LogJson(std::string msg, boost::json::object data);
+    void LogServerStarted(net::ip::address addres, net::ip::port_type port);
+    void LogRequestReceived(std::string IP, std::string URI, std::string method);
+    void LogResponseSent(int response_time, int code, std::string content_type);
+    void MyFormatter(logging::record_view const &rec, logging::formatting_ostream &strm);
+    void LogServerExited(int code, std::string exception);
+    void LogError(int code, std::string text, std::string where);
+    void InitBoostLog();
 
     void ReportError(beast::error_code ec, std::string_view what);
 
@@ -43,6 +65,11 @@ namespace http_server
         template <typename Body, typename Fields>
         void Write(http::response<Body, Fields> &&response)
         {
+
+            auto content_type_bsv = response.base().at("Content-Type");
+            std::string content_type_str(content_type_bsv.begin(), content_type_bsv.end());
+
+            LogResponseSent(1, response.result_int(), content_type_str);
             // Запись выполняется асинхронно, поэтому response перемещаем в область кучи
             auto safe_response = std::make_shared<http::response<Body, Fields>>(std::move(response));
 
@@ -167,7 +194,6 @@ namespace http_server
             // Принимаем новое соединение
             DoAccept();
         }
-
 
         void AsyncRunSession(tcp::socket &&socket)
         {

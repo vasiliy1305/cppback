@@ -7,6 +7,84 @@ namespace http_server
 {
     using namespace std::literals;
 
+    void MyFormatter(logging::record_view const &rec, logging::formatting_ostream &strm)
+    {
+        strm << rec[logging::expressions::smessage];
+    }
+
+    void LogJson(std::string msg, boost::json::object data)
+    {
+        boost::json::object obj;
+        boost::posix_time::ptime currentTime = boost::posix_time::second_clock::local_time();
+        std::string isoTimestamp = to_iso_extended_string(currentTime);
+        obj["timestamp"] = isoTimestamp;
+        obj["data"] = data;
+        obj["message"] = msg;
+
+        BOOST_LOG_TRIVIAL(trace) << obj;
+
+        // std::cout << obj << std::endl; // change to log
+    }
+
+    void LogServerStarted(net::ip::address addres, net::ip::port_type port)
+    {
+        boost::json::object data;
+        data["port"] = port;
+        data["address"] = addres.to_string();
+        LogJson("server started", data);
+    }
+
+    void InitBoostLog()
+    {
+        logging::add_console_log(
+            std::clog,
+            keywords::format = &MyFormatter,
+            keywords::auto_flush = true);
+    }
+
+    void LogRequestReceived(std::string IP, std::string URI, std::string method)
+    {
+        boost::json::object data;
+        data["ip"] = IP;
+        data["URI"] = URI;
+        data["method"] = method;
+        LogJson("request received", data);
+    }
+
+    void LogResponseSent(int response_time, int code, std::string content_type)
+    {
+        boost::json::object data;
+        data["response_time"] = response_time;
+        data["code"] = code;
+        if (content_type != "")
+        {
+            data["content_type"] = content_type;
+        }
+        else
+        {
+            data["content_type"] = "null";
+        }
+
+        LogJson("response sent", data);
+    }
+
+    void LogServerExited(int code, std::string exception)
+    {
+        boost::json::object data;
+        data["code"] = code;
+        data["exception"] = exception;
+        LogJson("server exited", data);
+    }
+
+    void LogError(int code, std::string text, std::string where)
+    {
+        boost::json::object data;
+        data["code"] = code;
+        data["text"] = text;
+        data["where"] = where;
+        LogJson("server exited", data);
+    }
+
     void ReportError(beast::error_code ec, std::string_view what)
     {
         std::cerr << what << ": "sv << ec.message() << std::endl;
@@ -59,6 +137,16 @@ namespace http_server
             return ReportError(ec, "read"sv);
         }
         HandleRequest(std::move(request_));
+
+        auto IP = stream_.socket().remote_endpoint().address().to_string();
+
+        auto target_bsv = request_.target();
+        std::string target_str(target_bsv.begin(), target_bsv.end());
+
+        auto method_bsv = request_.method_string();
+        std::string method_str(method_bsv.begin(), method_bsv.end());
+
+        LogRequestReceived(IP, target_str, method_str);
     }
 
     void SessionBase::Close()
