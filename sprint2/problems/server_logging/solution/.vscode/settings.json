@@ -72,5 +72,6 @@
         "variant": "cpp",
         "*.ipp": "cpp",
         "strstream": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": false
 }
