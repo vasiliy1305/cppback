@@ -5,6 +5,7 @@
 
 #include <filesystem>
 #include <iostream>
+#include <chrono>
 
 #include <boost/asio/dispatch.hpp>
 #include <boost/asio/ip/tcp.hpp>
@@ -21,7 +22,7 @@
 #include <boost/date_time.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/json.hpp>
-
+#include <cmath>
 namespace http_server
 {
     namespace net = boost::asio;
@@ -57,6 +58,7 @@ namespace http_server
 
     protected:
         using HttpRequest = http::request<http::string_body>;
+        std::chrono::_V2::system_clock::time_point start_read_;
 
         virtual ~SessionBase() = default;
 
@@ -72,7 +74,11 @@ namespace http_server
             auto content_type_bsv = response.base().at("Content-Type");
             std::string content_type_str(content_type_bsv.begin(), content_type_bsv.end());
 
-            LogResponseSent(1, response.result_int(), content_type_str);
+            auto finish = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double, std::milli> elapsed = finish - start_read_;
+            auto elapsed_int  = static_cast<int>(std::round(elapsed.count()));
+
+            LogResponseSent(elapsed_int, response.result_int(), content_type_str);
             // Запись выполняется асинхронно, поэтому response перемещаем в область кучи
             auto safe_response = std::make_shared<http::response<Body, Fields>>(std::move(response));
 

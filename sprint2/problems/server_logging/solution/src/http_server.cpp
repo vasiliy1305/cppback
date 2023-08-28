@@ -31,7 +31,7 @@ namespace http_server
     void InitBoostLog()
     {
         logging::add_console_log(
-            std::clog,
+            std::cout,
             keywords::format = &MyFormatter,
             keywords::auto_flush = true);
     }
@@ -109,7 +109,7 @@ namespace http_server
 
     void SessionBase::Read()
     {
-        using namespace std::literals;
+        start_read_ = std::chrono::high_resolution_clock::now();
         // Очищаем запрос от прежнего значения (метод Read может быть вызван несколько раз)
         request_ = {};
         stream_.expires_after(30s);
