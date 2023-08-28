@@ -2,7 +2,6 @@
 
 namespace http_server
 {
-    
 
     void MyFormatter(logging::record_view const &rec, logging::formatting_ostream &strm)
     {
@@ -126,12 +125,12 @@ namespace http_server
         {
             // Нормальная ситуация - клиент закрыл соединение
             return Close();
+            // todo add error
         }
         if (ec)
         {
             return ReportError(ec, "read"sv);
         }
-        HandleRequest(std::move(request_));
 
         auto IP = stream_.socket().remote_endpoint().address().to_string();
 
@@ -142,6 +141,8 @@ namespace http_server
         std::string method_str(method_bsv.begin(), method_bsv.end());
 
         LogRequestReceived(IP, target_str, method_str);
+        
+        HandleRequest(std::move(request_));
     }
 
     void SessionBase::Close()
