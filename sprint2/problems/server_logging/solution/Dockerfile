@@ -19,6 +19,7 @@ RUN mkdir /app/build && cd /app/build && \
 COPY ./src /app/src
 COPY CMakeLists.txt /app/
 
+
 RUN cd /app/build && \
     cmake cmake .. -DCMAKE_BUILD_TYPE=Release .. && \
     cmake --build .
@@ -34,6 +35,7 @@ USER www
 # Не забываем также папку data, она пригодится.
 COPY --from=build /app/build/bin/game_server /app/
 COPY ./data /app/data
+COPY ./static /app/static
 
 # Запускаем игровой сервер
-ENTRYPOINT ["/app/game_server", "/app/data/config.json"]
+ENTRYPOINT ["/app/game_server", "/app/data/config.json", "/app/static"]
