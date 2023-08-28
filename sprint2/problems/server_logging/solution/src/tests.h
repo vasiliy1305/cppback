@@ -62,6 +62,4 @@ void TestLoadGame()
 void AllTests()
 {
     TestLoadGame();
-
-    std::cout << "well done!" << std::endl;
 }

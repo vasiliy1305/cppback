@@ -108,12 +108,10 @@ namespace http_handler
     //     template <typename Body, typename Allocator>
     //     static void LogRequest(http::request<Body, http::basic_fields<Allocator>> &req)
     //     {
-    //         std::cout << "LogRequest" << std::endl;
     //     }
 
     //     static void LogResponse()
     //     {
-    //         std::cout << "LogResponse" << std::endl;
     //     }
 
     // public:
@@ -197,23 +195,20 @@ namespace http_handler
                         }
                         else
                         {
-                            // send error 404 Not Found text/plain
-                            // std::cout << 404 << std::endl;
+                            // todo возможно сообщение об ошибке
                             send(MakeStringResponse(http::status::not_found, "wrong page", req.version(), req.keep_alive(), ContentType::TEXT_PLAIN));
                         }
                     }
                     else
                     {
-                        // 400 bad request
-                        // std::cout << 400 << std::endl;
+
+                        // todo возможно сообщение об ошибке
                         send(MakeStringResponse(http::status::bad_request, "xxx", req.version(), req.keep_alive(), ContentType::TEXT_PLAIN));
                     }
                 }
                 else if (request.type == RequestType::Index)
                 {
                     auto target_file_path = buildPath(static_dir_, {"index.html"});
-                    // проверить что файл находится в поддиректории статик
-                    std::cout << "index" << std::endl;
                     if (IsSubPath(target_file_path, static_dir_))
                     {
                         send(MakeFileResponse(http::status::ok, target_file_path, req.version(), req.keep_alive()));
@@ -223,7 +218,7 @@ namespace http_handler
 
             else if (req.method() == http::verb::head)
             {
-                std::cout << "head" << std::endl;
+                // todo доделать хеды
             }
             else
             {

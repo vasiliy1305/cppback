@@ -28,7 +28,7 @@ namespace http_handler
         http::file_body::value_type file;
         if (sys::error_code ec; file.open(file_path.c_str(), beast::file_mode::read, ec), ec)
         {
-            std::cout << "faleed to open file" << std::endl;
+            // todo добавить ошибку?
             FileResponse response(http::status::not_found, http_version);
             response.keep_alive(keep_alive);
             response.set(http::field::content_type, ContentType::TEXT_PLAIN);

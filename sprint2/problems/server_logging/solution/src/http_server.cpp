@@ -19,8 +19,6 @@ namespace http_server
         obj["message"] = msg;
 
         BOOST_LOG_TRIVIAL(trace) << obj;
-
-        // std::cout << obj << std::endl; // change to log
     }
 
     void LogServerStarted(net::ip::address addres, net::ip::port_type port)
