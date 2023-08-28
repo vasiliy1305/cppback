@@ -95,6 +95,7 @@ namespace http_server
     {
         if (ec)
         {
+            LogError(ec.value(), ec.message(), "write");
             return ReportError(ec, "write"sv);
         }
         if (close)
@@ -124,11 +125,12 @@ namespace http_server
         if (ec == http::error::end_of_stream)
         {
             // Нормальная ситуация - клиент закрыл соединение
+            LogError(ec.value(), ec.message(), "read");
             return Close();
-            // todo add error
         }
         if (ec)
         {
+            LogError(ec.value(), ec.message(), "read");
             return ReportError(ec, "read"sv);
         }
 

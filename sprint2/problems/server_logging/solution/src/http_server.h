@@ -188,6 +188,7 @@ namespace http_server
 
             if (ec)
             {
+                LogError(ec.value(), ec.message(), "accept");
                 return ReportError(ec, "accept"sv);
             }
 
