@@ -7,8 +7,6 @@
 #include <vector>
 #include <boost/json.hpp>
 
-
-
 #include <string_view>
 
 using namespace std::literals;
@@ -95,47 +93,66 @@ namespace http_handler
                                   unsigned http_version,
                                   bool keep_alive);
 
-
-
     fs::path buildPath(const fs::path &base, const std::vector<std::string> &dirs);
 
     // Возвращает true, если каталог p содержится внутри base_path.
     bool IsSubPath(fs::path path, fs::path base);
 
-    // template <class SomeRequestHandler>
-    // class LoggingRequestHandler
-    // {
-    //     template <typename Body, typename Allocator>
-    //     static void LogRequest(http::request<Body, http::basic_fields<Allocator>> &req)
-    //     {
-    //     }
+    class ContentHandler
+    {
+    public:
+        ContentHandler(fs::path static_dir) : static_dir_(static_dir)
+        {
+        }
 
-    //     static void LogResponse()
-    //     {
-    //     }
+        template <typename Body, typename Allocator, typename Send>
+        void Do(http::request<Body, http::basic_fields<Allocator>> &req, Send &send)
+        {
+            auto target_bsv = req.target();
+            std::string target_str(target_bsv.begin(), target_bsv.end());
+            auto request = ParsePath(target_str);
 
-    // public:
-    //     LoggingRequestHandler(SomeRequestHandler &decorated) : decorated_(decorated)
-    //     {
-    //     }
+            auto target_file_path = buildPath(static_dir_, request.parts);
+            // проверить что таргет не корневая директория
+            if (target_file_path == static_dir_)
+            {
+                target_file_path = buildPath(static_dir_, {"index.html"}); // поменять на index
+            }
 
-    //     template <typename Body, typename Allocator, typename Send>
-    //     void operator()(http::request<Body, http::basic_fields<Allocator>> &&req, Send &&send)
-    //     {
-    //         LogRequest(req);
-    //         decorated_(std::move(req), send);
-    //         LogResponse();
-    //         // return resp;
-    //     }
+            // проверить что файл находится в поддиректории статик
+            if (IsSubPath(target_file_path, static_dir_))
+            {
+                // проверить что файл существует
+                if (fs::exists(target_file_path))
+                {
+                    send(MakeFileResponse(http::status::ok, target_file_path, req.version(), req.keep_alive()));
+                }
+                else
+                {
+                    // todo возможно сообщение об ошибке
+                    send(MakeStringResponse(http::status::not_found, "wrong page", req.version(), req.keep_alive(), ContentType::TEXT_PLAIN));
+                }
+            }
+            else
+            {
 
-    // private:
-    //     SomeRequestHandler &decorated_;
-    // };
+                // todo возможно сообщение об ошибке
+                send(MakeStringResponse(http::status::bad_request, "xxx", req.version(), req.keep_alive(), ContentType::TEXT_PLAIN));
+            }
+        }
+
+    private:
+        fs::path static_dir_;
+    };
+
+    class ApiHandler
+    {
+    };
 
     class RequestHandler
     {
     public:
-        explicit RequestHandler(model::Game &game, fs::path static_dir) : game_{game}, static_dir_(static_dir)
+        explicit RequestHandler(model::Game &game, fs::path static_dir) : game_{game}, content_handler_(static_dir)
         {
         }
 
@@ -177,42 +194,15 @@ namespace http_handler
                 }
                 else if (request.type == RequestType::Static)
                 {
-
-                    auto target_file_path = buildPath(static_dir_, request.parts);
-                    // проверить что таргет не корневая директория
-                    if (target_file_path == static_dir_)
-                    {
-                        target_file_path = buildPath(static_dir_, {"index.html"}); // поменять на index
-                    }
-
-                    // проверить что файл находится в поддиректории статик
-                    if (IsSubPath(target_file_path, static_dir_))
-                    {
-                        // проверить что файл существует
-                        if (fs::exists(target_file_path))
-                        {
-                            send(MakeFileResponse(http::status::ok, target_file_path, req.version(), req.keep_alive()));
-                        }
-                        else
-                        {
-                            // todo возможно сообщение об ошибке
-                            send(MakeStringResponse(http::status::not_found, "wrong page", req.version(), req.keep_alive(), ContentType::TEXT_PLAIN));
-                        }
-                    }
-                    else
-                    {
-
-                        // todo возможно сообщение об ошибке
-                        send(MakeStringResponse(http::status::bad_request, "xxx", req.version(), req.keep_alive(), ContentType::TEXT_PLAIN));
-                    }
+                    content_handler_.Do(req, send);
                 }
                 else if (request.type == RequestType::Index)
                 {
-                    auto target_file_path = buildPath(static_dir_, {"index.html"});
-                    if (IsSubPath(target_file_path, static_dir_))
-                    {
-                        send(MakeFileResponse(http::status::ok, target_file_path, req.version(), req.keep_alive()));
-                    }
+                    // auto target_file_path = buildPath(static_dir_, {"index.html"});
+                    // if (IsSubPath(target_file_path, static_dir_))
+                    // {
+                    //     send(MakeFileResponse(http::status::ok, target_file_path, req.version(), req.keep_alive()));
+                    // }
                 }
             }
 
@@ -228,7 +218,8 @@ namespace http_handler
 
     private:
         model::Game &game_;
-        fs::path static_dir_;
+        // fs::path static_dir_;
+        ContentHandler content_handler_;
 
         std::string GetMapsAsJS();
         boost::json::value RoadToJsonObj(const model::Road &road);
