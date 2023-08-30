@@ -48,9 +48,9 @@ namespace http_handler
         }
     }
 
-    bool IsAPI(const std::string &request)
+    bool IsApi(const std::string &request)
     {
-        return request.substr(0, 3) == "api";
+        return request.substr(0, 4) == "/api";
     }
 
     std::vector<std::string> SplitRequest(const std::string &str_req)

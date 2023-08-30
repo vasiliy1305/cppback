@@ -61,7 +61,7 @@ namespace http_handler
     // возвращает расширение в нижнем регистре
     std::string getFileExtension(const std::string &filename);
 
-    bool IsAPI(const std::string &request);
+    bool IsApi(const std::string &request);
 
     // file extension to content type
     std::string_view FileExtensionToContentType(const std::string &file_extension);
@@ -227,7 +227,7 @@ namespace http_handler
                 auto target_bsv = req.target();
                 std::string target_str(target_bsv.begin(), target_bsv.end());
 
-                if (IsAPI(target_str))
+                if (IsApi(target_str))
                 {
                     api_handler_.Do(req, send);
                 }
