@@ -37,22 +37,6 @@ namespace http_handler
     // Ответ, тело которого представлено в виде файла
     using FileResponse = http::response<http::file_body>;
 
-    enum class RequestType
-    {
-        Error,
-        Maps,
-        Map,
-        BadRequest,
-        Static,
-        Index
-    };
-
-    struct Request
-    {
-        RequestType type;
-        std::vector<std::string> parts;
-    };
-
     struct ContentType
     {
         ContentType() = delete;
@@ -77,11 +61,12 @@ namespace http_handler
     // возвращает расширение в нижнем регистре
     std::string getFileExtension(const std::string &filename);
 
+    bool IsAPI(const std::string &request);
+
     // file extension to content type
     std::string_view FileExtensionToContentType(const std::string &file_extension);
 
-    // разбор строки API
-    Request ParsePath(const std::string &path);
+    std::vector<std::string> SplitRequest(const std::string &str_req);
 
     // Создаёт StringResponse с заданными параметрами
     StringResponse MakeStringResponse(http::status status, std::string_view body, unsigned http_version,
@@ -110,9 +95,9 @@ namespace http_handler
         {
             auto target_bsv = req.target();
             std::string target_str(target_bsv.begin(), target_bsv.end());
-            auto request = ParsePath(target_str);
+            auto request_parts = SplitRequest(target_str);
 
-            auto target_file_path = buildPath(static_dir_, request.parts);
+            auto target_file_path = buildPath(static_dir_, request_parts);
             // проверить что таргет не корневая директория
             if (target_file_path == static_dir_)
             {
@@ -135,7 +120,6 @@ namespace http_handler
             }
             else
             {
-
                 // todo возможно сообщение об ошибке
                 send(MakeStringResponse(http::status::bad_request, "xxx", req.version(), req.keep_alive(), ContentType::TEXT_PLAIN));
             }
@@ -145,14 +129,85 @@ namespace http_handler
         fs::path static_dir_;
     };
 
+    enum class ApiRequestType
+    {
+        MAP,
+        MAPS,
+        BADREQUEST
+    };
+
+    ApiRequestType GetApiReqType(const std::string &path);
+
     class ApiHandler
     {
+    public:
+        ApiHandler(model::Game &game) : game_{game}
+        {
+        }
+
+        template <typename Body, typename Allocator, typename Send>
+        void Do(http::request<Body, http::basic_fields<Allocator>> &req, Send &send)
+        {
+
+            const auto text_response = [&req](http::status status, std::string_view text)
+            {
+                return MakeStringResponse(status, text, req.version(), req.keep_alive(), ContentType::API_JSON);
+            };
+
+            if (req.method() == http::verb::get)
+            {
+                auto target_bsv = req.target();
+                std::string target_str(target_bsv.begin(), target_bsv.end());
+                auto request_type = GetApiReqType(target_str);
+                auto request_parts = SplitRequest(target_str);
+
+                if (request_type == ApiRequestType::MAPS)
+                {
+                    send(text_response(http::status::ok, GetMapsAsJS()));
+                }
+                else if (request_type == ApiRequestType::MAP)
+                {
+                    if (IsMapExist(request_parts.at(3)))
+                    {
+                        send(text_response(http::status::ok, GetMapAsJS(request_parts.at(3))));
+                    }
+                    else
+                    {
+                        send(text_response(http::status::not_found, "{\"code\": \"mapNotFound\",\"message\": \"Map not found\"}"));
+                    }
+                }
+                else if (request_type == ApiRequestType::BADREQUEST)
+                {
+                    send(text_response(http::status::bad_request, "{\"code\": \"badRequest\", \"message\": \"Bad request\"}"));
+                }
+            }
+
+            else if (req.method() == http::verb::head)
+            {
+                // todo доделать хеды
+            }
+            else
+            {
+                send(text_response(http::status::method_not_allowed, ""sv));
+            }
+        }
+
+    private:
+        model::Game &game_;
+
+        bool IsMapExist(std::string id);
+        std::string GetMapsAsJS();
+        std::string GetMapAsJS(std::string id);
+        boost::json::value RoadToJsonObj(const model::Road &road);
+        boost::json::value BuildingToJsonObj(const model::Building &building);
+        boost::json::value OfficeToJsonObj(const model::Office &office);
+        boost::json::value MapToJsonObj(const model::Map &map);
     };
 
     class RequestHandler
     {
     public:
-        explicit RequestHandler(model::Game &game, fs::path static_dir) : game_{game}, content_handler_(static_dir)
+        explicit RequestHandler(model::Game &game, fs::path static_dir) : api_handler_{game}, content_handler_(static_dir)
         {
         }
 
@@ -171,38 +226,14 @@ namespace http_handler
             {
                 auto target_bsv = req.target();
                 std::string target_str(target_bsv.begin(), target_bsv.end());
-                auto request = ParsePath(target_str);
 
-                if (request.type == RequestType::Maps)
+                if (IsAPI(target_str))
                 {
-                    send(text_response(http::status::ok, GetMapsAsJS()));
+                    api_handler_.Do(req, send);
                 }
-                else if (request.type == RequestType::Map)
-                {
-                    if (IsMapExist(request.parts.at(3)))
-                    {
-                        send(text_response(http::status::ok, GetMapAsJS(request.parts.at(3))));
-                    }
-                    else
-                    {
-                        send(text_response(http::status::not_found, "{\"code\": \"mapNotFound\",\"message\": \"Map not found\"}"));
-                    }
-                }
-                else if (request.type == RequestType::BadRequest)
-                {
-                    send(text_response(http::status::bad_request, "{\"code\": \"badRequest\", \"message\": \"Bad request\"}"));
-                }
-                else if (request.type == RequestType::Static)
+                else
                 {
                     content_handler_.Do(req, send);
-                }
-                else if (request.type == RequestType::Index)
-                {
-                    // auto target_file_path = buildPath(static_dir_, {"index.html"});
-                    // if (IsSubPath(target_file_path, static_dir_))
-                    // {
-                    //     send(MakeFileResponse(http::status::ok, target_file_path, req.version(), req.keep_alive()));
-                    // }
                 }
             }
 
@@ -217,17 +248,8 @@ namespace http_handler
         }
 
     private:
-        model::Game &game_;
-        // fs::path static_dir_;
         ContentHandler content_handler_;
-
-        std::string GetMapsAsJS();
-        boost::json::value RoadToJsonObj(const model::Road &road);
-        boost::json::value BuildingToJsonObj(const model::Building &building);
-        boost::json::value OfficeToJsonObj(const model::Office &office);
-        boost::json::value MapToJsonObj(const model::Map &map);
-        bool IsMapExist(std::string id);
-        std::string GetMapAsJS(std::string id);
+        ApiHandler api_handler_;
     };
 
 } // namespace http_handler

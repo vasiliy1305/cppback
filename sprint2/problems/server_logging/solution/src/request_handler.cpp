@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <iterator>
 
-
 namespace http_handler
 {
 
@@ -49,48 +48,45 @@ namespace http_handler
         }
     }
 
-    Request ParsePath(const std::string &path)
+    bool IsAPI(const std::string &request)
     {
-        Request result;
-        std::stringstream ss(path);
+        return request.substr(0, 3) == "api";
+    }
+
+    std::vector<std::string> SplitRequest(const std::string &str_req)
+    {
+        std::vector<std::string> result;
+        std::stringstream ss(str_req);
         std::string token;
 
         while (std::getline(ss, token, '/')) // сделать констаной /
         {
             if (!token.empty())
             {
-                result.parts.push_back(token);
+                result.push_back(token);
             }
         }
+        return result;
+    }
 
-        if (path.size() == 0)
+    ApiRequestType GetApiReqType(const std::string &path)
+    {
+        auto request_parts = SplitRequest(path);
+        if (path == "/api/v1/maps"s)
         {
-            result.type = RequestType::Index;
-            return result;
+            return ApiRequestType::MAPS;
         }
-        else if (path == "/api/v1/maps"s)
+        else if ((request_parts.size() == 4) && (request_parts.at(0) == "api") && (request_parts.at(1) == "v1") && (request_parts.at(2) == "maps"))
         {
-            result.type = RequestType::Maps;
-            return result;
-        }
-        else if ((result.parts.size() == 4) && (result.parts.at(0) == "api") && (result.parts.at(1) == "v1") && result.parts.at(2) == "maps")
-        {
-            result.type = RequestType::Map;
-            return result;
-        }
-        else if (result.parts.size() != 0 && result.parts.at(0) == "api")
-        {
-            result.type = RequestType::BadRequest;
-            return result;
+            return ApiRequestType::MAP;
         }
         else
         {
-            result.type = RequestType::Static;
-            return result;
+            return ApiRequestType::BADREQUEST;
         }
     }
 
-    std::string RequestHandler::GetMapsAsJS()
+    std::string ApiHandler::GetMapsAsJS()
     {
         boost::json::array arr;
         for (const auto &map : game_.GetMaps())
@@ -103,7 +99,7 @@ namespace http_handler
         return boost::json::serialize(arr);
     }
 
-    bool RequestHandler::IsMapExist(std::string id)
+    bool ApiHandler::IsMapExist(std::string id)
     {
         const auto &maps = game_.GetMaps();
         auto map_it = std::find_if(maps.begin(), maps.end(), [&](model::Map map)
@@ -111,7 +107,7 @@ namespace http_handler
         return map_it != maps.end();
     }
 
-    std::string RequestHandler::GetMapAsJS(std::string id)
+    std::string ApiHandler::GetMapAsJS(std::string id)
     {
         const auto &maps = game_.GetMaps();
         auto map_it = std::find_if(maps.begin(), maps.end(), [&](model::Map map)
@@ -126,7 +122,7 @@ namespace http_handler
         return boost::json::serialize(MapToJsonObj(map));
     }
 
-    boost::json::value RequestHandler::RoadToJsonObj(const model::Road &road)
+    boost::json::value ApiHandler::RoadToJsonObj(const model::Road &road)
     {
         if (road.IsHorizontal())
         {
@@ -138,17 +134,17 @@ namespace http_handler
         }
     }
 
-    boost::json::value RequestHandler::BuildingToJsonObj(const model::Building &building)
+    boost::json::value ApiHandler::BuildingToJsonObj(const model::Building &building)
     {
         return {{"x", building.GetBounds().position.x}, {"y", building.GetBounds().position.y}, {"w", building.GetBounds().size.width}, {"h", building.GetBounds().size.height}};
     }
 
-    boost::json::value RequestHandler::OfficeToJsonObj(const model::Office &office)
+    boost::json::value ApiHandler::OfficeToJsonObj(const model::Office &office)
     {
         return {{"id", *office.GetId()}, {"x", office.GetPosition().x}, {"y", office.GetPosition().y}, {"offsetX", office.GetOffset().dx}, {"offsetY", office.GetOffset().dy}};
     }
 
-    boost::json::value RequestHandler::MapToJsonObj(const model::Map &map)
+    boost::json::value ApiHandler::MapToJsonObj(const model::Map &map)
     {
         boost::json::object map_obj;
         map_obj["id"] = *map.GetId();
