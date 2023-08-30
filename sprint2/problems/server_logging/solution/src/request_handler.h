@@ -61,8 +61,6 @@ namespace http_handler
     // возвращает расширение в нижнем регистре
     std::string getFileExtension(const std::string &filename);
 
-    bool IsApi(const std::string &request);
-
     // file extension to content type
     std::string_view FileExtensionToContentType(const std::string &file_extension);
 
@@ -73,12 +71,13 @@ namespace http_handler
                                       bool keep_alive,
                                       std::string_view content_type = ContentType::TEXT_HTML);
 
+    // Создаёт FileResponse с заданными параметрами
     FileResponse MakeFileResponse(http::status status,
                                   fs::path file_path,
                                   unsigned http_version,
                                   bool keep_alive);
 
-    fs::path buildPath(const fs::path &base, const std::vector<std::string> &dirs);
+    fs::path buildPath(const fs::path &base, const std::vector<std::string> &dirs); // delete this func
 
     // Возвращает true, если каталог p содержится внутри base_path.
     bool IsSubPath(fs::path path, fs::path base);
@@ -250,6 +249,8 @@ namespace http_handler
     private:
         ContentHandler content_handler_;
         ApiHandler api_handler_;
+
+        bool IsApi(const std::string &request);
     };
 
 } // namespace http_handler

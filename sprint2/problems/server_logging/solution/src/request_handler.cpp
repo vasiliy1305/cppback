@@ -48,9 +48,108 @@ namespace http_handler
         }
     }
 
-    bool IsApi(const std::string &request)
+    fs::path buildPath(const fs::path &base, const std::vector<std::string> &dirs)
     {
-        return request.substr(0, 4) == "/api";
+        std::filesystem::path result = base;
+        for (const auto &dir : dirs)
+        {
+            result /= dir;
+        }
+        return result;
+    }
+
+    bool IsSubPath(fs::path path, fs::path base)
+    {
+        // Приводим оба пути к каноничному виду (без . и ..)
+        path = fs::weakly_canonical(path);
+        base = fs::weakly_canonical(base);
+
+        // Проверяем, что все компоненты base содержатся внутри path
+        for (auto b = base.begin(), p = path.begin(); b != base.end(); ++b, ++p)
+        {
+            if (p == path.end() || *p != *b)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    std::string getFileExtension(const std::string &filename)
+    {
+        size_t pos = filename.rfind('.');
+        if (pos == std::string::npos)
+        {
+            // No extension found
+            return "";
+        }
+        std::string ext = filename.substr(pos + 1);
+        std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+        return ext;
+    }
+
+    std::string_view FileExtensionToContentType(const std::string &file_extension)
+    {
+        if (file_extension == "txt")
+        {
+            return ContentType::TEXT_PLAIN;
+        }
+        else if (file_extension == "htm" || file_extension == "html")
+        {
+            return ContentType::TEXT_HTML;
+        }
+        else if (file_extension == "css")
+        {
+            return ContentType::TEXT_CSS;
+        }
+        else if (file_extension == "js")
+        {
+            return ContentType::TEXT_JS;
+        }
+        else if (file_extension == "json")
+        {
+            return ContentType::API_JSON;
+        }
+        else if (file_extension == "xml")
+        {
+            return ContentType::API_XML;
+        }
+        else if (file_extension == "png")
+        {
+            return ContentType::IMAGE_PNG;
+        }
+        else if (file_extension == "jpg" || file_extension == "jpe" || file_extension == "jpeg")
+        {
+            return ContentType::IMAGE_JPG;
+        }
+        else if (file_extension == "gif")
+        {
+            return ContentType::IMAGE_GIF;
+        }
+        else if (file_extension == "bmp")
+        {
+            return ContentType::IMAGE_BMP;
+        }
+        else if (file_extension == "ico")
+        {
+            return ContentType::IMAGE_ICO;
+        }
+        else if (file_extension == "tiff" || file_extension == "tif")
+        {
+            return ContentType::IMAGE_TIFF;
+        }
+        else if (file_extension == "svg" || file_extension == "svgz")
+        {
+            return ContentType::IMAGE_SVG;
+        }
+        else if (file_extension == "mp3")
+        {
+            return ContentType::AUDIO_MPEG;
+        }
+        else
+        {
+            return ContentType::API_OCT;
+        }
     }
 
     std::vector<std::string> SplitRequest(const std::string &str_req)
@@ -176,108 +275,9 @@ namespace http_handler
         return map_obj;
     }
 
-    fs::path buildPath(const fs::path &base, const std::vector<std::string> &dirs)
+    bool RequestHandler::IsApi(const std::string &request)
     {
-        std::filesystem::path result = base;
-        for (const auto &dir : dirs)
-        {
-            result /= dir;
-        }
-        return result;
-    }
-
-    bool IsSubPath(fs::path path, fs::path base)
-    {
-        // Приводим оба пути к каноничному виду (без . и ..)
-        path = fs::weakly_canonical(path);
-        base = fs::weakly_canonical(base);
-
-        // Проверяем, что все компоненты base содержатся внутри path
-        for (auto b = base.begin(), p = path.begin(); b != base.end(); ++b, ++p)
-        {
-            if (p == path.end() || *p != *b)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    std::string getFileExtension(const std::string &filename)
-    {
-        size_t pos = filename.rfind('.');
-        if (pos == std::string::npos)
-        {
-            // No extension found
-            return "";
-        }
-        std::string ext = filename.substr(pos + 1);
-        std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
-        return ext;
-    }
-
-    std::string_view FileExtensionToContentType(const std::string &file_extension)
-    {
-        if (file_extension == "txt")
-        {
-            return ContentType::TEXT_PLAIN;
-        }
-        else if (file_extension == "htm" || file_extension == "html")
-        {
-            return ContentType::TEXT_HTML;
-        }
-        else if (file_extension == "css")
-        {
-            return ContentType::TEXT_CSS;
-        }
-        else if (file_extension == "js")
-        {
-            return ContentType::TEXT_JS;
-        }
-        else if (file_extension == "json")
-        {
-            return ContentType::API_JSON;
-        }
-        else if (file_extension == "xml")
-        {
-            return ContentType::API_XML;
-        }
-        else if (file_extension == "png")
-        {
-            return ContentType::IMAGE_PNG;
-        }
-        else if (file_extension == "jpg" || file_extension == "jpe" || file_extension == "jpeg")
-        {
-            return ContentType::IMAGE_JPG;
-        }
-        else if (file_extension == "gif")
-        {
-            return ContentType::IMAGE_GIF;
-        }
-        else if (file_extension == "bmp")
-        {
-            return ContentType::IMAGE_BMP;
-        }
-        else if (file_extension == "ico")
-        {
-            return ContentType::IMAGE_ICO;
-        }
-        else if (file_extension == "tiff" || file_extension == "tif")
-        {
-            return ContentType::IMAGE_TIFF;
-        }
-        else if (file_extension == "svg" || file_extension == "svgz")
-        {
-            return ContentType::IMAGE_SVG;
-        }
-        else if (file_extension == "mp3")
-        {
-            return ContentType::AUDIO_MPEG;
-        }
-        else
-        {
-            return ContentType::API_OCT;
-        }
+        return request.substr(0, 4) == "/api";
     }
 
 } // namespace http_handler
