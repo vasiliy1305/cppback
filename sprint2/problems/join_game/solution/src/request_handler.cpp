@@ -175,6 +175,14 @@ namespace http_handler
         {
             return ApiRequestType::MAPS;
         }
+        else if (path == "/api/v1/game/join"s)
+        {
+            return ApiRequestType::JOIN;
+        }
+        else if (path == "/api/v1/game/players"s)
+        {
+            return ApiRequestType::PLAYERS;
+        }
         else if ((request_parts.size() == 4) && (request_parts.at(0) == "api") && (request_parts.at(1) == "v1") && (request_parts.at(2) == "maps"))
         {
             return ApiRequestType::MAP;

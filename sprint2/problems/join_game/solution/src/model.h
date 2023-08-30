@@ -193,6 +193,53 @@ namespace model
         Offices offices_;
     };
 
+    class Dog
+    {
+    public:
+    private:
+        uint32_t id_;
+    };
+
+    class GameSession
+    {
+    public:
+    private:
+        std::vector<Dog> dogs_; // поменять на мап или сет  или нет
+        // карта
+    };
+
+    class Token
+    {
+    };
+
+    class Player
+    {
+    public:
+    private:
+        GameSession *session_; // sharedptr
+        Dog *dog_;             // sheredptr
+    };
+    
+    class PlayerTokens
+    {
+    public:
+        Player *FindplayerByToken(Token token);
+        void AddPlayer(Player &player);
+
+    private:
+        std::unordered_map<Token, Player *> token_to_player_;
+    };
+
+    class Players
+    {
+    public:
+        // Add(dog, session);
+        // FindByDogIdAndMapId(dog_id, map_id)
+    private:
+    };
+
+
+
     class Game
     {
     public:

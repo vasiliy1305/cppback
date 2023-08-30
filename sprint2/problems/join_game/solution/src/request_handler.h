@@ -132,6 +132,8 @@ namespace http_handler
     {
         MAP,
         MAPS,
+        JOIN,
+        PLAYERS,
         BADREQUEST
     };
 
@@ -148,7 +150,7 @@ namespace http_handler
         void Do(http::request<Body, http::basic_fields<Allocator>> &req, Send &send)
         {
 
-            const auto text_response = [&req](http::status status, std::string_view text)
+            const auto json_response = [&req](http::status status, std::string_view text)
             {
                 return MakeStringResponse(status, text, req.version(), req.keep_alive(), ContentType::API_JSON);
             };
@@ -162,22 +164,28 @@ namespace http_handler
 
                 if (request_type == ApiRequestType::MAPS)
                 {
-                    send(text_response(http::status::ok, GetMapsAsJS()));
+                    send(json_response(http::status::ok, GetMapsAsJS()));
                 }
                 else if (request_type == ApiRequestType::MAP)
                 {
                     if (IsMapExist(request_parts.at(3)))
                     {
-                        send(text_response(http::status::ok, GetMapAsJS(request_parts.at(3))));
+                        send(json_response(http::status::ok, GetMapAsJS(request_parts.at(3))));
                     }
                     else
                     {
-                        send(text_response(http::status::not_found, "{\"code\": \"mapNotFound\",\"message\": \"Map not found\"}"));
+                        send(json_response(http::status::not_found, "{\"code\": \"mapNotFound\",\"message\": \"Map not found\"}"));
                     }
+                }
+                else if (request_type == ApiRequestType::JOIN)
+                {
+                }
+                else if (request_type == ApiRequestType::PLAYERS)
+                {
                 }
                 else if (request_type == ApiRequestType::BADREQUEST)
                 {
-                    send(text_response(http::status::bad_request, "{\"code\": \"badRequest\", \"message\": \"Bad request\"}"));
+                    send(json_response(http::status::bad_request, "{\"code\": \"badRequest\", \"message\": \"Bad request\"}"));
                 }
             }
 
@@ -187,7 +195,7 @@ namespace http_handler
             }
             else
             {
-                send(text_response(http::status::method_not_allowed, ""sv));
+                send(json_response(http::status::method_not_allowed, ""sv));
             }
         }
 
@@ -201,9 +209,10 @@ namespace http_handler
         boost::json::value BuildingToJsonObj(const model::Building &building);
         boost::json::value OfficeToJsonObj(const model::Office &office);
         boost::json::value MapToJsonObj(const model::Map &map);
+        boost::json::value Join(const std::string json_str);
     };
 
-    class RequestHandler
+    class RequestHandler 
     {
     public:
         explicit RequestHandler(model::Game &game, fs::path static_dir) : api_handler_{game}, content_handler_(static_dir)

@@ -1,0 +1,99 @@
+model.h
+
+добавить классы:
+
+GameSession
+
+makeDod()
+
+Dog
+    id
+
+
+
+Player (содержит токен)
+PlayerTokens
+------------------------------------------------------------------------------------------------------------------------
+#include <random>
+
+namespace detail {
+struct TokenTag {};
+}  // namespace detail
+
+using Token = util::Tagged<std::string, detail::TokenTag>;
+
+class PlayerTokens {
+    ...
+private:
+    std::random_device random_device_;
+    std::mt19937_64 generator1_{[this] {
+        std::uniform_int_distribution<std::mt19937_64::result_type> dist;
+        return dist(random_device_);
+    }()};
+    std::mt19937_64 generator2_{[this] {
+        std::uniform_int_distribution<std::mt19937_64::result_type> dist;
+        return dist(random_device_);
+    }()};
+    // Чтобы сгенерировать токен, получите из generator1_ и generator2_
+    // два 64-разрядных числа и, переведя их в hex-строки, склейте в одну.
+    // Вы можете поэкспериментировать с алгоритмом генерирования токенов,
+    // чтобы сделать их подбор ещё более затруднительным
+};
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+class RequestHandler : public std::enable_shared_from_this<RequestHandler> {
+public:
+    using Strand = net::strand<net::io_context::executor_type>;
+
+    RequestHandler(fs::path root, Strand api_strand, /* прочие параметры */)
+        : root_{std::move(root)}
+        , api_strand_{api_strand}
+        , /*инициализируем остальные поля*/ {
+    }
+
+    RequestHandler(const RequestHandler&) = delete;
+    RequestHandler& operator=(const RequestHandler&) = delete;
+
+    template <typename Body, typename Allocator, typename Send>
+    void operator()(tcp::endpoint, http::request<Body, http::basic_fields<Allocator>>&& req, Send&& send) {
+        auto version = req.version();
+        auto keep_alive = req.keep_alive();
+
+        try {
+            if (/*req относится к API?*/) {
+                auto handle = [self = shared_from_this(), send,
+                               req = std::forward<decltype(req)>(req), version, keep_alive] {
+                    try {
+                        // Этот assert не выстрелит, так как лямбда-функция будет выполняться внутри strand
+                        assert(self->api_strand_.running_in_this_thread());
+                        return send(self->HandleApiRequest(req));
+                    } catch (...) {
+                        send(self->ReportServerError(version, keep_alive));
+                    }
+                };
+                return net::dispatch(api_strand_, handle);
+            }
+            // Возвращаем результат обработки запроса к файлу
+            return std::visit(
+                [&send](auto&& result) {
+                    send(std::forward<decltype(result)>(result));
+                },
+                HandleFileRequest(req));
+        } catch (...) {
+            send(ReportServerError(version, keep_alive));
+        }
+    }
+
+private:
+    using FileRequestResult = std::variant<EmptyResponse, StringResponse, FileResponse>;
+
+    FileRequestResult HandleFileRequest(const StringRequest& req) const;
+    StringResponse HandleApiRequest(const StringRequest& request) const;
+    StringResponse ReportServerError(unsigned version, bool keep_alive) const;
+
+    fs::path root_;
+    Strand api_strand_;
+    /* прочие данные */
+};
