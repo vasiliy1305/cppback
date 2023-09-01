@@ -1,5 +1,7 @@
 model.h
 
+56cbd97fa283fcfd3556eadb08615adf
+
 добавить классы:
 
 GameSession
@@ -9,6 +11,10 @@ makeDod()
 Dog
     id
 
+curl -X POST -H "Content-Type: application/json" -d '{"userName": "Scooby Doo", "mapId": "map1"}' http://127.0.0.1:8080/api/v1/game/join
+
+
+curl -X GET  -H "Authorization: Bearer 6516861d89ebfff147bf2eb2b5153ae1" "http://127.0.0.1:8080/api/v1/game/players"
 
 
 Player (содержит токен)
@@ -40,7 +46,23 @@ private:
     // чтобы сделать их подбор ещё более затруднительным
 };
 ------------------------------------------------------------------------------------------------------------------------
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 182
+Cache-Control: no-cache
 
+"players": {
+  "4": {
+    "pos": [32.1, 25.8],
+    "speed": [0.0, 0.0],
+    "dir": "U"
+  },
+  "5": {
+    "pos": [0.8, 3.35],
+    "speed": [0.0, 0.0"],
+    "dir": "U"
+  }
+}
 
 ------------------------------------------------------------------------------------------------------------------------
 class RequestHandler : public std::enable_shared_from_this<RequestHandler> {

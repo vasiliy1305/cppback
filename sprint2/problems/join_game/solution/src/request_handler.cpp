@@ -283,9 +283,99 @@ namespace http_handler
         return map_obj;
     }
 
+    std::pair<std::string, http::status> ApiHandler::Join(const std::string json_str)
+    {
+        http::status status;
+        std::string body;
+        try
+        {
+            auto value = json::parse(json_str);
+            std::string user_name(value.as_object()["userName"].as_string());
+            std::string map_id(value.as_object()["mapId"].as_string());
+
+            auto [player, token] = game_.Join(user_name, map_id);
+
+            if (user_name == "")
+            {
+                status = http::status::bad_request;
+                body = "{\"code\": \"invalidArgument\", \"message\": \"Invalid name\"}";
+                return {body, status};
+            }
+
+            if (player)
+            {
+                boost::json::object resualt;
+                resualt["authToken"] = *token;
+                resualt["playerId"] = *(player->GetId());
+                status = http::status::ok;
+                body = boost::json::serialize(resualt);
+            }
+            else
+            {
+                status = http::status::not_found;
+                body = "{\"code\": \"mapNotFound\", \"message\": \"Map not found\"}";
+            }
+            return {body, status};
+        }
+        catch (...)
+        {
+            status = http::status::bad_request;
+            body = "{\"code\": \"invalidArgument\", \"message\": \"Join game request parse error\"}";
+            return {body, status};
+        }
+    }
+
+    std::pair<std::string, http::status> ApiHandler::Players(const std::string token)
+    {
+        http::status status;
+        std::string body;
+        if (token.size() == 32)
+        {
+            auto dogs = game_.GetPlayersByToken(token);
+            if (dogs)
+            {
+                boost::json::object js_players;
+                for (auto dog : *dogs)
+                {
+                    auto id = dog.GetId();
+                    js_players[std::to_string(*id)] = DogToJsonObj(dog);
+                }
+                body = json::serialize(js_players);
+                status = http::status::ok;
+                return {body, status};
+            }
+            else
+            {
+                status = http::status::unauthorized;
+                body = "{\"code\": \"unknownToken\", \"message\": \"Player token has not been found\"}";
+                return {body, status};
+            }
+        }
+        else
+        {
+            status = http::status::unauthorized;
+            body = "{\"code\": \"invalidToken\", \"message\": \"Authorization header is missing\"}";
+            return {body, status};
+        }
+    }
+
     bool RequestHandler::IsApi(const std::string &request)
     {
         return request.substr(0, 4) == "/api";
+    }
+
+    boost::json::value ApiHandler::DogToJsonObj(const model::Dog &dog)
+    {
+        boost::json::array pos = {0, 0};
+        boost::json::array speed = {0, 0};
+        boost::json::string dir = "U";
+
+        boost::json::object player;
+        player["pos"] = pos;
+        player["speed"] = speed;
+        player["dir"] = dir;
+
+        return player;
     }
 
 } // namespace http_handler

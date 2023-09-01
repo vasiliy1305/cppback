@@ -27,6 +27,7 @@ namespace http_handler
     namespace fs = std::filesystem;
     namespace sys = boost::system;
     namespace net = boost::asio;
+    namespace json = boost::json;
 
     using namespace std::literals;
 
@@ -155,13 +156,13 @@ namespace http_handler
                 return MakeStringResponse(status, text, req.version(), req.keep_alive(), ContentType::API_JSON);
             };
 
+            auto target_bsv = req.target();
+            std::string target_str(target_bsv.begin(), target_bsv.end());
+            auto request_type = GetApiReqType(target_str);
+            auto request_parts = SplitRequest(target_str);
+
             if (req.method() == http::verb::get)
             {
-                auto target_bsv = req.target();
-                std::string target_str(target_bsv.begin(), target_bsv.end());
-                auto request_type = GetApiReqType(target_str);
-                auto request_parts = SplitRequest(target_str);
-
                 if (request_type == ApiRequestType::MAPS)
                 {
                     send(json_response(http::status::ok, GetMapsAsJS()));
@@ -177,25 +178,40 @@ namespace http_handler
                         send(json_response(http::status::not_found, "{\"code\": \"mapNotFound\",\"message\": \"Map not found\"}"));
                     }
                 }
-                else if (request_type == ApiRequestType::JOIN)
-                {
-                }
+
                 else if (request_type == ApiRequestType::PLAYERS)
                 {
+                    
+                    auto a =  req[boost::beast::http::field::authorization];
+                    std::string b(a.begin(), a.end());
+                    std::istringstream iss(b);
+                    std::string trash, token;
+                    auto [body, status] = Players(token);
+                    send(json_response(status, body));
                 }
                 else if (request_type == ApiRequestType::BADREQUEST)
                 {
                     send(json_response(http::status::bad_request, "{\"code\": \"badRequest\", \"message\": \"Bad request\"}"));
                 }
             }
-
+            else if (req.method() == http::verb::post)
+            {
+                if (request_type == ApiRequestType::JOIN)
+                {
+                    auto [body, status] = Join(req.body().c_str());
+                    send(json_response(status, body));
+                }
+                else
+                {
+                    send(json_response(http::status::method_not_allowed, ""sv));
+                }
+            }
             else if (req.method() == http::verb::head)
             {
                 // todo доделать хеды
             }
             else
             {
-                send(json_response(http::status::method_not_allowed, ""sv));
             }
         }
 
@@ -209,10 +225,12 @@ namespace http_handler
         boost::json::value BuildingToJsonObj(const model::Building &building);
         boost::json::value OfficeToJsonObj(const model::Office &office);
         boost::json::value MapToJsonObj(const model::Map &map);
-        boost::json::value Join(const std::string json_str);
+        boost::json::value DogToJsonObj(const model::Dog &dog);
+        std::pair<std::string, http::status> Join(const std::string json_str);
+        std::pair<std::string, http::status> Players(const std::string token);
     };
 
-    class RequestHandler 
+    class RequestHandler
     {
     public:
         explicit RequestHandler(model::Game &game, fs::path static_dir) : api_handler_{game}, content_handler_(static_dir)
@@ -230,28 +248,16 @@ namespace http_handler
                 return MakeStringResponse(status, text, req.version(), req.keep_alive(), ContentType::API_JSON);
             };
 
-            if (req.method() == http::verb::get)
-            {
-                auto target_bsv = req.target();
-                std::string target_str(target_bsv.begin(), target_bsv.end());
+            auto target_bsv = req.target();
+            std::string target_str(target_bsv.begin(), target_bsv.end());
 
-                if (IsApi(target_str))
-                {
-                    api_handler_.Do(req, send);
-                }
-                else
-                {
-                    content_handler_.Do(req, send);
-                }
-            }
-
-            else if (req.method() == http::verb::head)
+            if (IsApi(target_str))
             {
-                // todo доделать хеды
+                api_handler_.Do(req, send);
             }
             else
             {
-                send(text_response(http::status::method_not_allowed, ""sv));
+                content_handler_.Do(req, send);
             }
         }
 

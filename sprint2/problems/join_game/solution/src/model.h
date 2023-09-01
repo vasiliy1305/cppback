@@ -2,6 +2,13 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <memory>
+#include <random>
+#include <iostream>
+#include <sstream>
+#include <iomanip>
+#include <utility>
+#include <optional>
 
 #include "tagged.h"
 
@@ -196,49 +203,132 @@ namespace model
     class Dog
     {
     public:
+        using Id = util::Tagged<uint32_t, Dog>;
+        Dog(Id id) : id_(id)
+        {
+        }
+
+        const Id &GetId()
+        {
+            return id_;
+        }
+
     private:
-        uint32_t id_;
+        Id id_;
     };
 
     class GameSession
     {
     public:
+        GameSession(Map::Id map_id) : map_id_(map_id)
+        {
+        }
+
+        Map::Id GetMapId()
+        {
+            return map_id_;
+        }
+
+        const std::vector<Dog> &GetDogs()
+        {
+            return dogs_;
+        }
+
+        std::shared_ptr<Dog> GetDog(Dog::Id dog_id)
+        {
+            if (dog_id_to_index_.count(dog_id))
+            {
+                return std::make_shared<Dog>(dogs_.at(dog_id_to_index_.at(dog_id)));
+            }
+            return nullptr;
+        }
+
+        std::shared_ptr<Dog> AddDog(Dog::Id id)
+        {
+            dog_id_to_index_[id] = dogs_.size();
+            dogs_.push_back(Dog(id));
+            return std::make_shared<Dog>(dogs_.at(dogs_.size() - 1));
+        }
+
     private:
-        std::vector<Dog> dogs_; // поменять на мап или сет  или нет
-        // карта
+        using DogIdHasher = util::TaggedHasher<Dog::Id>;
+        std::vector<Dog> dogs_; // поменять на мап или сет или нет
+        Map::Id map_id_;
+        std::unordered_map<Dog::Id, uint32_t, DogIdHasher> dog_id_to_index_;
     };
 
-    class Token
+    namespace detail
     {
-    };
+        struct TokenTag
+        {
+        };
+    } // namespace detail
+
+    using Token = util::Tagged<std::string, detail::TokenTag>;
 
     class Player
     {
     public:
+        using Id = util::Tagged<uint32_t, Player>;
+
+        Player(std::shared_ptr<GameSession> session, std::shared_ptr<Dog> dog, uint32_t id, std::string name) : session_(session), dog_(dog), id_{id}, name_(name)
+        {
+        }
+
+        std::shared_ptr<GameSession> GetSession()
+        {
+            return session_;
+        }
+
+        std::shared_ptr<Dog> GetDog()
+        {
+            return dog_;
+        }
+
+        Id GetId()
+        {
+            return id_;
+        }
+
+        std::string GetName()
+        {
+            return name_;
+        }
+
     private:
-        GameSession *session_; // sharedptr
-        Dog *dog_;             // sheredptr
+        std::shared_ptr<GameSession> session_;
+        std::shared_ptr<Dog> dog_;
+        Id id_;
+        std::string name_;
     };
-    
+
+    std::string GenerateToken();
+
     class PlayerTokens
     {
     public:
-        Player *FindplayerByToken(Token token);
-        void AddPlayer(Player &player);
+        Token AddPlayer(Player &player);
+        std::shared_ptr<Player> FindPlayerByToken(Token token);
 
     private:
-        std::unordered_map<Token, Player *> token_to_player_;
+        using TokenHasher = util::TaggedHasher<Token>;
+        std::unordered_map<Token, std::shared_ptr<Player>, TokenHasher> token_to_player_;
     };
 
     class Players
     {
     public:
-        // Add(dog, session);
-        // FindByDogIdAndMapId(dog_id, map_id)
+        std::shared_ptr<Player> Add(std::shared_ptr<Dog> dog, std::shared_ptr<GameSession> session, std::string name);
+        std::shared_ptr<Player> FindByDogIdAndMapId(Dog::Id dog_id, Map::Id map_id);
+
     private:
+        using MapIdHasher = util::TaggedHasher<Map::Id>;
+        using DogIdHasher = util::TaggedHasher<Dog::Id>;
+        using MapIdandDogIdToPlayer = std::unordered_map<Map::Id, std::unordered_map<Dog::Id, uint32_t, DogIdHasher>, MapIdHasher>;
+
+        MapIdandDogIdToPlayer map_and_dog_to_index_;
+        std::vector<Player> players_;
     };
-
-
 
     class Game
     {
@@ -252,7 +342,7 @@ namespace model
             return maps_;
         }
 
-        const Map *FindMap(const Map::Id &id) const noexcept
+        const Map *FindMap(const Map::Id &id) const noexcept // отказаться полностб от обычных указателей
         {
             if (auto it = map_id_to_index_.find(id); it != map_id_to_index_.end())
             {
@@ -261,12 +351,33 @@ namespace model
             return nullptr;
         }
 
+        std::shared_ptr<GameSession> FindSession(const Map::Id &id)
+        {
+            if (auto it = map_id_to_game_index_.find(id); it != map_id_to_game_index_.end())
+            {
+                return std::make_shared<GameSession>(sessions_.at(it->second));
+            }
+            return nullptr;
+        }
+
+        void CreateSession(Map::Id map_id);
+
+        std::pair<std::shared_ptr<model::Player>, Token> Join(const std::string &user_name, const std::string &map_id);
+        std::optional<std::vector<model::Dog>> GetPlayersByToken(const std::string &token);
+
     private:
         using MapIdHasher = util::TaggedHasher<Map::Id>;
         using MapIdToIndex = std::unordered_map<Map::Id, size_t, MapIdHasher>;
 
         std::vector<Map> maps_;
+        std::vector<GameSession> sessions_;
+        Players players_;
+        PlayerTokens tokens_;
+
         MapIdToIndex map_id_to_index_;
+        MapIdToIndex map_id_to_game_index_;
+
+        uint32_t curr_dog_id_ = 0;
     };
 
 } // namespace model
