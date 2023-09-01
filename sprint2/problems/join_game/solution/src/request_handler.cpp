@@ -15,6 +15,7 @@ namespace http_handler
         response.body() = body;
         response.content_length(body.size());
         response.keep_alive(keep_alive);
+        response.set(http::field::cache_control, "no-cache");
 
         return response;
     }
