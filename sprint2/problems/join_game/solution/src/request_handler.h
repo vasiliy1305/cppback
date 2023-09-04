@@ -191,7 +191,7 @@ namespace http_handler
             }
             else if (request_type == ApiRequestType::PLAYERS)
             {
-                if (req.method() == http::verb::get)
+                if (req.method() == http::verb::get || req.method() == http::verb::head)
                 {
                     auto auth = req[boost::beast::http::field::authorization];
                     std::string auth_str(auth.begin(), auth.end());
@@ -239,6 +239,8 @@ namespace http_handler
         std::pair<std::string, http::status> Players(const std::string token);
     };
 
+
+// 
     class RequestHandler
     {
     public:
