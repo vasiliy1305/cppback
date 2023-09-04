@@ -6,16 +6,20 @@
 namespace http_handler
 {
 
-    StringResponse MakeStringResponse(http::status status, std::string_view body, unsigned http_version,
-                                      bool keep_alive,
-                                      std::string_view content_type)
+    StringResponse MakeStringResponse(http::status status, std::string_view body, unsigned http_version, bool keep_alive, std::string_view content_type,
+    std::vector<std::pair<http::field, std::string>> http_fields)
     {
         StringResponse response(status, http_version);
         response.set(http::field::content_type, content_type);
         response.body() = body;
         response.content_length(body.size());
         response.keep_alive(keep_alive);
-        response.set(http::field::cache_control, "no-cache");
+        // response.set(http::field::cache_control, "no-cache");
+        for(auto field: http_fields)
+        {
+            response.set(field.first, field.second);
+        }
+        
 
         return response;
     }

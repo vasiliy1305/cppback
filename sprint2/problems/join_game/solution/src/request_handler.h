@@ -7,7 +7,6 @@
 #include <vector>
 #include <boost/json.hpp>
 
-
 using namespace std::literals;
 namespace logging = boost::log;
 namespace keywords = boost::log::keywords;
@@ -67,9 +66,12 @@ namespace http_handler
     std::vector<std::string> SplitRequest(const std::string &str_req);
 
     // Создаёт StringResponse с заданными параметрами
-    StringResponse MakeStringResponse(http::status status, std::string_view body, unsigned http_version,
+    StringResponse MakeStringResponse(http::status status,
+                                      std::string_view body,
+                                      unsigned http_version,
                                       bool keep_alive,
-                                      std::string_view content_type = ContentType::TEXT_HTML);
+                                      std::string_view content_type,
+                                      std::vector<std::pair<http::field, std::string>> http_fields);
 
     // Создаёт FileResponse с заданными параметрами
     FileResponse MakeFileResponse(http::status status,
@@ -114,13 +116,13 @@ namespace http_handler
                 else
                 {
                     // todo возможно сообщение об ошибке
-                    send(MakeStringResponse(http::status::not_found, "wrong page", req.version(), req.keep_alive(), ContentType::TEXT_PLAIN));
+                    send(MakeStringResponse(http::status::not_found, "wrong page", req.version(), req.keep_alive(), ContentType::TEXT_PLAIN, {{http::field::cache_control, "no-cache"}}));
                 }
             }
             else
             {
                 // todo возможно сообщение об ошибке
-                send(MakeStringResponse(http::status::bad_request, "xxx", req.version(), req.keep_alive(), ContentType::TEXT_PLAIN));
+                send(MakeStringResponse(http::status::bad_request, "xxx", req.version(), req.keep_alive(), ContentType::TEXT_PLAIN, {{http::field::cache_control, "no-cache"}}));
             }
         }
 
@@ -152,7 +154,12 @@ namespace http_handler
 
             const auto json_response = [&req](http::status status, std::string_view text)
             {
-                return MakeStringResponse(status, text, req.version(), req.keep_alive(), ContentType::API_JSON);
+                return MakeStringResponse(status, text, req.version(), req.keep_alive(), ContentType::API_JSON, {{http::field::cache_control, "no-cache"}});
+            };
+
+            const auto method_not_allowed_response = [&req](std::string_view text, std::string allow)
+            {
+                return MakeStringResponse(http::status::method_not_allowed, text, req.version(), req.keep_alive(), ContentType::API_JSON, {{http::field::cache_control, "no-cache"}, {http::field::allow, allow}});
             };
 
             auto target_bsv = req.target();
@@ -219,7 +226,7 @@ namespace http_handler
                 }
                 else
                 {
-                    send(json_response(http::status::method_not_allowed, ""sv));
+                    send(method_not_allowed_response("{\"code\": \"invalidMethod\", \"message\": \"Only POST method is expected\"}" , "POST"));
                 }
             }
         }
@@ -239,8 +246,7 @@ namespace http_handler
         std::pair<std::string, http::status> Players(const std::string token);
     };
 
-
-// 
+    //
     class RequestHandler
     {
     public:
@@ -256,7 +262,7 @@ namespace http_handler
         {
             const auto text_response = [&req](http::status status, std::string_view text)
             {
-                return MakeStringResponse(status, text, req.version(), req.keep_alive(), ContentType::API_JSON);
+                return MakeStringResponse(status, text, req.version(), req.keep_alive(), ContentType::API_JSON, {{http::field::cache_control, "no-cache"}});
             };
 
             auto target_bsv = req.target();
