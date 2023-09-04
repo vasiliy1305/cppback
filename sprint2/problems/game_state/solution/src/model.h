@@ -17,7 +17,6 @@ namespace model
 
     double randomDouble(double start, double end);
 
-
     using Dimension = int;
     using Coord = Dimension;
 
@@ -261,6 +260,14 @@ namespace model
         {
         }
 
+        GameSession() = delete;
+        GameSession(const GameSession &) = delete;
+        GameSession &operator=(const GameSession &) = delete;
+
+        ~GameSession()
+        {
+        }
+
         Map::Id GetMapId()
         {
             return map_id_;
@@ -282,14 +289,16 @@ namespace model
 
         std::shared_ptr<Dog> AddDog(Dog::Id id, TwoDimVector pos)
         {
+
             dog_id_to_index_[id] = dogs_.size();
             dogs_.push_back(Dog(id, pos));
+
             return std::make_shared<Dog>(dogs_.at(dogs_.size() - 1));
         }
 
     private:
         using DogIdHasher = util::TaggedHasher<Dog::Id>;
-        std::vector<Dog> dogs_; // поменять на мап или сет или нет
+        std::vector<Dog> dogs_;
         Map::Id map_id_;
         std::unordered_map<Dog::Id, uint32_t, DogIdHasher> dog_id_to_index_;
     };
@@ -392,7 +401,9 @@ namespace model
         {
             if (auto it = map_id_to_game_index_.find(id); it != map_id_to_game_index_.end())
             {
-                return std::make_shared<GameSession>(sessions_.at(it->second));
+
+                return sessions_.at(it->second);
+
             }
             return nullptr;
         }
@@ -407,7 +418,7 @@ namespace model
         using MapIdToIndex = std::unordered_map<Map::Id, size_t, MapIdHasher>;
 
         std::vector<Map> maps_;
-        std::vector<GameSession> sessions_;
+        std::vector<std::shared_ptr<GameSession>> sessions_;
         Players players_;
         PlayerTokens tokens_;
 

@@ -335,9 +335,7 @@ namespace http_handler
 
     std::pair<std::string, http::status> ApiHandler::Players(const std::string token)
     {
-        // std::cerr << "Players {" << std::endl;
-        // std::cerr << "    token = " << token << std::endl;
-        // std::cerr << "    token.size() = " << token.size() << std::endl;
+
         http::status status;
         std::string body;
         if (token.size() == 32)
@@ -345,12 +343,14 @@ namespace http_handler
             auto dogs = game_.GetPlayersByToken(token);
             if (dogs)
             {
-                // std::cerr << "dogs !=0" << std::endl;
+
                 boost::json::object js_players;
                 for (auto dog : *dogs)
                 {
                     auto id = dog.GetId();
                     js_players[std::to_string(*id)] = DogToJsonObj(dog);
+
+
                 }
                 body = json::serialize(js_players);
                 status = http::status::ok;
@@ -358,7 +358,7 @@ namespace http_handler
             }
             else
             {
-                // std::cerr << "dogs ==0" << std::endl;
+
                 status = http::status::unauthorized;
                 body = "{\"code\": \"unknownToken\", \"message\": \"Player token has not been found\"}";
                 return {body, status};
@@ -370,7 +370,7 @@ namespace http_handler
             body = "{\"code\": \"invalidToken\", \"message\": \"Authorization header is missing\"}";
             return {body, status};
         }
-        // std::cerr << "} Players" << std::endl;
+
     }
 
         std::pair<std::string, http::status> ApiHandler::State(const std::string token)
@@ -382,6 +382,7 @@ namespace http_handler
             auto dogs = game_.GetPlayersByToken(token);
             if (dogs)
             {
+                // std::dogs->size()
                 boost::json::object js_players;
                 for (auto dog : *dogs)
                 {

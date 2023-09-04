@@ -207,6 +207,7 @@ namespace http_handler
                     std::string trash, token;
                     iss >> trash >> token;
                     auto [body, status] = Players(token);
+
                     send(json_response(status, body));
                 }
                 else
@@ -224,6 +225,7 @@ namespace http_handler
                     std::string trash, token;
                     iss >> trash >> token;
                     auto [body, status] = State(token);
+
                     send(json_response(status, body));
                 }
                 else

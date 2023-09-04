@@ -68,10 +68,12 @@ namespace model
         {
             try
             {
-                sessions_.emplace_back(GameSession(map_id));
+                sessions_.push_back(std::make_shared<GameSession>(map_id));
+
             }
             catch (...)
             {
+
                 map_id_to_game_index_.erase(it);
                 throw;
             }
@@ -81,6 +83,7 @@ namespace model
     std::shared_ptr<Player> Players::Add(std::shared_ptr<Dog> dog, std::shared_ptr<GameSession> session, std::string name)
     {
         uint32_t id = players_.size();
+
         map_and_dog_to_index_[session->GetMapId()][dog->GetId()] = id;
         players_.emplace_back(Player(session, dog, id, name));
         return std::make_shared<Player>(players_.at(id));
@@ -153,10 +156,11 @@ namespace model
         if (map_id_to_index_.count(Map::Id(map_id)))
         {
             // 2. если карта сущ. проверить нет ли уже сесии с этой картой
-            if (!map_id_to_game_index_.count(Map::Id(map_id)))
+            if (map_id_to_game_index_.count(Map::Id(map_id)) == 0)
             {
                 // если сессия нет создать сессию
                 CreateSession(Map::Id(map_id));
+                
             }
             // get random road
             std::random_device random_device_;
@@ -172,11 +176,15 @@ namespace model
             double rnd_x = randomDouble(road_start.x, road_end.x);
             double rnd_y = randomDouble(road_start.y, road_end.y);
             // 2. создаем собаку на сесии
+
             auto dog_ptr = FindSession(Map::Id(map_id))->AddDog(Dog::Id(curr_dog_id_++), {rnd_x, rnd_y}); // что то тут не так
+
             // 3 создать игрока - выдать ему собаку -вернуть токен и id
             auto player = players_.Add(dog_ptr, FindSession(Map::Id(map_id)), user_name);
+
             // зарегестировать ишрока выдать токен
             auto token = tokens_.AddPlayer(*player);
+
             return {player, token};
         }
         else
@@ -199,5 +207,7 @@ namespace model
             return std::nullopt;
         }
     }
+
+
 
 } // namespace model
