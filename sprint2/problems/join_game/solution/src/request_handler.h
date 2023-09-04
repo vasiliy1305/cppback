@@ -7,7 +7,6 @@
 #include <vector>
 #include <boost/json.hpp>
 
-#include <string_view>
 
 using namespace std::literals;
 namespace logging = boost::log;
@@ -160,7 +159,7 @@ namespace http_handler
             std::string target_str(target_bsv.begin(), target_bsv.end());
             auto request_type = GetApiReqType(target_str);
             auto request_parts = SplitRequest(target_str);
-            // =----------------------------------
+
             if (request_type == ApiRequestType::MAPS)
             {
                 if (req.method() == http::verb::get)
@@ -194,10 +193,11 @@ namespace http_handler
             {
                 if (req.method() == http::verb::get)
                 {
-                    auto a = req[boost::beast::http::field::authorization];
-                    std::string b(a.begin(), a.end());
-                    std::istringstream iss(b);
+                    auto auth = req[boost::beast::http::field::authorization];
+                    std::string auth_str(auth.begin(), auth.end());
+                    std::istringstream iss(auth_str);
                     std::string trash, token;
+                    iss >> trash >> token;
                     auto [body, status] = Players(token);
                     send(json_response(status, body));
                 }
@@ -222,60 +222,6 @@ namespace http_handler
                     send(json_response(http::status::method_not_allowed, ""sv));
                 }
             }
-
-            // ----------------------------------
-            // if (req.method() == http::verb::get)
-            // {
-            //     if (request_type == ApiRequestType::MAPS)
-            //     {
-            //         send(json_response(http::status::ok, GetMapsAsJS()));
-            //     }
-            //     else if (request_type == ApiRequestType::MAP)
-            //     {
-            //         if (IsMapExist(request_parts.at(3)))
-            //         {
-            //             send(json_response(http::status::ok, GetMapAsJS(request_parts.at(3))));
-            //         }
-            //         else
-            //         {
-            //             send(json_response(http::status::not_found, "{\"code\": \"mapNotFound\",\"message\": \"Map not found\"}"));
-            //         }
-            //     }
-
-            //     else if (request_type == ApiRequestType::PLAYERS)
-            //     {
-
-            //         auto a = req[boost::beast::http::field::authorization];
-            //         std::string b(a.begin(), a.end());
-            //         std::istringstream iss(b);
-            //         std::string trash, token;
-            //         auto [body, status] = Players(token);
-            //         send(json_response(status, body));
-            //     }
-            //     else if (request_type == ApiRequestType::BADREQUEST)
-            //     {
-            //         send(json_response(http::status::bad_request, "{\"code\": \"badRequest\", \"message\": \"Bad request\"}"));
-            //     }
-            // }
-            // else if (req.method() == http::verb::post)
-            // {
-            //     if (request_type == ApiRequestType::JOIN)
-            //     {
-            //         auto [body, status] = Join(req.body().c_str());
-            //         send(json_response(status, body));
-            //     }
-            //     else
-            //     {
-            //         send(json_response(http::status::method_not_allowed, ""sv));
-            //     }
-            // }
-            // else if (req.method() == http::verb::head)
-            // {
-            //     // todo доделать хеды
-            // }
-            // else
-            // {
-            // }
         }
 
     private:

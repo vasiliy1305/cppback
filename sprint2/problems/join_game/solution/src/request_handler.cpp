@@ -328,6 +328,9 @@ namespace http_handler
 
     std::pair<std::string, http::status> ApiHandler::Players(const std::string token)
     {
+        // std::cerr << "Players {" << std::endl;
+        // std::cerr << "    token = " << token << std::endl;
+        // std::cerr << "    token.size() = " << token.size() << std::endl;
         http::status status;
         std::string body;
         if (token.size() == 32)
@@ -335,6 +338,7 @@ namespace http_handler
             auto dogs = game_.GetPlayersByToken(token);
             if (dogs)
             {
+                // std::cerr << "dogs !=0" << std::endl;
                 boost::json::object js_players;
                 for (auto dog : *dogs)
                 {
@@ -347,6 +351,7 @@ namespace http_handler
             }
             else
             {
+                // std::cerr << "dogs ==0" << std::endl;
                 status = http::status::unauthorized;
                 body = "{\"code\": \"unknownToken\", \"message\": \"Player token has not been found\"}";
                 return {body, status};
@@ -358,6 +363,7 @@ namespace http_handler
             body = "{\"code\": \"invalidToken\", \"message\": \"Authorization header is missing\"}";
             return {body, status};
         }
+        // std::cerr << "} Players" << std::endl;
     }
 
     bool RequestHandler::IsApi(const std::string &request)
