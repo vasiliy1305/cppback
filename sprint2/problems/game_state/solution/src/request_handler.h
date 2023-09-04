@@ -228,8 +228,8 @@ namespace http_handler
                 }
                 else
                 {
-                    // send(method_not_allowed_response("{\"code\": \"invalidMethod\", \"message\": \"Only GET method is expected\"}" , "GET"));
-                    send(json_response(http::status::bad_request, "{\"code\": \"invalidMethod\", \"message\": \"Invalid method\"}"));
+                    send(method_not_allowed_response("{\"code\": \"invalidMethod\", \"message\": \"Only GET method is expected\"}" , "GET"));
+                    // send(json_response(http::status::bad_request, "{\"code\": \"invalidMethod\", \"message\": \"Invalid method\"}"));
                 }
             }
             else if (request_type == ApiRequestType::BADREQUEST)
