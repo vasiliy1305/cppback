@@ -210,7 +210,7 @@ namespace http_handler
                 }
                 else
                 {
-                    send(json_response(http::status::method_not_allowed, ""sv));
+                    send(method_not_allowed_response("{\"code\": \"invalidMethod\", \"message\": \"Only POST method is expected\"}" , "GET, HEAD"));
                 }
             }
             else if (request_type == ApiRequestType::BADREQUEST)
