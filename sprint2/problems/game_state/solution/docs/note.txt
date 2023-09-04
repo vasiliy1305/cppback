@@ -1,0 +1,6 @@
+
+curl -X POST -H "Content-Type: application/json" -d '{"userName": "Scooby Doo", "mapId": "map1"}' http://127.0.0.1:8080/api/v1/game/join
+curl -X GET  -H "Authorization: Bearer 64d46f4089e326ccffbe5d4d660f821d" "http://127.0.0.1:8080/api/v1/game/players"
+------------------------------------------------------------------------------------------------------------------------
+
+
