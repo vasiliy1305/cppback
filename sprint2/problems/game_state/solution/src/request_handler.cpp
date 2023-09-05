@@ -389,7 +389,9 @@ namespace http_handler
                     auto id = dog.GetId();
                     js_players[std::to_string(*id)] = DogToJsonObj(dog);
                 }
-                body = json::serialize(js_players);
+                boost::json::object resualt;
+                resualt["players"] = js_players;
+                body = json::serialize(resualt);
                 status = http::status::ok;
                 return {body, status};
             }
