@@ -28,6 +28,8 @@ add_executable(game_server
 	src/request_handler.cpp
 	src/request_handler.h
 	src/tests.h
+	src/application.h 
+	src/application.cpp
 )
 
 target_include_directories(game_server PRIVATE CONAN_PKG::boost)

@@ -1,61 +1,15 @@
 #pragma once
-#include "http_server.h"
-#include "model.h"
 
-#include <iostream>
-#include <string_view>
-#include <vector>
-#include <boost/json.hpp>
-
-using namespace std::literals;
-namespace logging = boost::log;
-namespace keywords = boost::log::keywords;
-namespace sinks = boost::log::sinks;
-
-BOOST_LOG_ATTRIBUTE_KEYWORD(line_id, "LineID", unsigned int)
-BOOST_LOG_ATTRIBUTE_KEYWORD(timestamp, "TimeStamp", boost::posix_time::ptime)
-
-BOOST_LOG_ATTRIBUTE_KEYWORD(file, "File", std::string)
-BOOST_LOG_ATTRIBUTE_KEYWORD(line, "Line", int)
+#include "application.h"
 
 namespace http_handler
 {
-    namespace beast = boost::beast;
-    namespace http = beast::http;
-    namespace fs = std::filesystem;
-    namespace sys = boost::system;
-    namespace net = boost::asio;
-    namespace json = boost::json;
-
     using namespace std::literals;
 
-    // Запрос, тело которого представлено в виде строки
-    using StringRequest = http::request<http::string_body>;
-    // Ответ, тело которого представлено в виде строки
-    using StringResponse = http::response<http::string_body>;
     // Ответ, тело которого представлено в виде файла
     using FileResponse = http::response<http::file_body>;
 
-    struct ContentType
-    {
-        ContentType() = delete;
-        constexpr static std::string_view TEXT_HTML = "text/html"sv;
-        constexpr static std::string_view TEXT_CSS = "text/css"sv;
-        constexpr static std::string_view TEXT_PLAIN = "text/plain"sv;
-        constexpr static std::string_view TEXT_JS = "text/javascript"sv;
-        constexpr static std::string_view API_JSON = "application/json"sv;
-        constexpr static std::string_view API_XML = "application/xml"sv;
-        constexpr static std::string_view API_OCT = "application/octet-stream"sv;
-        constexpr static std::string_view IMAGE_PNG = "image/png"sv;
-        constexpr static std::string_view IMAGE_JPG = "image/jpeg"sv;
-        constexpr static std::string_view IMAGE_GIF = "image/gif"sv;
-        constexpr static std::string_view IMAGE_BMP = "image/bmp"sv;
-        constexpr static std::string_view IMAGE_ICO = "image/vnd.microsoft.icon"sv;
-        constexpr static std::string_view IMAGE_TIFF = "image/tiff"sv;
-        constexpr static std::string_view IMAGE_SVG = "image/svg+xml"sv;
-        constexpr static std::string_view AUDIO_MPEG = "audio/mpeg"sv;
-        // При необходимости внутрь ContentType можно добавить и другие типы контента
-    };
+
 
     // возвращает расширение в нижнем регистре
     std::string getFileExtension(const std::string &filename);
@@ -64,14 +18,6 @@ namespace http_handler
     std::string_view FileExtensionToContentType(const std::string &file_extension);
 
     std::vector<std::string> SplitRequest(const std::string &str_req);
-
-    // Создаёт StringResponse с заданными параметрами
-    StringResponse MakeStringResponse(http::status status,
-                                      std::string_view body,
-                                      unsigned http_version,
-                                      bool keep_alive,
-                                      std::string_view content_type,
-                                      std::vector<std::pair<http::field, std::string>> http_fields);
 
     // Создаёт FileResponse с заданными параметрами
     FileResponse MakeFileResponse(http::status status,
@@ -145,7 +91,7 @@ namespace http_handler
     class ApiHandler
     {
     public:
-        ApiHandler(model::Game &game) : game_{game}
+        ApiHandler(model::Game &game) : game_{game}, app_{game}
         {
         }
 
@@ -254,6 +200,7 @@ namespace http_handler
 
     private:
         model::Game &game_;
+        app::Application app_;
 
         bool IsMapExist(std::string id);
         std::string GetMapsAsJS();
