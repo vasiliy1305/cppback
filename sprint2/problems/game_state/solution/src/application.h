@@ -80,6 +80,8 @@ namespace app
     private:
         model::Game game_;
 
+        std::string GetToken(const StringRequest &req);
+
         StringResponse ReturnMethodNotAllowed(const StringRequest &req, std::string_view text, std::string allow);
         StringResponse ReturnJsonContent(const StringRequest &req, http::status status, std::string_view text);
 
