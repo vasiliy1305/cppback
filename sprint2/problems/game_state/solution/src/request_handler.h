@@ -9,15 +9,11 @@ namespace http_handler
     // Ответ, тело которого представлено в виде файла
     using FileResponse = http::response<http::file_body>;
 
-
-
     // возвращает расширение в нижнем регистре
     std::string getFileExtension(const std::string &filename);
 
     // file extension to content type
     std::string_view FileExtensionToContentType(const std::string &file_extension);
-
-    
 
     // Создаёт FileResponse с заданными параметрами
     FileResponse MakeFileResponse(http::status status,
@@ -91,7 +87,7 @@ namespace http_handler
     class ApiHandler
     {
     public:
-        ApiHandler(model::Game &game) : game_{game}, app_{game}
+        ApiHandler(model::Game &game) : app_{game}
         {
         }
 
@@ -124,40 +120,11 @@ namespace http_handler
             }
             else if (request_type == ApiRequestType::PLAYERS)
             {
-                if (req.method() == http::verb::get || req.method() == http::verb::head)
-                {
-                    auto auth = req[boost::beast::http::field::authorization];
-                    std::string auth_str(auth.begin(), auth.end());
-                    std::istringstream iss(auth_str);
-                    std::string trash, token;
-                    iss >> trash >> token;
-                    auto [body, status] = Players(token);
-
-                    send(json_response(status, body));
-                }
-                else
-                {
-                    send(method_not_allowed_response("{\"code\": \"invalidMethod\", \"message\": \"Only POST method is expected\"}" , "GET"));
-                }
+                send(app_.GetPlayers(req));
             }
             else if (request_type == ApiRequestType::STATE)
             {
-                if (req.method() == http::verb::get || req.method() == http::verb::head)
-                {
-                    auto auth = req[boost::beast::http::field::authorization];
-                    std::string auth_str(auth.begin(), auth.end());
-                    std::istringstream iss(auth_str);
-                    std::string trash, token;
-                    iss >> trash >> token;
-                    auto [body, status] = State(token);
-
-                    send(json_response(status, body));
-                }
-                else
-                {
-                    send(method_not_allowed_response("{\"code\": \"invalidMethod\", \"message\": \"Only GET method is expected\"}" , "GET"));
-                    // send(json_response(http::status::bad_request, "{\"code\": \"invalidMethod\", \"message\": \"Invalid method\"}"));
-                }
+                send(app_.GetState(req));
             }
             else if (request_type == ApiRequestType::BADREQUEST)
             {
@@ -170,14 +137,7 @@ namespace http_handler
         }
 
     private:
-        model::Game &game_;
         app::Application app_;
-
-
-        boost::json::value DogToJsonObj(model::Dog &dog);
-        
-        std::pair<std::string, http::status> Players(const std::string token);
-        std::pair<std::string, http::status> State(const std::string token);
     };
 
     //

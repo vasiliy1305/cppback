@@ -187,7 +187,6 @@ namespace app
         }
     }
 
-
     std::pair<std::string, http::status> Application::Join(const std::string json_str)
     {
         http::status status;
@@ -227,6 +226,132 @@ namespace app
             status = http::status::bad_request;
             body = "{\"code\": \"invalidArgument\", \"message\": \"Join game request parse error\"}";
             return {body, status};
+        }
+    }
+
+    std::pair<std::string, http::status> Application::Players(const std::string token)
+    {
+
+        http::status status;
+        std::string body;
+        if (token.size() == 32)
+        {
+            auto dogs = game_.GetPlayersByToken(token);
+            if (dogs)
+            {
+
+                boost::json::object js_players;
+                for (auto dog : *dogs)
+                {
+                    auto id = dog.GetId();
+                    js_players[std::to_string(*id)] = DogToJsonObj(dog);
+                }
+                body = json::serialize(js_players);
+                status = http::status::ok;
+                return {body, status};
+            }
+            else
+            {
+
+                status = http::status::unauthorized;
+                body = "{\"code\": \"unknownToken\", \"message\": \"Player token has not been found\"}";
+                return {body, status};
+            }
+        }
+        else
+        {
+            status = http::status::unauthorized;
+            body = "{\"code\": \"invalidToken\", \"message\": \"Authorization header is missing\"}";
+            return {body, status};
+        }
+    }
+
+    std::pair<std::string, http::status> Application::State(const std::string token)
+    {
+        http::status status;
+        std::string body;
+        if (token.size() == 32)
+        {
+            auto dogs = game_.GetPlayersByToken(token);
+            if (dogs)
+            {
+                // std::dogs->size()
+                boost::json::object js_players;
+                for (auto dog : *dogs)
+                {
+                    auto id = dog.GetId();
+                    js_players[std::to_string(*id)] = DogToJsonObj(dog);
+                }
+                boost::json::object resualt;
+                resualt["players"] = js_players;
+                body = json::serialize(resualt);
+                status = http::status::ok;
+                return {body, status};
+            }
+            else
+            {
+                status = http::status::unauthorized;
+                body = "{\"code\": \"unknownToken\", \"message\": \"Player token has not been found\"}";
+                return {body, status};
+            }
+        }
+        else
+        {
+            status = http::status::unauthorized;
+            body = "{\"code\": \"invalidToken\", \"message\": \"Authorization header is missing\"}";
+            return {body, status};
+        }
+    }
+
+    boost::json::value Application::DogToJsonObj(model::Dog &dog)
+    {
+        boost::json::array pos = {dog.GetPos().x, dog.GetPos().y};
+        boost::json::array speed = {dog.GetSpeed().x, dog.GetSpeed().y};
+        boost::json::string dir(dog.GetDir());
+
+        boost::json::object player;
+        player["pos"] = pos;
+        player["speed"] = speed;
+        player["dir"] = dir;
+
+        return player;
+    }
+
+    StringResponse Application::GetState(const StringRequest &req)
+    {
+        if (req.method() == http::verb::get || req.method() == http::verb::head)
+        {
+            auto auth = req[boost::beast::http::field::authorization];
+            std::string auth_str(auth.begin(), auth.end());
+            std::istringstream iss(auth_str);
+            std::string trash, token;
+            iss >> trash >> token;
+            auto [body, status] = State(token);
+
+            return ReturnJsonContent(req, status, body);
+        }
+        else
+        {
+            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only GET method is expected\"}", "GET");
+        }
+    }
+
+    StringResponse Application::GetPlayers(const StringRequest &req)
+    {
+        if (req.method() == http::verb::get || req.method() == http::verb::head)
+        {
+            auto auth = req[boost::beast::http::field::authorization];
+            std::string auth_str(auth.begin(), auth.end());
+            std::istringstream iss(auth_str);
+            std::string trash, token;
+            iss >> trash >> token;
+            auto [body, status] = Players(token);
+
+            return ReturnJsonContent(req, status, body);
+        }
+        else
+        {
+            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only GET and HEAD method is expected\"}", "GET, HEAD");
         }
     }
 
