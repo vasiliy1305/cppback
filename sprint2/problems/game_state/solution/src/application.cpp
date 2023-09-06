@@ -17,6 +17,22 @@ StringResponse MakeStringResponse(http::status status, std::string_view body, un
     return response;
 }
 
+std::vector<std::string> SplitRequest(const std::string &str_req)
+{
+    std::vector<std::string> result;
+    std::stringstream ss(str_req);
+    std::string token;
+
+    while (std::getline(ss, token, '/')) // сделать констаной /
+    {
+        if (!token.empty())
+        {
+            result.push_back(token);
+        }
+    }
+    return result;
+}
+
 namespace app
 {
     StringResponse Application::ReturnMethodNotAllowed(const StringRequest &req, std::string_view text, std::string allow)
@@ -56,6 +72,162 @@ namespace app
             arr.push_back(obj);
         }
         return boost::json::serialize(arr);
+    }
+
+    bool Application::IsMapExist(std::string id)
+    {
+        const auto &maps = game_.GetMaps();
+        auto map_it = std::find_if(maps.begin(), maps.end(), [&](model::Map map)
+                                   { return *map.GetId() == id; });
+        return map_it != maps.end();
+    }
+
+    std::string Application::GetMapAsJS(std::string id)
+    {
+        const auto &maps = game_.GetMaps();
+        auto map_it = std::find_if(maps.begin(), maps.end(), [&](model::Map map)
+                                   { return *map.GetId() == id; });
+
+        if (map_it == maps.end())
+        {
+            return "";
+        }
+        auto map = *map_it;
+
+        return boost::json::serialize(MapToJsonObj(map));
+    }
+
+    boost::json::value Application::RoadToJsonObj(const model::Road &road)
+    {
+        if (road.IsHorizontal())
+        {
+            return {{"x0", road.GetStart().x}, {"y0", road.GetStart().y}, {"x1", road.GetEnd().x}};
+        }
+        else
+        {
+            return {{"x0", road.GetStart().x}, {"y0", road.GetStart().y}, {"y1", road.GetEnd().y}};
+        }
+    }
+
+    boost::json::value Application::BuildingToJsonObj(const model::Building &building)
+    {
+        return {{"x", building.GetBounds().position.x}, {"y", building.GetBounds().position.y}, {"w", building.GetBounds().size.width}, {"h", building.GetBounds().size.height}};
+    }
+
+    boost::json::value Application::OfficeToJsonObj(const model::Office &office)
+    {
+        return {{"id", *office.GetId()}, {"x", office.GetPosition().x}, {"y", office.GetPosition().y}, {"offsetX", office.GetOffset().dx}, {"offsetY", office.GetOffset().dy}};
+    }
+
+    boost::json::value Application::MapToJsonObj(const model::Map &map)
+    {
+        boost::json::object map_obj;
+        map_obj["id"] = *map.GetId();
+        map_obj["name"] = map.GetName();
+
+        // Добавление дорог
+        boost::json::array roads_obj;
+        for (const auto &road : map.GetRoads())
+        {
+            roads_obj.push_back(RoadToJsonObj(road));
+        }
+        map_obj["roads"] = roads_obj;
+
+        // Добавление зданий
+        boost::json::array buildings;
+        for (const auto &building : map.GetBuildings())
+        {
+            buildings.push_back(BuildingToJsonObj(building));
+        }
+        map_obj["buildings"] = buildings;
+
+        // Добавление офисов
+        boost::json::array offices;
+        for (const auto &office : map.GetOffices())
+        {
+            offices.push_back(OfficeToJsonObj(office));
+        }
+        map_obj["offices"] = offices;
+        return map_obj;
+    }
+
+    StringResponse Application::GetMap(const StringRequest &req)
+    {
+        if (req.method() == http::verb::get)
+        {
+            auto target_bsv = req.target();
+            std::string target_str(target_bsv.begin(), target_bsv.end());
+            auto request_parts = SplitRequest(target_str);
+
+            if (IsMapExist(request_parts.at(3)))
+            {
+                return ReturnJsonContent(req, http::status::ok, GetMapAsJS(request_parts.at(3)));
+            }
+            else
+            {
+                return ReturnJsonContent(req, http::status::not_found, "{\"code\": \"mapNotFound\",\"message\": \"Map not found\"}");
+            }
+        }
+        else
+        {
+            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only GET method is expected\"}", "GET");
+        }
+    }
+
+    StringResponse Application::JoinGame(const StringRequest &req)
+    {
+        if (req.method() == http::verb::post)
+        {
+            auto [body, status] = Join(req.body().c_str());
+            return ReturnJsonContent(req, status, body);
+        }
+        else
+        {
+            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only POST method is expected\"}", "POST");
+        }
+    }
+
+
+    std::pair<std::string, http::status> Application::Join(const std::string json_str)
+    {
+        http::status status;
+        std::string body;
+        try
+        {
+            auto value = json::parse(json_str);
+            std::string user_name(value.as_object()["userName"].as_string());
+            std::string map_id(value.as_object()["mapId"].as_string());
+
+            auto [player, token] = game_.Join(user_name, map_id);
+
+            if (user_name == "")
+            {
+                status = http::status::bad_request;
+                body = "{\"code\": \"invalidArgument\", \"message\": \"Invalid name\"}";
+                return {body, status};
+            }
+
+            if (player)
+            {
+                boost::json::object resualt;
+                resualt["authToken"] = *token;
+                resualt["playerId"] = *(player->GetId());
+                status = http::status::ok;
+                body = boost::json::serialize(resualt);
+            }
+            else
+            {
+                status = http::status::not_found;
+                body = "{\"code\": \"mapNotFound\", \"message\": \"Map not found\"}";
+            }
+            return {body, status};
+        }
+        catch (...)
+        {
+            status = http::status::bad_request;
+            body = "{\"code\": \"invalidArgument\", \"message\": \"Join game request parse error\"}";
+            return {body, status};
+        }
     }
 
 } // end namespace app

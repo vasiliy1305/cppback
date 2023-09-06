@@ -61,8 +61,11 @@ using StringResponse = http::response<http::string_body>;
         // При необходимости внутрь ContentType можно добавить и другие типы контента
     };
 
+std::vector<std::string> SplitRequest(const std::string &str_req);
 namespace app
 {
+
+
 
     class Application
     {
@@ -75,8 +78,8 @@ namespace app
         StringResponse GetMap(const StringRequest &req);
         StringResponse GetPlayers(const StringRequest &req);
         StringResponse GetState(const StringRequest &req);
-        StringResponse SetPlayerAction(const StringRequest& request);
-        StringResponse JoinGame(const StringRequest& request);
+        StringResponse SetPlayerAction(const StringRequest& req);
+        StringResponse JoinGame(const StringRequest& req);
 
     private:
         model::Game game_;
@@ -84,8 +87,17 @@ namespace app
         StringResponse ReturnMethodNotAllowed(const StringRequest &req, std::string_view text, std::string allow);
         StringResponse ReturnJsonContent(const StringRequest &req, http::status status, std::string_view text);
 
+
         // json 
+        bool IsMapExist(std::string id);
         std::string GetMapsAsJS();
+        std::string GetMapAsJS(std::string id);
+        boost::json::value RoadToJsonObj(const model::Road &road);
+        boost::json::value BuildingToJsonObj(const model::Building &building);
+        boost::json::value OfficeToJsonObj(const model::Office &office);
+        boost::json::value MapToJsonObj(const model::Map &map);
+
+        std::pair<std::string, http::status> Join(const std::string json_str);
 
     };
 

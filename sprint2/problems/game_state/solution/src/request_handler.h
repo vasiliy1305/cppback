@@ -17,7 +17,7 @@ namespace http_handler
     // file extension to content type
     std::string_view FileExtensionToContentType(const std::string &file_extension);
 
-    std::vector<std::string> SplitRequest(const std::string &str_req);
+    
 
     // Создаёт FileResponse с заданными параметрами
     FileResponse MakeFileResponse(http::status status,
@@ -117,32 +117,10 @@ namespace http_handler
             if (request_type == ApiRequestType::MAPS)
             {
                 send(app_.GetMaps(req));
-                // if (req.method() == http::verb::get)
-                // {
-                //     send(json_response(http::status::ok, GetMapsAsJS()));
-                // }
-                // else
-                // {
-                //     send(json_response(http::status::method_not_allowed, ""sv));
-                // }
             }
             else if (request_type == ApiRequestType::MAP)
             {
-                if (req.method() == http::verb::get)
-                {
-                    if (IsMapExist(request_parts.at(3)))
-                    {
-                        send(json_response(http::status::ok, GetMapAsJS(request_parts.at(3))));
-                    }
-                    else
-                    {
-                        send(json_response(http::status::not_found, "{\"code\": \"mapNotFound\",\"message\": \"Map not found\"}"));
-                    }
-                }
-                else
-                {
-                    send(json_response(http::status::method_not_allowed, ""sv));
-                }
+                send(app_.GetMap(req));
             }
             else if (request_type == ApiRequestType::PLAYERS)
             {
@@ -187,15 +165,7 @@ namespace http_handler
             }
             else if (request_type == ApiRequestType::JOIN)
             {
-                if (req.method() == http::verb::post)
-                {
-                    auto [body, status] = Join(req.body().c_str());
-                    send(json_response(status, body));
-                }
-                else
-                {
-                    send(method_not_allowed_response("{\"code\": \"invalidMethod\", \"message\": \"Only POST method is expected\"}" , "POST"));
-                }
+                send(app_.JoinGame(req));
             }
         }
 
@@ -203,15 +173,9 @@ namespace http_handler
         model::Game &game_;
         app::Application app_;
 
-        bool IsMapExist(std::string id);
-        
-        std::string GetMapAsJS(std::string id);
-        boost::json::value RoadToJsonObj(const model::Road &road);
-        boost::json::value BuildingToJsonObj(const model::Building &building);
-        boost::json::value OfficeToJsonObj(const model::Office &office);
-        boost::json::value MapToJsonObj(const model::Map &map);
+
         boost::json::value DogToJsonObj(model::Dog &dog);
-        std::pair<std::string, http::status> Join(const std::string json_str);
+        
         std::pair<std::string, http::status> Players(const std::string token);
         std::pair<std::string, http::status> State(const std::string token);
     };
