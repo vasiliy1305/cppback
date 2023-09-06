@@ -157,6 +157,10 @@ namespace http_handler
         {
             return ApiRequestType::STATE;
         }
+        else if (path == "/api/v1/game/player/action"s)
+        {
+            return ApiRequestType::MOVE;
+        }
         else if ((request_parts.size() == 4) && (request_parts.at(0) == "api") && (request_parts.at(1) == "v1") && (request_parts.at(2) == "maps"))
         {
             return ApiRequestType::MAP;

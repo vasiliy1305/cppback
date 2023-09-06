@@ -57,18 +57,18 @@ namespace model
         }
     }
 
-    void Game::CreateSession(Map::Id map_id)
+    void Game::CreateSession(std::shared_ptr<Map> map_ptr)
     {
         const size_t index = sessions_.size();
-        if (auto [it, inserted] = map_id_to_game_index_.emplace(map_id, index); !inserted)
+        if (auto [it, inserted] = map_id_to_game_index_.emplace(map_ptr->GetId(), index); !inserted)
         {
-            throw std::invalid_argument("Session with map_id "s + *map_id + " already exists"s);
+            throw std::invalid_argument("Session with map_id "s + *(map_ptr->GetId()) + " already exists"s);
         }
         else
         {
             try
             {
-                sessions_.push_back(std::make_shared<GameSession>(map_id));
+                sessions_.push_back(std::make_shared<GameSession>(map_ptr));
 
             }
             catch (...)
@@ -84,7 +84,7 @@ namespace model
     {
         uint32_t id = players_.size();
 
-        map_and_dog_to_index_[session->GetMapId()][dog->GetId()] = id;
+        map_and_dog_to_index_[session->GetMap()->GetId()][dog->GetId()] = id;
         players_.emplace_back(Player(session, dog, id, name));
         return std::make_shared<Player>(players_.at(id));
     }
@@ -159,7 +159,10 @@ namespace model
             if (map_id_to_game_index_.count(Map::Id(map_id)) == 0)
             {
                 // если сессия нет создать сессию
-                CreateSession(Map::Id(map_id));
+                
+
+
+                CreateSession(std::make_shared<Map>(maps_.at(map_id_to_index_.at(Map::Id(map_id))))); // todo - хранить сразу как вектор шередптр
                 
             }
             // get random road
@@ -194,7 +197,7 @@ namespace model
         }
     }
 
-    std::optional<std::vector<model::Dog>> Game::GetPlayersByToken(const std::string &token_str)
+    std::vector<std::shared_ptr<Dog>> Game::GetDogsByToken(const std::string &token_str)
     {
         Token token(token_str);
         auto player_ptr = tokens_.FindPlayerByToken(token);
@@ -204,7 +207,7 @@ namespace model
         }
         else
         {
-            return std::nullopt;
+            return {};
         }
     }
 

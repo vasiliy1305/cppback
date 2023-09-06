@@ -236,15 +236,15 @@ namespace app
         std::string body;
         if (token.size() == 32)
         {
-            auto dogs = game_.GetPlayersByToken(token);
-            if (dogs)
+            auto dogs = game_.GetDogsByToken(token);
+            if (dogs.size()) // todo сделать нормально
             {
 
                 boost::json::object js_players;
-                for (auto dog : *dogs)
+                for (auto dog : dogs)
                 {
-                    auto id = dog.GetId();
-                    js_players[std::to_string(*id)] = DogToJsonObj(dog);
+                    auto id = dog->GetId();
+                    js_players[std::to_string(*id)] = DogToJsonObj(*dog);
                 }
                 body = json::serialize(js_players);
                 status = http::status::ok;
@@ -272,15 +272,15 @@ namespace app
         std::string body;
         if (token.size() == 32)
         {
-            auto dogs = game_.GetPlayersByToken(token);
-            if (dogs)
+            auto dogs = game_.GetDogsByToken(token);
+            if (dogs.size()) // todo!!!
             {
                 // std::dogs->size()
                 boost::json::object js_players;
-                for (auto dog : *dogs)
+                for (auto dog : dogs)
                 {
-                    auto id = dog.GetId();
-                    js_players[std::to_string(*id)] = DogToJsonObj(dog);
+                    auto id = dog->GetId();
+                    js_players[std::to_string(*id)] = DogToJsonObj(*dog);
                 }
                 boost::json::object resualt;
                 resualt["players"] = js_players;
@@ -358,6 +358,28 @@ namespace app
             return "";
         }
         return token;
+    }
+
+    StringResponse Application::SetPlayerAction(const StringRequest &req)
+    {
+        if (req.method() == http::verb::post)
+        {
+            auto player = game_.GetPlayerByToken(GetToken(req));
+            if (player != nullptr)
+            {
+                auto value = json::parse(req.body().c_str());
+                std::string direction(value.as_object().at("move").as_string());
+                player->GetDog()->SetDir(direction);
+            }
+            else
+            {
+                ReturnJsonContent(req, http::status::unauthorized, "{\"code\": \"invalidToken\", \"message\": \"Authorization header is missing\"}");
+            }
+        }
+        else
+        {
+            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only POST method is expected\"}", "POST");
+        }
     }
 
 } // end namespace app

@@ -148,8 +148,8 @@ namespace model
         using Buildings = std::vector<Building>;
         using Offices = std::vector<Office>;
 
-        Map(Id id, std::string name) noexcept
-            : id_(std::move(id)), name_(std::move(name))
+        Map(Id id, std::string name, double dog_speed) noexcept
+            : id_(std::move(id)), name_(std::move(name)), dog_speed_(dog_speed)
         {
         }
 
@@ -190,6 +190,16 @@ namespace model
 
         void AddOffice(Office office);
 
+        void SetDogSpeed(double spead)
+        {
+            dog_speed_ = spead;
+        }
+
+        double GetDogSpeed()
+        {
+            return dog_speed_;
+        }
+
     private:
         using OfficeIdToIndex = std::unordered_map<Office::Id, size_t, util::TaggedHasher<Office::Id>>;
 
@@ -197,6 +207,7 @@ namespace model
         std::string name_;
         Roads roads_;
         Buildings buildings_;
+        double dog_speed_;
 
         OfficeIdToIndex warehouse_id_to_index_;
         Offices offices_;
@@ -220,7 +231,7 @@ namespace model
     {
     public:
         using Id = util::Tagged<uint32_t, Dog>;
-        Dog(Id id, TwoDimVector pos) : id_(id), pos_(pos)
+        Dog(Id id, TwoDimVector pos, double abs_speed) : id_(id), pos_(pos), abs_speed_(abs_speed)
         {
             speed_ = {0.0, 0.0};
             dir_ = Direction::NORTH;
@@ -246,17 +257,46 @@ namespace model
             return std::string(1, static_cast<char>(dir_));
         }
 
+        void SetDir(std::string dir)
+        {
+            if (dir == "L")
+            {
+                speed_ = {-abs_speed_, 0};
+                dir_ = Direction::WEST;
+            }
+            else if (dir == "R")
+            {
+                speed_ = {abs_speed_, 0};
+                dir_ = Direction::EAST;
+            }
+            else if (dir == "U")
+            {
+                speed_ = {0, -abs_speed_};
+                dir_ = Direction::NORTH;
+            }
+            else if(dir == "D")
+            {
+                speed_ = {0, abs_speed_};
+                dir_ = Direction::WEST;
+            }
+            else
+            {
+                speed_ = {0, 0};
+            }
+        }
+
     private:
         Id id_;
         TwoDimVector speed_;
         TwoDimVector pos_;
         Direction dir_;
+        double abs_speed_;
     };
 
     class GameSession
     {
     public:
-        GameSession(Map::Id map_id) : map_id_(map_id)
+        GameSession(std::shared_ptr<Map> map_ptr) : map_ptr_(map_ptr)
         {
         }
 
@@ -268,12 +308,12 @@ namespace model
         {
         }
 
-        Map::Id GetMapId()
+        std::shared_ptr<Map> GetMap()
         {
-            return map_id_;
+            return map_ptr_;
         }
 
-        const std::vector<Dog> &GetDogs()
+        std::vector<std::shared_ptr<Dog>> GetDogs()
         {
             return dogs_;
         }
@@ -282,7 +322,7 @@ namespace model
         {
             if (dog_id_to_index_.count(dog_id))
             {
-                return std::make_shared<Dog>(dogs_.at(dog_id_to_index_.at(dog_id)));
+                return dogs_.at(dog_id_to_index_.at(dog_id));
             }
             return nullptr;
         }
@@ -291,15 +331,15 @@ namespace model
         {
 
             dog_id_to_index_[id] = dogs_.size();
-            dogs_.push_back(Dog(id, pos));
+            dogs_.push_back(std::make_shared<Dog>(Dog(id, pos, map_ptr_->GetDogSpeed())));
 
-            return std::make_shared<Dog>(dogs_.at(dogs_.size() - 1));
+            return (dogs_.at(dogs_.size() - 1));
         }
 
     private:
         using DogIdHasher = util::TaggedHasher<Dog::Id>;
-        std::vector<Dog> dogs_;
-        Map::Id map_id_;
+        std::vector<std::shared_ptr<Dog>> dogs_; 
+        std::shared_ptr<Map> map_ptr_;
         std::unordered_map<Dog::Id, uint32_t, DogIdHasher> dog_id_to_index_;
     };
 
@@ -403,15 +443,29 @@ namespace model
             {
 
                 return sessions_.at(it->second);
-
             }
             return nullptr;
         }
 
-        void CreateSession(Map::Id map_id);
+        void CreateSession(std::shared_ptr<Map> map_ptr);
 
         std::pair<std::shared_ptr<model::Player>, Token> Join(const std::string &user_name, const std::string &map_id);
-        std::optional<std::vector<model::Dog>> GetPlayersByToken(const std::string &token);
+        std::vector<std::shared_ptr<Dog>> GetDogsByToken(const std::string &token_str);
+
+        std::shared_ptr<model::Player> GetPlayerByToken(std::string token)
+        {
+            return tokens_.FindPlayerByToken(Token(token));
+        }
+
+        void SetDfaultDogSpeed(double speed)
+        {
+            default_dog_speed_ = speed;
+        }
+
+        double GetDefDogSpeed()
+        {
+            return default_dog_speed_;
+        }
 
     private:
         using MapIdHasher = util::TaggedHasher<Map::Id>;
@@ -426,6 +480,7 @@ namespace model
         MapIdToIndex map_id_to_game_index_;
 
         uint32_t curr_dog_id_ = 0;
+        double default_dog_speed_ = 1.0;
     };
 
 } // namespace model

@@ -79,6 +79,7 @@ namespace http_handler
         JOIN,
         PLAYERS,
         STATE,
+        MOVE,
         BADREQUEST
     };
 
@@ -133,6 +134,10 @@ namespace http_handler
             else if (request_type == ApiRequestType::JOIN)
             {
                 send(app_.JoinGame(req));
+            }
+            else if (request_type == ApiRequestType::MOVE)
+            {
+                send(app_.SetPlayerAction(req));
             }
         }
 

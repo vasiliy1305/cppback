@@ -55,12 +55,19 @@ namespace json_loader
         // Загрузить модель игры из файла
         model::Game game;
 
+        if (value.as_object().contains("defaultDogSpeed"))
+        {
+            double defaultDogSpeed = value.as_object().at("defaultDogSpeed").as_double();
+            game.SetDfaultDogSpeed(defaultDogSpeed);
+        }
+
         auto maps = value.as_object().at(JsonStrConst::maps).as_array();
 
         for (const auto &map : maps)
         {
-            game.AddMap(ParseMap(map));
+            game.AddMap(ParseMap(map, game.GetDefDogSpeed()));
         }
+
         return game;
     }
 
@@ -114,12 +121,18 @@ namespace json_loader
         return model_office;
     }
 
-    model::Map ParseMap(boost::json::value map)
+    model::Map ParseMap(boost::json::value map, double def_dog_speed)
     {
         std::string id(map.at(JsonStrConst::id).as_string());
         std::string name(map.at(JsonStrConst::name).as_string());
 
-        model::Map model_map(model::Map::Id(id), name);
+        model::Map model_map(model::Map::Id(id), name, def_dog_speed);
+
+        if (map.as_object().contains("dogSpeed"))
+        {
+            double dog_speed(map.at("dogSpeed").as_double());
+            model_map.SetDogSpeed(dog_speed);
+        }
 
         auto roads = map.at(JsonStrConst::roads).as_array();
         for (auto road : roads)
