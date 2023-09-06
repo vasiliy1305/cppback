@@ -183,18 +183,6 @@ namespace http_handler
         }
     }
 
-    std::string ApiHandler::GetMapsAsJS()
-    {
-        boost::json::array arr;
-        for (const auto &map : game_.GetMaps())
-        {
-            boost::json::object obj;
-            obj["id"] = *map.GetId();
-            obj["name"] = map.GetName();
-            arr.push_back(obj);
-        }
-        return boost::json::serialize(arr);
-    }
 
     bool ApiHandler::IsMapExist(std::string id)
     {

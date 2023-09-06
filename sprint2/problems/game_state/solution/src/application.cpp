@@ -21,20 +21,41 @@ namespace app
 {
     StringResponse Application::ReturnMethodNotAllowed(const StringRequest &req, std::string_view text, std::string allow)
     {
-        return MakeStringResponse(http::status::method_not_allowed, text, req.version(), req.keep_alive(), ContentType::API_JSON, {{http::field::cache_control, "no-cache"}, {http::field::allow, allow}});
+        return MakeStringResponse(http::status::method_not_allowed,
+                                  text, req.version(),
+                                  req.keep_alive(),
+                                  ContentType::API_JSON,
+                                  {{http::field::cache_control, "no-cache"}, {http::field::allow, allow}});
+    }
+
+    StringResponse Application::ReturnJsonContent(const StringRequest &req, http::status status, std::string_view text)
+    {
+        return MakeStringResponse(status, text, req.version(), req.keep_alive(), ContentType::API_JSON, {{http::field::cache_control, "no-cache"}});
     }
 
     StringResponse Application::GetMaps(const StringRequest &req)
     {
         if (req.method() == http::verb::get) // возможно добавить head
         {
-            // send(json_response(http::status::ok, GetMapsAsJS()));
+            return ReturnJsonContent(req, http::status::ok, GetMapsAsJS());
         }
         else
         {
-            // send(json_response(http::status::method_not_allowed, ""sv));
-            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only GET method is expected\"}" , "GET");
+            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only GET method is expected\"}", "GET");
         }
+    }
+
+    std::string Application::GetMapsAsJS()
+    {
+        boost::json::array arr;
+        for (const auto &map : game_.GetMaps())
+        {
+            boost::json::object obj;
+            obj["id"] = *map.GetId();
+            obj["name"] = map.GetName();
+            arr.push_back(obj);
+        }
+        return boost::json::serialize(arr);
     }
 
 } // end namespace app

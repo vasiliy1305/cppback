@@ -116,14 +116,15 @@ namespace http_handler
 
             if (request_type == ApiRequestType::MAPS)
             {
-                if (req.method() == http::verb::get)
-                {
-                    send(json_response(http::status::ok, GetMapsAsJS()));
-                }
-                else
-                {
-                    send(json_response(http::status::method_not_allowed, ""sv));
-                }
+                send(app_.GetMaps(req));
+                // if (req.method() == http::verb::get)
+                // {
+                //     send(json_response(http::status::ok, GetMapsAsJS()));
+                // }
+                // else
+                // {
+                //     send(json_response(http::status::method_not_allowed, ""sv));
+                // }
             }
             else if (request_type == ApiRequestType::MAP)
             {
@@ -203,7 +204,7 @@ namespace http_handler
         app::Application app_;
 
         bool IsMapExist(std::string id);
-        std::string GetMapsAsJS();
+        
         std::string GetMapAsJS(std::string id);
         boost::json::value RoadToJsonObj(const model::Road &road);
         boost::json::value BuildingToJsonObj(const model::Building &building);

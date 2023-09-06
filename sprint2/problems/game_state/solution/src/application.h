@@ -82,6 +82,11 @@ namespace app
         model::Game game_;
 
         StringResponse ReturnMethodNotAllowed(const StringRequest &req, std::string_view text, std::string allow);
+        StringResponse ReturnJsonContent(const StringRequest &req, http::status status, std::string_view text);
+
+        // json 
+        std::string GetMapsAsJS();
+
     };
 
 } // end namespace app
