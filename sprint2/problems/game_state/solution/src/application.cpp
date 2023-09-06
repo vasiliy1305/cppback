@@ -321,12 +321,7 @@ namespace app
     {
         if (req.method() == http::verb::get || req.method() == http::verb::head)
         {
-            auto auth = req[boost::beast::http::field::authorization];
-            std::string auth_str(auth.begin(), auth.end());
-            std::istringstream iss(auth_str);
-            std::string trash, token;
-            iss >> trash >> token;
-            auto [body, status] = State(token);
+            auto [body, status] = State(GetToken(req));
 
             return ReturnJsonContent(req, status, body);
         }
@@ -340,12 +335,8 @@ namespace app
     {
         if (req.method() == http::verb::get || req.method() == http::verb::head)
         {
-            auto auth = req[boost::beast::http::field::authorization];
-            std::string auth_str(auth.begin(), auth.end());
-            std::istringstream iss(auth_str);
-            std::string trash, token;
-            iss >> trash >> token;
-            auto [body, status] = Players(token);
+
+            auto [body, status] = Players(GetToken(req));
 
             return ReturnJsonContent(req, status, body);
         }
@@ -353,6 +344,20 @@ namespace app
         {
             return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only GET and HEAD method is expected\"}", "GET, HEAD");
         }
+    }
+
+    std::string Application::GetToken(const StringRequest &req)
+    {
+        auto auth = req[boost::beast::http::field::authorization];
+        std::string auth_str(auth.begin(), auth.end());
+        std::istringstream iss(auth_str);
+        std::string trash, token;
+        iss >> trash >> token;
+        if (token.size() != 32)
+        {
+            return "";
+        }
+        return token;
     }
 
 } // end namespace app
