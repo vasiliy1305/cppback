@@ -370,10 +370,11 @@ namespace app
                 auto value = json::parse(req.body().c_str());
                 std::string direction(value.as_object().at("move").as_string());
                 player->GetDog()->SetDir(direction);
+                return ReturnJsonContent(req, http::status::ok, "{}");
             }
             else
             {
-                ReturnJsonContent(req, http::status::unauthorized, "{\"code\": \"invalidToken\", \"message\": \"Authorization header is missing\"}");
+                return ReturnJsonContent(req, http::status::unauthorized, "{\"code\": \"invalidToken\", \"message\": \"Authorization header is missing\"}");
             }
         }
         else
