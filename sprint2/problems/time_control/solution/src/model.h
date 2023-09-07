@@ -297,7 +297,7 @@ namespace model
             else if (dir == "D")
             {
                 speed_ = {0, abs_speed_};
-                dir_ = Direction::WEST;
+                dir_ = Direction::SOUTH;
             }
             else
             {
