@@ -219,6 +219,12 @@ namespace model
         double y;
     };
 
+    TwoDimVector operator+(const TwoDimVector &lhs, const TwoDimVector &rhs);
+
+    TwoDimVector operator*(const TwoDimVector &vec, double scalar);
+
+    TwoDimVector operator*(double scalar, const TwoDimVector &vec);
+
     enum class Direction : char
     {
         NORTH = 'U',
@@ -274,7 +280,7 @@ namespace model
                 speed_ = {0, -abs_speed_};
                 dir_ = Direction::NORTH;
             }
-            else if(dir == "D")
+            else if (dir == "D")
             {
                 speed_ = {0, abs_speed_};
                 dir_ = Direction::WEST;
@@ -284,6 +290,8 @@ namespace model
                 speed_ = {0, 0};
             }
         }
+
+        void UpdateTime(int delta);
 
     private:
         Id id_;
@@ -336,9 +344,11 @@ namespace model
             return (dogs_.at(dogs_.size() - 1));
         }
 
+        void UpdateTime(int delta_t);
+
     private:
         using DogIdHasher = util::TaggedHasher<Dog::Id>;
-        std::vector<std::shared_ptr<Dog>> dogs_; 
+        std::vector<std::shared_ptr<Dog>> dogs_;
         std::shared_ptr<Map> map_ptr_;
         std::unordered_map<Dog::Id, uint32_t, DogIdHasher> dog_id_to_index_;
     };
@@ -466,6 +476,8 @@ namespace model
         {
             return default_dog_speed_;
         }
+
+        void UpdateTime(int delta);
 
     private:
         using MapIdHasher = util::TaggedHasher<Map::Id>;

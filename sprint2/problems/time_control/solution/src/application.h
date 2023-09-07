@@ -83,6 +83,8 @@ namespace app
 
         std::string GetToken(const StringRequest &req);
 
+        void UpdateTime(int delta_time);
+
         StringResponse ReturnMethodNotAllowed(const StringRequest &req, std::string_view text, std::string allow);
         StringResponse ReturnJsonContent(const StringRequest &req, http::status status, std::string_view text);
 

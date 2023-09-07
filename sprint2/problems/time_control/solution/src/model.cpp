@@ -211,6 +211,52 @@ namespace model
         }
     }
 
+    void Game::UpdateTime(int delta)
+    {
+        for(auto session: sessions_)
+        {
+            session->UpdateTime(delta);
+        }
+    }
 
+    void GameSession::UpdateTime(int delta_t)
+    {
+        for(auto dog: dogs_)
+        {
+            auto curr_pos = dog->GetPos();
+            auto curr_speed = dog->GetSpeed();
+            auto next_pos = curr_pos + curr_speed * ((delta_t + 0.0) / 1000.0);
+            // нужно определить что не вышли за границы дорог
+
+            // если вышли за границы
+            // если вышли за границу то поставить в точку на границе
+        }
+    }
+
+    void Dog::UpdateTime(int delta)
+    {
+
+    }
+
+        TwoDimVector operator+(const TwoDimVector &lhs, const TwoDimVector &rhs)
+    {
+        TwoDimVector result;
+        result.x = lhs.x + rhs.x;
+        result.y = lhs.y + rhs.y;
+        return result;
+    }
+
+    TwoDimVector operator*(const TwoDimVector &vec, double scalar)
+    {
+        TwoDimVector result;
+        result.x = vec.x * scalar;
+        result.y = vec.y * scalar;
+        return result;
+    }
+
+    TwoDimVector operator*(double scalar, const TwoDimVector &vec)
+    {
+        return vec * scalar; 
+    }
 
 } // namespace model

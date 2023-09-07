@@ -383,4 +383,33 @@ namespace app
         }
     }
 
+    StringResponse Application::SetTimeDelta(const StringRequest &req)
+    {
+        if (req.method() == http::verb::post)
+        {
+            try
+            {
+                auto value = json::parse(req.body().c_str());
+                int64_t time_delta(value.as_object().at("timeDelta").as_int64());
+                UpdateTime(time_delta);
+                return ReturnJsonContent(req, http::status::ok, "{}");
+            }
+            catch (const std::exception &e)
+            {
+                 return ReturnJsonContent(req, http::status::bad_request, "{\"code\": \"invalidArgument\", \"message\": \"Failed to parse tick request JSON\"}");
+            }
+        }
+        else
+        {
+            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only POST method is expected\"}", "POST");
+        }
+    }
+
+    void Application::UpdateTime(int delta_time)
+    {
+
+    }
+
+    
+
 } // end namespace app
