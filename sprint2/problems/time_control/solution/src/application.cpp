@@ -407,9 +407,6 @@ namespace app
 
     void Application::UpdateTime(int delta_time)
     {
-
+        game_.UpdateTime(delta_time);
     }
-
-    
-
 } // end namespace app
