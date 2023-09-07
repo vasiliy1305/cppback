@@ -221,8 +221,9 @@ namespace model
         for (auto dog : dogs_)
         {
             auto curr_pos = dog->GetPos();
+            auto dt = ((delta_t + 0.0) / 1000.0);
             auto curr_speed = dog->GetSpeed();
-            auto next_pos = curr_pos + curr_speed * ((delta_t + 0.0) / 1000.0);
+            auto next_pos = curr_pos + curr_speed * dt;
             // нужно определить что не вышли за границы дорог
             // близжайшая дорога
             auto closed_road = std::min_element(map_ptr_->GetRoads().begin(), map_ptr_->GetRoads().end(), [next_pos](auto a, auto b)
@@ -230,17 +231,19 @@ namespace model
 
             auto min_distace = DistanceBetweenRoadAndPoint(*closed_road, next_pos);
 
-            if (min_distace <= ROAD_WIDTH)
-            {
-                dog->SetPos(next_pos);
-            }
-            else
-            {
-                // если вышли за границу то поставить в точку на границе
-                // расчитываем растояние от края дороги
-                next_pos = next_pos - (min_distace - ROAD_WIDTH) * dog->GetDirectionVec(); // возвращаемся на растояние до края дороги в направлении противоположном движению
-                dog->SetDir(""); // stop
-            }
+            dog->SetPos(next_pos);
+            // if (min_distace <= ROAD_WIDTH)
+            // {
+            //     dog->SetPos(next_pos);
+            // }
+            // else
+            // {
+            //     // если вышли за границу то поставить в точку на границе
+            //     // расчитываем растояние от края дороги
+            //     next_pos = next_pos - (min_distace - ROAD_WIDTH) * dog->GetDirectionVec(); // возвращаемся на растояние до края дороги в направлении противоположном движению
+            //     dog->SetPos(next_pos);
+            //     dog->SetDir(""); // stop
+            // }
         }
     }
 

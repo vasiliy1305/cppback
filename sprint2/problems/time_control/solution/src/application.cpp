@@ -322,7 +322,8 @@ namespace app
         if (req.method() == http::verb::get || req.method() == http::verb::head)
         {
             auto [body, status] = State(GetToken(req));
-
+            
+            // std::cerr <<  body << std::endl;
             return ReturnJsonContent(req, status, body);
         }
         else
