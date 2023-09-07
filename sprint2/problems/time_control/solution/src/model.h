@@ -293,6 +293,11 @@ namespace model
 
         void UpdateTime(int delta);
 
+        void SetPos(TwoDimVector pos)
+        {
+            pos_ = pos;
+        }
+
     private:
         Id id_;
         TwoDimVector speed_;
