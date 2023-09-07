@@ -1,6 +1,7 @@
 #include "model.h"
 
 #include <stdexcept>
+#include <math.h>
 
 namespace model
 {
@@ -69,7 +70,6 @@ namespace model
             try
             {
                 sessions_.push_back(std::make_shared<GameSession>(map_ptr));
-
             }
             catch (...)
             {
@@ -159,11 +159,8 @@ namespace model
             if (map_id_to_game_index_.count(Map::Id(map_id)) == 0)
             {
                 // если сессия нет создать сессию
-                
-
 
                 CreateSession(std::make_shared<Map>(maps_.at(map_id_to_index_.at(Map::Id(map_id))))); // todo - хранить сразу как вектор шередптр
-                
             }
             // get random road
             std::random_device random_device_;
@@ -213,7 +210,7 @@ namespace model
 
     void Game::UpdateTime(int delta)
     {
-        for(auto session: sessions_)
+        for (auto session : sessions_)
         {
             session->UpdateTime(delta);
         }
@@ -221,25 +218,37 @@ namespace model
 
     void GameSession::UpdateTime(int delta_t)
     {
-        for(auto dog: dogs_)
+        for (auto dog : dogs_)
         {
             auto curr_pos = dog->GetPos();
             auto curr_speed = dog->GetSpeed();
             auto next_pos = curr_pos + curr_speed * ((delta_t + 0.0) / 1000.0);
             // нужно определить что не вышли за границы дорог
+            // близжайшая дорога
+            auto closed_road = std::min_element(map_ptr_->GetRoads().begin(), map_ptr_->GetRoads().end(), [next_pos](auto a, auto b)
+                                                 { return DistanceBetweenRoadAndPoint(a, next_pos) < DistanceBetweenRoadAndPoint(b, next_pos); });
 
-            // если вышли за границы
-            // если вышли за границу то поставить в точку на границе
-            dog->SetPos(next_pos);
+            auto min_distace = DistanceBetweenRoadAndPoint(*closed_road, next_pos);
+
+            if (min_distace <= ROAD_WIDTH)
+            {
+                dog->SetPos(next_pos);
+            }
+            else
+            {
+                // если вышли за границу то поставить в точку на границе
+                // расчитываем растояние от края дороги
+                next_pos = next_pos - (min_distace - ROAD_WIDTH) * dog->GetDirectionVec(); // возвращаемся на растояние до края дороги в направлении противоположном движению
+                dog->SetDir(""); // stop
+            }
         }
     }
 
     void Dog::UpdateTime(int delta)
     {
-
     }
 
-        TwoDimVector operator+(const TwoDimVector &lhs, const TwoDimVector &rhs)
+    TwoDimVector operator+(const TwoDimVector &lhs, const TwoDimVector &rhs)
     {
         TwoDimVector result;
         result.x = lhs.x + rhs.x;
@@ -257,7 +266,63 @@ namespace model
 
     TwoDimVector operator*(double scalar, const TwoDimVector &vec)
     {
-        return vec * scalar; 
+        return vec * scalar;
+    }
+
+    TwoDimVector operator-(const TwoDimVector &lhs, const TwoDimVector &rhs)
+    {
+        return lhs + (rhs * (-1.0));
+    }
+
+    double ChebyshevDistance(TwoDimVector v1, TwoDimVector v2)
+    {
+        auto delta = v1 - v2;
+        return std::max(std::abs(delta.x), std::abs(delta.y));
+    }
+
+    double DistanceBetweenRoadAndPoint(Road road, TwoDimVector pos)
+    {
+        if (road.IsHorizontal())
+        {
+            auto road_min_x = std::min(road.GetStart().x, road.GetEnd().x);
+            auto road_max_x = std::max(road.GetStart().x, road.GetEnd().x);
+
+            if (pos.x < road_min_x)
+            {
+                return ChebyshevDistance(pos, TwoDimVector(road_min_x, road.GetEnd().y)); // так как дорога горизонтальная у начала и конца совпадают
+            }
+            else if (pos.x > road_max_x)
+            {
+                return ChebyshevDistance(pos, TwoDimVector(road_max_x, road.GetEnd().y));
+            }
+            else
+            {
+                return std::abs(pos.y - road.GetEnd().y);
+            }
+        }
+        else
+        {
+            auto road_min_y = std::min(road.GetStart().y, road.GetEnd().y);
+            auto road_max_y = std::max(road.GetStart().y, road.GetEnd().y);
+
+            if (pos.y < road_min_y)
+            {
+                return ChebyshevDistance(pos, TwoDimVector(road.GetEnd().x, road_min_y));
+            }
+            else if (pos.y > road_max_y)
+            {
+                return ChebyshevDistance(pos, TwoDimVector(road.GetEnd().x, road_max_y));
+            }
+            else
+            {
+                return std::abs(pos.x - road.GetEnd().x);
+            }
+        }
+    }
+
+    bool OnRoad(Road road, TwoDimVector pos)
+    {
+        return DistanceBetweenRoadAndPoint(road, pos) <= ROAD_WIDTH;
     }
 
 } // namespace model

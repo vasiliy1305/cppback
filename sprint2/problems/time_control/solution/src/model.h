@@ -9,6 +9,7 @@
 #include <iomanip>
 #include <utility>
 #include <optional>
+#include <algorithm>
 
 #include "tagged.h"
 
@@ -40,6 +41,8 @@ namespace model
     {
         Dimension dx, dy;
     };
+
+    const double ROAD_WIDTH = 0.4;
 
     class Road
     {
@@ -221,9 +224,18 @@ namespace model
 
     TwoDimVector operator+(const TwoDimVector &lhs, const TwoDimVector &rhs);
 
+    TwoDimVector operator-(const TwoDimVector &lhs, const TwoDimVector &rhs);
+
     TwoDimVector operator*(const TwoDimVector &vec, double scalar);
 
     TwoDimVector operator*(double scalar, const TwoDimVector &vec);
+
+    // в этой задаче удобнее использовать такую метрику так как дороги прямоугольные
+    double ChebyshevDistance(TwoDimVector x1, TwoDimVector x2);
+
+    double DistanceBetweenRoadAndPoint(Road road, TwoDimVector pos);
+
+    bool OnRoad(Road road, TwoDimVector pos);
 
     enum class Direction : char
     {
@@ -241,6 +253,7 @@ namespace model
         {
             speed_ = {0.0, 0.0};
             dir_ = Direction::NORTH;
+            dir_str_ = "";
         }
 
         const Id &GetId()
@@ -265,6 +278,7 @@ namespace model
 
         void SetDir(std::string dir)
         {
+            dir_str_ = dir;
             if (dir == "L")
             {
                 speed_ = {-abs_speed_, 0};
@@ -298,11 +312,38 @@ namespace model
             pos_ = pos;
         }
 
+        // единичный вектор направления двиижения
+        TwoDimVector GetDirectionVec()
+        {
+            if (dir_str_ == "L")
+            {
+                return {-1, 0};
+            }
+            else if (dir_str_ == "R")
+            {
+                return {1, 0};
+            }
+            else if (dir_str_ == "U")
+            {
+                return {0, -1};
+            }
+            else if (dir_str_ == "D")
+            {
+                return {0, 1};
+            }
+            else
+            {
+                return {0, 0};
+            }
+        }
+
     private:
         Id id_;
         TwoDimVector speed_;
         TwoDimVector pos_;
         Direction dir_;
+        std ::string dir_str_;
+
         double abs_speed_;
     };
 
