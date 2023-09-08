@@ -222,94 +222,6 @@ namespace model
         }
     }
 
-    // void GameSession::UpdateTime(int delta_t)
-    // {
-    //     for (auto dog : dogs_)
-    //     {
-    //         auto dt = ((delta_t + 0.0) / 1000.0);
-
-    //         auto curr_pos = dog->GetPos();
-    //         auto curr_speed = dog->GetSpeed();
-    //         auto next_pos = curr_pos + curr_speed * dt;
-    //         // нужно определить что не вышли за границы дорог
-    //         // близжайшая дорога
-    //         auto curr_road = std::min_element(map_ptr_->GetRoads().begin(), map_ptr_->GetRoads().end(), [curr_pos](auto a, auto b)
-    //                                              { return DistanceBetweenRoadAndPoint(a, curr_pos) < DistanceBetweenRoadAndPoint(b, curr_pos); });
-
-    //         auto closed_road = std::min_element(map_ptr_->GetRoads().begin(), map_ptr_->GetRoads().end(), [next_pos](auto a, auto b)
-    //                                              { return DistanceBetweenRoadAndPoint(a, next_pos) < DistanceBetweenRoadAndPoint(b, next_pos); });
-    //         auto min_distace = DistanceBetweenRoadAndPoint(*closed_road, next_pos);
-
-    //         if (min_distace <= ROAD_WIDTH)
-    //         {
-    //             dog->SetPos(next_pos);
-    //         }
-    //         else
-    //         {
-    //             double delta = DistanceBetweenRoadAndPoint(*curr_road, next_pos) - ROAD_WIDTH;
-    //             // если вышли за границу то поставить в точку на границе
-    //             // расчитываем растояние от края дороги
-    //             next_pos = next_pos - delta * dog->GetDirectionVec(); // возвращаемся на растояние до края дороги в направлении противоположном движению
-    //             dog->SetPos(next_pos);
-    //             dog->SetDir(""); // stop
-    //         }
-    //     }
-    // }
-
-    // void GameSession::UpdateTime(int delta_t)
-    // {
-    //     for (auto dog : dogs_)
-    //     {
-    //         auto dt = ((delta_t + 0.0) / 1000.0);
-    //         auto curr_pos = dog->GetPos();
-    //         auto curr_speed = dog->GetSpeed();
-    //         auto next_pos = curr_pos + curr_speed * dt;
-    //         // нужно определить что не вышли за границы дорог
-    //         // близжайшая дорога
-    //         std::vector<Road> curr_roads;
-    //         bool not_jump = false;
-    //         for (auto road : map_ptr_->GetRoads())
-    //         {
-    //             if ((DistanceBetweenRoadAndPoint(road, curr_pos) <= ROAD_WIDTH) && (DistanceBetweenRoadAndPoint(road, next_pos) <= ROAD_WIDTH))
-    //             {
-    //                 not_jump = true;
-    //             }
-
-    //             if (DistanceBetweenRoadAndPoint(road, curr_pos) <= ROAD_WIDTH)
-    //             {
-    //                 curr_roads.push_back(road);
-    //             }
-    //         }
-    //         if (not_jump)
-    //         {
-    //             dog->SetPos(next_pos);
-    //         }
-    //         else
-    //         {
-    //             double min_delta = 0;
-    //             bool first = true;
-    //             for (auto road : curr_roads)
-    //             {
-    //                 double delta = DistanceBetweenRoadAndPoint(road, next_pos) - ROAD_WIDTH;
-    //                 if (first)
-    //                 {
-    //                     min_delta = delta;
-    //                     first = false;
-    //                 }
-
-    //                 if (delta < min_delta)
-    //                 {
-    //                     min_delta = delta;
-    //                 }
-    //             }
-    //             // если вышли за границу то поставить в точку на границе
-    //             // расчитываем растояние от края дороги
-    //             next_pos = next_pos - min_delta * dog->GetDirectionVec(); // возвращаемся на растояние до края дороги в направлении противоположном движению
-    //             dog->SetPos(next_pos);
-    //             dog->SetDir(""); // stop
-    //         }
-    //     }
-    // }
 
     void GameSession::UpdateTime(int delta_t)
     {
@@ -320,7 +232,6 @@ namespace model
             auto curr_speed = dog->GetSpeed();
             auto next_pos = curr_pos + curr_speed * dt;
             // нужно определить что не вышли за границы дорог
-            // близжайшая дорога
             std::vector<Road> curr_roads;
             bool not_jump = false;
             for (auto road : map_ptr_->GetRoads())
@@ -379,7 +290,6 @@ namespace model
                     {
                     }
                 }
-
                 dog->SetPos(next_pos);
                 dog->SetDir(""); // stop
             }
