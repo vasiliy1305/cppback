@@ -159,7 +159,6 @@ namespace model
             if (map_id_to_game_index_.count(Map::Id(map_id)) == 0)
             {
                 // если сессия нет создать сессию
-
                 CreateSession(std::make_shared<Map>(maps_.at(map_id_to_index_.at(Map::Id(map_id))))); // todo - хранить сразу как вектор шередптр
             }
             // get random road
@@ -171,10 +170,16 @@ namespace model
                                        }()};
             auto roads = maps_.at(map_id_to_index_.at(Map::Id(map_id))).GetRoads();
             auto rnd_road = roads.at(generator_() % roads.size());
+
+            rnd_road = roads.at(0); // временно для автотестов todo уьрать
+
             auto road_start = rnd_road.GetStart();
             auto road_end = rnd_road.GetEnd();
             double rnd_x = randomDouble(road_start.x, road_end.x);
             double rnd_y = randomDouble(road_start.y, road_end.y);
+
+            rnd_x = road_start.x; // временно для автотестов todo уьрать
+            rnd_y = road_start.y; // временно для автотестов todo уьрать
             // 2. создаем собаку на сесии
 
             auto dog_ptr = FindSession(Map::Id(map_id))->AddDog(Dog::Id(curr_dog_id_++), {rnd_x, rnd_y}); // что то тут не так
