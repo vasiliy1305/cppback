@@ -228,22 +228,20 @@ namespace model
             // близжайшая дорога
             auto closed_road = std::min_element(map_ptr_->GetRoads().begin(), map_ptr_->GetRoads().end(), [next_pos](auto a, auto b)
                                                  { return DistanceBetweenRoadAndPoint(a, next_pos) < DistanceBetweenRoadAndPoint(b, next_pos); });
-
             auto min_distace = DistanceBetweenRoadAndPoint(*closed_road, next_pos);
 
-            dog->SetPos(next_pos);
-            // if (min_distace <= ROAD_WIDTH)
-            // {
-            //     dog->SetPos(next_pos);
-            // }
-            // else
-            // {
-            //     // если вышли за границу то поставить в точку на границе
-            //     // расчитываем растояние от края дороги
-            //     next_pos = next_pos - (min_distace - ROAD_WIDTH) * dog->GetDirectionVec(); // возвращаемся на растояние до края дороги в направлении противоположном движению
-            //     dog->SetPos(next_pos);
-            //     dog->SetDir(""); // stop
-            // }
+            if (min_distace <= ROAD_WIDTH)
+            {
+                dog->SetPos(next_pos);
+            }
+            else
+            {
+                // если вышли за границу то поставить в точку на границе
+                // расчитываем растояние от края дороги
+                next_pos = next_pos - (min_distace - ROAD_WIDTH) * dog->GetDirectionVec(); // возвращаемся на растояние до края дороги в направлении противоположном движению
+                dog->SetPos(next_pos);
+                dog->SetDir(""); // stop
+            }
         }
     }
 
