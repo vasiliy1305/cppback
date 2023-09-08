@@ -269,6 +269,8 @@ namespace model
             // нужно определить что не вышли за границы дорог
             // близжайшая дорога
 
+            std::vector<Road> curr_roads;
+
             bool not_jump = false;
             for (auto road : map_ptr_->GetRoads())
             {
@@ -276,11 +278,12 @@ namespace model
                 {
                     not_jump = true;
                 }
+
+                if (DistanceBetweenRoadAndPoint(road, curr_pos) <= ROAD_WIDTH)
+                {
+                    curr_roads.push_back(road);
+                }
             }
-
-            auto curr_road = std::min_element(map_ptr_->GetRoads().begin(), map_ptr_->GetRoads().end(), [curr_pos](auto a, auto b)
-                                              { return DistanceBetweenRoadAndPoint(a, curr_pos) < DistanceBetweenRoadAndPoint(b, curr_pos); });
-
 
             if (not_jump)
             {
@@ -288,10 +291,26 @@ namespace model
             }
             else
             {
-                double delta = DistanceBetweenRoadAndPoint(*curr_road, next_pos) - ROAD_WIDTH;
+                double min_delta = 0;
+                bool first = true;
+                for (auto road : curr_roads)
+                {
+                    double delta = DistanceBetweenRoadAndPoint(road, next_pos) - ROAD_WIDTH;
+                    if (first)
+                    {
+                        min_delta = delta;
+                        first = false;
+                    }
+
+                    if (delta < min_delta)
+                    {
+                        min_delta = delta;
+                    }
+                }
+
                 // если вышли за границу то поставить в точку на границе
                 // расчитываем растояние от края дороги
-                next_pos = next_pos - delta * dog->GetDirectionVec(); // возвращаемся на растояние до края дороги в направлении противоположном движению
+                next_pos = next_pos - min_delta * dog->GetDirectionVec(); // возвращаемся на растояние до края дороги в направлении противоположном движению
                 dog->SetPos(next_pos);
                 dog->SetDir(""); // stop
             }
@@ -379,4 +398,21 @@ namespace model
         return DistanceBetweenRoadAndPoint(road, pos) <= ROAD_WIDTH;
     }
 
+    //     TwoDimVector GetBorderPoint(Road road, std::shared_ptr<model::Dog> dog)
+    //     {
+    //         auto dir = dog->GetDir();
+    //         auto pos = dog->GetPos();
+
+    //         TwoDimVector curr_pos = dog->GetPos();
+
+    //         auto is_horizontal = road.IsHorizontal();
+    //         if(road.IsHorizontal())
+    //         {
+    //             if(dog->GetDir() == "U")
+    //             {
+
+    //             }
+    //         }
+
+    //    }
 } // namespace model
