@@ -256,21 +256,72 @@ namespace model
     //     }
     // }
 
+    // void GameSession::UpdateTime(int delta_t)
+    // {
+    //     for (auto dog : dogs_)
+    //     {
+    //         auto dt = ((delta_t + 0.0) / 1000.0);
+    //         auto curr_pos = dog->GetPos();
+    //         auto curr_speed = dog->GetSpeed();
+    //         auto next_pos = curr_pos + curr_speed * dt;
+    //         // нужно определить что не вышли за границы дорог
+    //         // близжайшая дорога
+    //         std::vector<Road> curr_roads;
+    //         bool not_jump = false;
+    //         for (auto road : map_ptr_->GetRoads())
+    //         {
+    //             if ((DistanceBetweenRoadAndPoint(road, curr_pos) <= ROAD_WIDTH) && (DistanceBetweenRoadAndPoint(road, next_pos) <= ROAD_WIDTH))
+    //             {
+    //                 not_jump = true;
+    //             }
+
+    //             if (DistanceBetweenRoadAndPoint(road, curr_pos) <= ROAD_WIDTH)
+    //             {
+    //                 curr_roads.push_back(road);
+    //             }
+    //         }
+    //         if (not_jump)
+    //         {
+    //             dog->SetPos(next_pos);
+    //         }
+    //         else
+    //         {
+    //             double min_delta = 0;
+    //             bool first = true;
+    //             for (auto road : curr_roads)
+    //             {
+    //                 double delta = DistanceBetweenRoadAndPoint(road, next_pos) - ROAD_WIDTH;
+    //                 if (first)
+    //                 {
+    //                     min_delta = delta;
+    //                     first = false;
+    //                 }
+
+    //                 if (delta < min_delta)
+    //                 {
+    //                     min_delta = delta;
+    //                 }
+    //             }
+    //             // если вышли за границу то поставить в точку на границе
+    //             // расчитываем растояние от края дороги
+    //             next_pos = next_pos - min_delta * dog->GetDirectionVec(); // возвращаемся на растояние до края дороги в направлении противоположном движению
+    //             dog->SetPos(next_pos);
+    //             dog->SetDir(""); // stop
+    //         }
+    //     }
+    // }
+
     void GameSession::UpdateTime(int delta_t)
     {
         for (auto dog : dogs_)
         {
             auto dt = ((delta_t + 0.0) / 1000.0);
-
             auto curr_pos = dog->GetPos();
             auto curr_speed = dog->GetSpeed();
             auto next_pos = curr_pos + curr_speed * dt;
-
             // нужно определить что не вышли за границы дорог
             // близжайшая дорога
-
             std::vector<Road> curr_roads;
-
             bool not_jump = false;
             for (auto road : map_ptr_->GetRoads())
             {
@@ -284,33 +335,51 @@ namespace model
                     curr_roads.push_back(road);
                 }
             }
-
             if (not_jump)
             {
                 dog->SetPos(next_pos);
             }
             else
             {
-                double min_delta = 0;
-                bool first = true;
+                // мы можем находится на нескольких дорогах нужно выбрать ту у которой в выбранном направлении мы продвинемся дальше
+                next_pos = curr_pos; //
                 for (auto road : curr_roads)
                 {
-                    double delta = DistanceBetweenRoadAndPoint(road, next_pos) - ROAD_WIDTH;
-                    if (first)
-                    {
-                        min_delta = delta;
-                        first = false;
-                    }
+                    auto border_pos = GetBorderPoint(road, dog);
 
-                    if (delta < min_delta)
+                    if (dog->GetDir() == "U")
                     {
-                        min_delta = delta;
+                        if (border_pos.y < next_pos.y)
+                        {
+                            next_pos = border_pos;
+                        }
+                    }
+                    else if (dog->GetDir() == "D")
+                    {
+                        if (border_pos.y > next_pos.y)
+                        {
+                            next_pos = border_pos;
+                        }
+                    }
+                    else if (dog->GetDir() == "L")
+                    {
+                        if (border_pos.x < next_pos.x)
+                        {
+                            next_pos = border_pos;
+                        }
+                    }
+                    else if (dog->GetDir() == "R")
+                    {
+                        if (border_pos.x > next_pos.x)
+                        {
+                            next_pos = border_pos;
+                        }
+                    }
+                    else
+                    {
                     }
                 }
 
-                // если вышли за границу то поставить в точку на границе
-                // расчитываем растояние от края дороги
-                next_pos = next_pos - min_delta * dog->GetDirectionVec(); // возвращаемся на растояние до края дороги в направлении противоположном движению
                 dog->SetPos(next_pos);
                 dog->SetDir(""); // stop
             }
@@ -398,21 +467,34 @@ namespace model
         return DistanceBetweenRoadAndPoint(road, pos) <= ROAD_WIDTH;
     }
 
-    //     TwoDimVector GetBorderPoint(Road road, std::shared_ptr<model::Dog> dog)
-    //     {
-    //         auto dir = dog->GetDir();
-    //         auto pos = dog->GetPos();
+    TwoDimVector GetBorderPoint(Road road, std::shared_ptr<model::Dog> dog)
+    {
+        auto road_min_x = std::min(road.GetStart().x, road.GetEnd().x) - ROAD_WIDTH; // L самая левая точка дороги
+        auto road_max_x = std::max(road.GetStart().x, road.GetEnd().x) + ROAD_WIDTH; // R самая правая точка
+        auto road_min_y = std::min(road.GetStart().y, road.GetEnd().y) - ROAD_WIDTH; // U самая верхняя
+        auto road_max_y = std::max(road.GetStart().y, road.GetEnd().y) + ROAD_WIDTH; // D нижняя
 
-    //         TwoDimVector curr_pos = dog->GetPos();
+        TwoDimVector curr_pos = dog->GetPos();
 
-    //         auto is_horizontal = road.IsHorizontal();
-    //         if(road.IsHorizontal())
-    //         {
-    //             if(dog->GetDir() == "U")
-    //             {
-
-    //             }
-    //         }
-
-    //    }
+        if (dog->GetDir() == "U")
+        {
+            curr_pos.y = road_min_y; // идем до самой верхней точки дороги
+        }
+        else if (dog->GetDir() == "D")
+        {
+            curr_pos.y = road_max_y;
+        }
+        else if (dog->GetDir() == "L")
+        {
+            curr_pos.x = road_min_x;
+        }
+        else if (dog->GetDir() == "R")
+        {
+            curr_pos.x = road_max_x;
+        }
+        else
+        {
+        }
+        return curr_pos;
+    }
 } // namespace model

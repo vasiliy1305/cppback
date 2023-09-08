@@ -541,4 +541,5 @@ namespace model
         double default_dog_speed_ = 1.0;
     };
 
+    TwoDimVector GetBorderPoint(Road road, std::shared_ptr<model::Dog> dog);
 } // namespace model
