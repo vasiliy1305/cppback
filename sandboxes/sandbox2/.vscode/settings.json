@@ -64,14 +64,13 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp",
-        "*.ipp": "cpp",
         "compare": "cpp",
         "concepts": "cpp",
-        "coroutine": "cpp",
-        "source_location": "cpp",
         "numbers": "cpp",
+        "syncstream": "cpp",
+        "strstream": "cpp",
         "semaphore": "cpp",
-        "stop_token": "cpp",
-        "syncstream": "cpp"
-    }
+        "stop_token": "cpp"
+    },
+    "cmake.configureOnOpen": false
 }
