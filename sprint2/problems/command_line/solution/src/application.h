@@ -78,12 +78,14 @@ namespace app
         StringResponse JoinGame(const StringRequest &req);
         StringResponse SetTimeDelta(const StringRequest &req);
 
+        void UpdateTime(int delta_time);
+
     private:
         model::Game game_;
 
         std::string GetToken(const StringRequest &req);
 
-        void UpdateTime(int delta_time);
+        
 
         StringResponse ReturnMethodNotAllowed(const StringRequest &req, std::string_view text, std::string allow);
         StringResponse ReturnJsonContent(const StringRequest &req, http::status status, std::string_view text);

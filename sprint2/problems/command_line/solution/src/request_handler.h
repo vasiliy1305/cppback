@@ -4,62 +4,68 @@
 
 namespace http_handler
 {
-    class Ticker : public std::enable_shared_from_this<Ticker> {
-public:
-    using Strand = net::strand<net::io_context::executor_type>;
-    using Handler = std::function<void(std::chrono::milliseconds delta)>;
-
-    // Функция handler будет вызываться внутри strand с интервалом period
-    Ticker(Strand strand, std::chrono::milliseconds period, Handler handler)
-        : strand_{strand}
-        , period_{period}
-        , handler_{std::move(handler)} {
-    }
-
-    void Start() {
-        net::dispatch(strand_, [self = shared_from_this()] {
-            self->SetLastTick(Clock::now());
-            self->ScheduleTick();
-        });
-    }
-    void SetLastTick(std::chrono::steady_clock::time_point last_tick)
+    class Ticker : public std::enable_shared_from_this<Ticker>
     {
-        last_tick_ = last_tick;
-    }
+    public:
+        using Strand = net::strand<net::io_context::executor_type>;
+        using Handler = std::function<void(std::chrono::milliseconds delta)>;
 
-private:
-    void ScheduleTick() {
-        assert(strand_.running_in_this_thread());
-        timer_.expires_after(period_);
-        timer_.async_wait([self = shared_from_this()](sys::error_code ec) {
-            self->OnTick(ec);
-        });
-    }
-
-    void OnTick(sys::error_code ec) {
-        using namespace std::chrono;
-        assert(strand_.running_in_this_thread());
-
-        if (!ec) {
-            auto this_tick = Clock::now();
-            auto delta = duration_cast<milliseconds>(this_tick - last_tick_);
-            last_tick_ = this_tick;
-            try {
-                handler_(delta);
-            } catch (...) {
-            }
-            ScheduleTick();
+        // Функция handler будет вызываться внутри strand с интервалом period
+        Ticker(Strand strand, std::chrono::milliseconds period, Handler handler)
+            : strand_{strand}, period_{period}, handler_{std::move(handler)}
+        {
         }
-    }
 
-    using Clock = std::chrono::steady_clock;
+        void Start()
+        {
+            net::dispatch(strand_, [self = shared_from_this()]
+                          {
+            self->SetLastTick(Clock::now());
+            self->ScheduleTick(); });
+        }
+        void SetLastTick(std::chrono::steady_clock::time_point last_tick)
+        {
+            last_tick_ = last_tick;
+        }
 
-    Strand strand_;
-    std::chrono::milliseconds period_;
-    net::steady_timer timer_{strand_};
-    Handler handler_;
-    std::chrono::steady_clock::time_point last_tick_;
-};
+    private:
+        void ScheduleTick()
+        {
+            assert(strand_.running_in_this_thread());
+            timer_.expires_after(period_);
+            timer_.async_wait([self = shared_from_this()](sys::error_code ec)
+                              { self->OnTick(ec); });
+        }
+
+        void OnTick(sys::error_code ec)
+        {
+            using namespace std::chrono;
+            assert(strand_.running_in_this_thread());
+
+            if (!ec)
+            {
+                auto this_tick = Clock::now();
+                auto delta = duration_cast<milliseconds>(this_tick - last_tick_);
+                last_tick_ = this_tick;
+                try
+                {
+                    handler_(delta);
+                }
+                catch (...)
+                {
+                }
+                ScheduleTick();
+            }
+        }
+
+        using Clock = std::chrono::steady_clock;
+
+        Strand strand_;
+        std::chrono::milliseconds period_;
+        net::steady_timer timer_{strand_};
+        Handler handler_;
+        std::chrono::steady_clock::time_point last_tick_;
+    };
 
     using namespace std::literals;
 
@@ -144,8 +150,9 @@ private:
     class ApiHandler
     {
     public:
-        ApiHandler(model::Game &game, net::io_context &ioc) : app_{game} , ioc_(ioc)
+        ApiHandler(model::Game &game, net::io_context &ioc) : app_{game}, ioc_(ioc)
         {
+            StartTicker();
         }
 
         template <typename Body, typename Allocator, typename Send>
@@ -201,19 +208,32 @@ private:
             }
         }
 
+        void StartTicker()
+        {
+            // strand, используемый для доступа к API
+            auto api_strand = net::make_strand(ioc_);
+
+            // Настраиваем вызов метода Application::Tick каждые 50 миллисекунд внутри strand
+            auto ticker = std::make_shared<Ticker>(api_strand, 50ms,
+                                                   [this](std::chrono::milliseconds delta)
+                                                   { app_.UpdateTime(delta.count()); });
+            ticker->Start();
+
+        }
+
     private:
         app::Application app_;
         net::io_context &ioc_;
+        std::shared_ptr<Ticker> tiker_sh_ptr_;
     };
-
 
     class RequestHandler
     {
     public:
         explicit RequestHandler(model::Game &game, fs::path static_dir, int tick, net::io_context &ioc) : api_handler_{game, ioc},
-                                                                                                     content_handler_(static_dir),
-                                                                                                     tick_(tick)
-                                                                                                
+                                                                                                          content_handler_(static_dir),
+                                                                                                          tick_(tick)
+
         {
         }
 
