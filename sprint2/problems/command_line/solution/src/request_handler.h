@@ -148,7 +148,7 @@ namespace http_handler
         app::Application app_;
     };
 
-    //
+
     class RequestHandler
     {
     public:

@@ -7,3 +7,15 @@ curl -X POST -H "Content-Type: application/json" -d '{"timeDelta":100}' http://1
 ------------------------------------------------------------------------------------------------------------------------
 
 game_server --tick-period <time-in-ms> --config-file <config-path> --www-root <static-files-dir>
+
+------------------------------------
+conan install .. --build=missing -s build_type=Release -s compiler.libcxx=libstdc++11
+cmake ..
+cmake --build .
+
+
+mkdir build_debug && cd build_debug
+
+conan install .. -s compiler.libcxx=libstdc++11 -s build_type=Debug
+cmake .. -DCMAKE_BUILD_TYPE=Debug
+cmake --build . 
