@@ -110,6 +110,7 @@ int main(int argc, const char *argv[])
         if (!ec) 
         {
             ioc.stop();
+            
         } });
 
             // 4. Создаём обработчик HTTP-запросов и связываем его с моделью игры
