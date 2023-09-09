@@ -87,7 +87,7 @@ namespace http_handler
     class ApiHandler
     {
     public:
-        ApiHandler(model::Game &game) : app_{game}
+        ApiHandler(model::Game &game, net::io_context &ioc) : app_{game} , ioc_(ioc)
         {
         }
 
@@ -146,13 +146,14 @@ namespace http_handler
 
     private:
         app::Application app_;
+        net::io_context &ioc_;
     };
 
 
     class RequestHandler
     {
     public:
-        explicit RequestHandler(model::Game &game, fs::path static_dir, int tick) : api_handler_{game},
+        explicit RequestHandler(model::Game &game, fs::path static_dir, int tick, net::io_context &ioc) : api_handler_{game, ioc},
                                                                                                      content_handler_(static_dir),
                                                                                                      tick_(tick)
                                                                                                 

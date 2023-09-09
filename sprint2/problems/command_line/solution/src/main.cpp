@@ -113,7 +113,7 @@ int main(int argc, const char *argv[])
         } });
 
             // 4. Создаём обработчик HTTP-запросов и связываем его с моделью игры
-            http_handler::RequestHandler handler{game, args->www_root, args->tick_period};
+            http_handler::RequestHandler handler{game, args->www_root, args->tick_period, ioc};
             // http_handler::LoggingRequestHandler logging_handler{handler};
 
             // 5. Запустить обработчик HTTP-запросов, делегируя их обработчику запросов
