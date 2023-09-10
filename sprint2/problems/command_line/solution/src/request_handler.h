@@ -152,9 +152,9 @@ namespace http_handler
     public:
         ApiHandler(model::Game &game, net::io_context &ioc, int period) : app_{game}, ioc_(ioc), period_(period)
         {
-            if (period > 0)
+            if (period)
             {
-                StartTicker();
+                StartTicker(); // todo 
             }
         }
 

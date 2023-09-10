@@ -74,7 +74,10 @@ struct Args
     {
         throw std::runtime_error("www-root dir is not specified"s);
     }
-
+    if (!vm.contains("tick-period"s))
+    {
+        args.tick_period = -1;
+    }
     if (vm.contains("randomize-spawn-points"))
     {
         args.randomize_spawn_points = true;
