@@ -207,7 +207,7 @@ namespace http_handler
             }
             else if (request_type == ApiRequestType::TICK)
             {
-                if (period_ > 0)
+                if (period_ < 0)
                 {
                     send(app_.SetTimeDelta(req));
                 }
