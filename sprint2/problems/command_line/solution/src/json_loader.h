@@ -55,3 +55,4 @@ namespace json_loader
     model::Map ParseMap(boost::json::value map, double def_dog_speed);
 
 } // namespace json_loader
+// 123
