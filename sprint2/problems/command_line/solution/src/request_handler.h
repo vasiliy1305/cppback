@@ -150,9 +150,12 @@ namespace http_handler
     class ApiHandler
     {
     public:
-        ApiHandler(model::Game &game, net::io_context &ioc) : app_{game}, ioc_(ioc)
+        ApiHandler(model::Game &game, net::io_context &ioc, int period) : app_{game}, ioc_(ioc), period_(period)
         {
-            StartTicker();
+            if (period > 0)
+            {
+                StartTicker();
+            }
         }
 
         template <typename Body, typename Allocator, typename Send>
@@ -204,7 +207,14 @@ namespace http_handler
             }
             else if (request_type == ApiRequestType::TICK)
             {
-                send(app_.SetTimeDelta(req));
+                if (period_ > 0)
+                {
+                    send(app_.SetTimeDelta(req));
+                }
+                else
+                {
+                    send(json_response(http::status::bad_request, "{\"code\": \"badRequest\", \"message\": \"Bad request\"}"));
+                }
             }
         }
 
@@ -218,21 +228,20 @@ namespace http_handler
                                                    [this](std::chrono::milliseconds delta)
                                                    { app_.UpdateTime(delta.count()); });
             ticker->Start();
-
         }
 
     private:
         app::Application app_;
         net::io_context &ioc_;
         std::shared_ptr<Ticker> tiker_sh_ptr_;
+        int period_;
     };
 
     class RequestHandler
     {
     public:
-        explicit RequestHandler(model::Game &game, fs::path static_dir, int tick, net::io_context &ioc) : api_handler_{game, ioc},
-                                                                                                          content_handler_(static_dir),
-                                                                                                          tick_(tick)
+        explicit RequestHandler(model::Game &game, fs::path static_dir, int period, net::io_context &ioc) : api_handler_{game, ioc, period},
+                                                                                                            content_handler_(static_dir)
 
         {
         }
@@ -264,7 +273,6 @@ namespace http_handler
     private:
         ContentHandler content_handler_;
         ApiHandler api_handler_;
-        int tick_;
 
         bool IsApi(const std::string &request);
     };
