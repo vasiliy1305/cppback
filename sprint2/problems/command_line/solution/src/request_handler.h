@@ -154,7 +154,7 @@ namespace http_handler
         {
             if (period)
             {
-                StartTicker(); // todo 
+                StartTicker(std::chrono::milliseconds(period)); // todo 
             }
         }
 
@@ -207,7 +207,7 @@ namespace http_handler
             }
             else if (request_type == ApiRequestType::TICK)
             {
-                if (period_ > 0)
+                if (period_ < 0)
                 {
                     send(app_.SetTimeDelta(req));
                 }
@@ -218,13 +218,13 @@ namespace http_handler
             }
         }
 
-        void StartTicker()
+        void StartTicker(std::chrono::milliseconds period)
         {
             // strand, используемый для доступа к API
             auto api_strand = net::make_strand(ioc_);
 
             // Настраиваем вызов метода Application::Tick каждые 50 миллисекунд внутри strand
-            auto ticker = std::make_shared<Ticker>(api_strand, 50ms,
+            auto ticker = std::make_shared<Ticker>(api_strand, period,
                                                    [this](std::chrono::milliseconds delta)
                                                    { app_.UpdateTime(delta.count()); });
             ticker->Start();
