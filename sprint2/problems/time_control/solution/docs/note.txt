@@ -1,0 +1,10 @@
+
+curl -X POST -H "Content-Type: application/json" -d '{"userName": "Scooby Doo", "mapId": "map1"}' http://127.0.0.1:8080/api/v1/game/join
+curl -X GET  -H "Authorization: Bearer bd0d1f0d838308f35773dc54968a1bc0" "http://127.0.0.1:8080/api/v1/game/players"
+curl -X GET  -H "Authorization: Bearer bd0d1f0d838308f35773dc54968a1bc0" "http://127.0.0.1:8080/api/v1/game/state"
+
+curl -X POST -H "Content-Type: application/json" -d '{"timeDelta":100}' http://127.0.0.1:8080/
+
+------------------------------------------------------------------------------------------------------------------------
+
+assert Point(x=10.0, y=5.817234770596967) == Point(x=10.4, y=5.817234770596967)
