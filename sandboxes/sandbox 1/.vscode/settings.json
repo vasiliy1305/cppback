@@ -68,6 +68,5 @@
         "concepts": "cpp",
         "numbers": "cpp",
         "syncstream": "cpp"
-    },
-    "cmake.configureOnOpen": false
+    }
 }
