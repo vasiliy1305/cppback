@@ -55,7 +55,8 @@ namespace app
         {
             return ReturnJsonContent(req, http::status::ok, GetMapsAsJS());
         }
-        return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only GET method is expected\"}", "GET");
+        return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only GET method is expected"), "GET");
+        
     }
 
     std::string Application::GetMapsAsJS()
@@ -157,9 +158,10 @@ namespace app
             {
                 return ReturnJsonContent(req, http::status::ok, GetMapAsJS(request_parts.at(3)));
             }
-            return ReturnJsonContent(req, http::status::not_found, "{\"code\": \"mapNotFound\",\"message\": \"Map not found\"}");
+            return ReturnJsonContent(req, http::status::not_found, MakeMessege("mapNotFound", "Map not found"));
+            
         }
-        return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only GET method is expected\"}", "GET");
+        return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only GET method is expected"), "GET");
     }
 
     StringResponse Application::JoinGame(const StringRequest &req)
@@ -171,7 +173,7 @@ namespace app
         }
         else
         {
-            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only POST method is expected\"}", "POST");
+            return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only POST method is expected"), "POST");
         }
     }
 
@@ -190,7 +192,7 @@ namespace app
             if (user_name == "")
             {
                 status = http::status::bad_request;
-                body = "{\"code\": \"invalidArgument\", \"message\": \"Invalid name\"}";
+                body = MakeMessege("invalidArgument", "Invalid name");
                 return {body, status};
             }
 
@@ -205,14 +207,14 @@ namespace app
             else
             {
                 status = http::status::not_found;
-                body = "{\"code\": \"mapNotFound\", \"message\": \"Map not found\"}";
+                body = MakeMessege("mapNotFound", "Map not found");
             }
             return {body, status};
         }
         catch (...)
         {
             status = http::status::bad_request;
-            body = "{\"code\": \"invalidArgument\", \"message\": \"Join game request parse error\"}";
+            body = MakeMessege("invalidArgument", "Join game request parse error");
             return {body, status};
         }
     }
@@ -242,14 +244,15 @@ namespace app
             {
 
                 status = http::status::unauthorized;
-                body = "{\"code\": \"unknownToken\", \"message\": \"Player token has not been found\"}";
+                body = MakeMessege("unknownToken", "Player token has not been found");
+                
                 return {body, status};
             }
         }
         else
         {
             status = http::status::unauthorized;
-            body = "{\"code\": \"invalidToken\", \"message\": \"Authorization header is missing\"}";
+            body = MakeMessege("invalidToken", "Authorization header is missing");
             return {body, status};
         }
     }
@@ -279,14 +282,14 @@ namespace app
             else
             {
                 status = http::status::unauthorized;
-                body = "{\"code\": \"unknownToken\", \"message\": \"Player token has not been found\"}";
+                body = MakeMessege("unknownToken", "Player token has not been found");
                 return {body, status};
             }
         }
         else
         {
             status = http::status::unauthorized;
-            body = "{\"code\": \"invalidToken\", \"message\": \"Authorization header is missing\"}";
+            body = MakeMessege("invalidToken", "Authorization header is missing");
             return {body, status};
         }
     }
@@ -316,7 +319,7 @@ namespace app
         }
         else
         {
-            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only GET method is expected\"}", "GET");
+            return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only GET method is expected"), "GET");
         }
     }
 
@@ -331,7 +334,7 @@ namespace app
         }
         else
         {
-            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only GET and HEAD method is expected\"}", "GET, HEAD");
+            return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only GET and HEAD method is expected"), "GET, HEAD");
         }
     }
 
@@ -363,12 +366,12 @@ namespace app
             }
             else
             {
-                return ReturnJsonContent(req, http::status::unauthorized, "{\"code\": \"invalidToken\", \"message\": \"Authorization header is missing\"}");
+                return ReturnJsonContent(req, http::status::unauthorized, MakeMessege("invalidToken", "Authorization header is missing"));
             }
         }
         else
         {
-            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only POST method is expected\"}", "POST");
+            return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only POST method is expected"), "POST");
         }
     }
 
@@ -385,17 +388,27 @@ namespace app
             }
             catch (const std::exception &e)
             {
-                return ReturnJsonContent(req, http::status::bad_request, "{\"code\": \"invalidArgument\", \"message\": \"Failed to parse tick request JSON\"}");
+                return ReturnJsonContent(req, http::status::bad_request, MakeMessege("invalidArgument", "Failed to parse tick request JSON"));
             }
         }
         else
         {
-            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only POST method is expected\"}", "POST");
+            return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only POST method is expected"), "POST");
         }
     }
 
     void Application::UpdateTime(int delta_time)
     {
         game_.UpdateTime(delta_time);
+    }
+
+
+    std::string Application::MakeMessege(std::string code, std::string message)
+    {
+        json::object msg;
+        msg["code"] = code;
+        msg["message"] = message;
+
+        return json::serialize(msg);
     }
 } // end namespace app
