@@ -56,7 +56,6 @@ namespace app
             return ReturnJsonContent(req, http::status::ok, GetMapsAsJS());
         }
         return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only GET method is expected"), "GET");
-        
     }
 
     std::string Application::GetMapsAsJS()
@@ -159,7 +158,6 @@ namespace app
                 return ReturnJsonContent(req, http::status::ok, GetMapAsJS(request_parts.at(3)));
             }
             return ReturnJsonContent(req, http::status::not_found, MakeMessege("mapNotFound", "Map not found"));
-            
         }
         return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only GET method is expected"), "GET");
     }
@@ -171,10 +169,7 @@ namespace app
             auto [body, status] = Join(req.body().c_str());
             return ReturnJsonContent(req, status, body);
         }
-        else
-        {
-            return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only POST method is expected"), "POST");
-        }
+        return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only POST method is expected"), "POST");
     }
 
     std::pair<std::string, http::status> Application::Join(const std::string json_str)
@@ -240,21 +235,13 @@ namespace app
                 status = http::status::ok;
                 return {body, status};
             }
-            else
-            {
-
-                status = http::status::unauthorized;
-                body = MakeMessege("unknownToken", "Player token has not been found");
-                
-                return {body, status};
-            }
-        }
-        else
-        {
             status = http::status::unauthorized;
-            body = MakeMessege("invalidToken", "Authorization header is missing");
+            body = MakeMessege("unknownToken", "Player token has not been found");
             return {body, status};
         }
+        status = http::status::unauthorized;
+        body = MakeMessege("invalidToken", "Authorization header is missing");
+        return {body, status};
     }
 
     std::pair<std::string, http::status> Application::State(const std::string token)
@@ -279,19 +266,13 @@ namespace app
                 status = http::status::ok;
                 return {body, status};
             }
-            else
-            {
-                status = http::status::unauthorized;
-                body = MakeMessege("unknownToken", "Player token has not been found");
-                return {body, status};
-            }
-        }
-        else
-        {
             status = http::status::unauthorized;
-            body = MakeMessege("invalidToken", "Authorization header is missing");
+            body = MakeMessege("unknownToken", "Player token has not been found");
             return {body, status};
         }
+        status = http::status::unauthorized;
+        body = MakeMessege("invalidToken", "Authorization header is missing");
+        return {body, status};
     }
 
     boost::json::value Application::DogToJsonObj(model::Dog &dog)
@@ -332,10 +313,7 @@ namespace app
 
             return ReturnJsonContent(req, status, body);
         }
-        else
-        {
-            return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only GET and HEAD method is expected"), "GET, HEAD");
-        }
+        return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only GET and HEAD method is expected"), "GET, HEAD");
     }
 
     std::string Application::GetToken(const StringRequest &req)
@@ -364,15 +342,9 @@ namespace app
                 player->GetDog()->SetDir(direction);
                 return ReturnJsonContent(req, http::status::ok, "{}");
             }
-            else
-            {
-                return ReturnJsonContent(req, http::status::unauthorized, MakeMessege("invalidToken", "Authorization header is missing"));
-            }
+            return ReturnJsonContent(req, http::status::unauthorized, MakeMessege("invalidToken", "Authorization header is missing"));
         }
-        else
-        {
-            return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only POST method is expected"), "POST");
-        }
+        return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only POST method is expected"), "POST");
     }
 
     StringResponse Application::SetTimeDelta(const StringRequest &req)
@@ -391,17 +363,13 @@ namespace app
                 return ReturnJsonContent(req, http::status::bad_request, MakeMessege("invalidArgument", "Failed to parse tick request JSON"));
             }
         }
-        else
-        {
-            return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only POST method is expected"), "POST");
-        }
+        return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only POST method is expected"), "POST");
     }
 
     void Application::UpdateTime(int delta_time)
     {
         game_.UpdateTime(delta_time);
     }
-
 
     std::string Application::MakeMessege(std::string code, std::string message)
     {
