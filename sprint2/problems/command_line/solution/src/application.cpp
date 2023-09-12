@@ -55,10 +55,7 @@ namespace app
         {
             return ReturnJsonContent(req, http::status::ok, GetMapsAsJS());
         }
-        else
-        {
-            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only GET method is expected\"}", "GET");
-        }
+        return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only GET method is expected\"}", "GET");
     }
 
     std::string Application::GetMapsAsJS()
@@ -103,10 +100,7 @@ namespace app
         {
             return {{"x0", road.GetStart().x}, {"y0", road.GetStart().y}, {"x1", road.GetEnd().x}};
         }
-        else
-        {
-            return {{"x0", road.GetStart().x}, {"y0", road.GetStart().y}, {"y1", road.GetEnd().y}};
-        }
+        return {{"x0", road.GetStart().x}, {"y0", road.GetStart().y}, {"y1", road.GetEnd().y}};
     }
 
     boost::json::value Application::BuildingToJsonObj(const model::Building &building)
@@ -163,15 +157,9 @@ namespace app
             {
                 return ReturnJsonContent(req, http::status::ok, GetMapAsJS(request_parts.at(3)));
             }
-            else
-            {
-                return ReturnJsonContent(req, http::status::not_found, "{\"code\": \"mapNotFound\",\"message\": \"Map not found\"}");
-            }
+            return ReturnJsonContent(req, http::status::not_found, "{\"code\": \"mapNotFound\",\"message\": \"Map not found\"}");
         }
-        else
-        {
-            return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only GET method is expected\"}", "GET");
-        }
+        return ReturnMethodNotAllowed(req, "{\"code\": \"invalidMethod\", \"message\": \"Only GET method is expected\"}", "GET");
     }
 
     StringResponse Application::JoinGame(const StringRequest &req)
@@ -322,7 +310,7 @@ namespace app
         if (req.method() == http::verb::get || req.method() == http::verb::head)
         {
             auto [body, status] = State(GetToken(req));
-            
+
             // std::cerr <<  body << std::endl;
             return ReturnJsonContent(req, status, body);
         }
@@ -397,7 +385,7 @@ namespace app
             }
             catch (const std::exception &e)
             {
-                 return ReturnJsonContent(req, http::status::bad_request, "{\"code\": \"invalidArgument\", \"message\": \"Failed to parse tick request JSON\"}");
+                return ReturnJsonContent(req, http::status::bad_request, "{\"code\": \"invalidArgument\", \"message\": \"Failed to parse tick request JSON\"}");
             }
         }
         else
