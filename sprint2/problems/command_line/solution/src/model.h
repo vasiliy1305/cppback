@@ -448,7 +448,6 @@ namespace model
         {
             if (auto it = map_id_to_game_index_.find(id); it != map_id_to_game_index_.end())
             {
-
                 return sessions_.at(it->second);
             }
             return nullptr;

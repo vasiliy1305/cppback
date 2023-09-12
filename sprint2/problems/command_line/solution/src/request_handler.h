@@ -4,6 +4,8 @@
 
 namespace http_handler
 {
+    using Clock = std::chrono::steady_clock;
+    
     class Ticker : public std::enable_shared_from_this<Ticker>
     {
     public:
@@ -58,7 +60,7 @@ namespace http_handler
             }
         }
 
-        using Clock = std::chrono::steady_clock;
+        
 
         Strand strand_;
         std::chrono::milliseconds period_;
