@@ -184,8 +184,8 @@ namespace model
 
             if (!randomize_spawn_points_)
             {
-                rnd_x = road_start.x; 
-                rnd_y = road_start.y; 
+                rnd_x = road_start.x;
+                rnd_y = road_start.y;
             }
 
             // 2. создаем собаку на сене
@@ -412,5 +412,58 @@ namespace model
         {
         }
         return curr_pos;
+    }
+
+    TwoDimVector Dog::GetDirectionVec()
+    {
+        if (dir_str_ == "L")
+        {
+            return {-1, 0};
+        }
+        else if (dir_str_ == "R")
+        {
+            return {1, 0};
+        }
+        else if (dir_str_ == "U")
+        {
+            return {0, -1};
+        }
+        else if (dir_str_ == "D")
+        {
+            return {0, 1};
+        }
+        else
+        {
+            return {0, 0};
+        }
+    }
+
+    void Dog::SetDir(std::string dir)
+    {
+        dir_str_ = dir;
+        if (dir == "L")
+        {
+            speed_ = {-abs_speed_, 0};
+            dir_ = Direction::WEST;
+        }
+        else if (dir == "R")
+        {
+            speed_ = {abs_speed_, 0};
+            dir_ = Direction::EAST;
+        }
+        else if (dir == "U")
+        {
+            speed_ = {0, -abs_speed_};
+            dir_ = Direction::NORTH;
+        }
+        else if (dir == "D")
+        {
+            speed_ = {0, abs_speed_};
+            dir_ = Direction::SOUTH;
+        }
+        else
+        {
+            speed_ = {0, 0};
+        }
     }
 } // namespace model

@@ -276,34 +276,7 @@ namespace model
             return std::string(1, static_cast<char>(dir_));
         }
 
-        void SetDir(std::string dir)
-        {
-            dir_str_ = dir;
-            if (dir == "L")
-            {
-                speed_ = {-abs_speed_, 0};
-                dir_ = Direction::WEST;
-            }
-            else if (dir == "R")
-            {
-                speed_ = {abs_speed_, 0};
-                dir_ = Direction::EAST;
-            }
-            else if (dir == "U")
-            {
-                speed_ = {0, -abs_speed_};
-                dir_ = Direction::NORTH;
-            }
-            else if (dir == "D")
-            {
-                speed_ = {0, abs_speed_};
-                dir_ = Direction::SOUTH;
-            }
-            else
-            {
-                speed_ = {0, 0};
-            }
-        }
+        void SetDir(std::string dir);
 
         void UpdateTime(int delta);
 
@@ -313,29 +286,7 @@ namespace model
         }
 
         // единичный вектор направления двиижения
-        TwoDimVector GetDirectionVec()
-        {
-            if (dir_str_ == "L")
-            {
-                return {-1, 0};
-            }
-            else if (dir_str_ == "R")
-            {
-                return {1, 0};
-            }
-            else if (dir_str_ == "U")
-            {
-                return {0, -1};
-            }
-            else if (dir_str_ == "D")
-            {
-                return {0, 1};
-            }
-            else
-            {
-                return {0, 0};
-            }
-        }
+        TwoDimVector GetDirectionVec();
 
     private:
         Id id_;
