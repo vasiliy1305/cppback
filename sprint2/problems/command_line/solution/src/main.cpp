@@ -94,7 +94,7 @@ int main(int argc, const char *argv[])
         {
 
             // 0. init log
-            http_server::InitBoostLog();
+            logger::InitBoostLog();
 
             // 1. Загружаем карту из файла и построить модель игры
             model::Game game = json_loader::LoadGame(args->config_file);
@@ -128,7 +128,7 @@ int main(int argc, const char *argv[])
 
             // Эта надпись сообщает тестам о том, что сервер запущен и готов обрабатывать запросы
             // std::cout << "Server has started..." << std::endl;
-            http_server::LogServerStarted(address, port);
+            logger::LogServerStarted(address, port);
 
             // 6. Запускаем обработку асинхронных операций
             RunWorkers(std::max(1u, num_threads), [&ioc]
@@ -137,9 +137,9 @@ int main(int argc, const char *argv[])
     }
     catch (const std::exception &ex)
     {
-        http_server::LogServerExited(EXIT_FAILURE, ex.what());
+        logger::LogServerExited(EXIT_FAILURE, ex.what());
         return EXIT_FAILURE;
     }
-    http_server::LogServerExited(0, "");
+    logger::LogServerExited(0, "");
     return 0;
 }

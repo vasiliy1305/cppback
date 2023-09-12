@@ -1,5 +1,6 @@
 #pragma once
 #include "sdk.h"
+#include "logger.h"
 // boost.beast будет использовать std::string_view вместо boost::string_view
 #define BOOST_BEAST_USE_STD_STRING_VIEW
 
@@ -7,44 +8,26 @@
 #include <iostream>
 #include <chrono>
 
-#include <boost/asio/dispatch.hpp>
-#include <boost/asio/ip/tcp.hpp>
-#include <boost/asio/strand.hpp>
+
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 
-#include <boost/log/trivial.hpp>     // для BOOST_LOG_TRIVIAL
-#include <boost/log/core.hpp>        // для logging::core
-#include <boost/log/expressions.hpp> // для выражения, задающего фильтр
-#include <boost/log/utility/setup/file.hpp>
-#include <boost/log/utility/setup/common_attributes.hpp>
-#include <boost/log/utility/setup/console.hpp>
-#include <boost/date_time.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/json.hpp>
+
 #include <cmath>
 namespace http_server
 {
-    namespace net = boost::asio;
+    
     using tcp = net::ip::tcp;
     namespace beast = boost::beast;
     namespace http = beast::http;
 
-    namespace keywords = boost::log::keywords;
-    namespace sinks = boost::log::sinks;
-    namespace logging = boost::log;
+
+
     namespace sys = boost::system;
 
     using namespace std::literals;
 
-    void LogJson(std::string msg, boost::json::object data);
-    void LogServerStarted(net::ip::address addres, net::ip::port_type port);
-    void LogRequestReceived(std::string IP, std::string URI, std::string method);
-    void LogResponseSent(int response_time, int code, std::string content_type);
-    void MyFormatter(logging::record_view const &rec, logging::formatting_ostream &strm);
-    void LogServerExited(int code, std::string exception);
-    void LogError(int code, std::string text, std::string where);
-    void InitBoostLog();
+
 
     void ReportError(beast::error_code ec, std::string_view what);
 
@@ -78,7 +61,7 @@ namespace http_server
             std::chrono::duration<double, std::milli> elapsed = finish - start_read_;
             auto elapsed_int  = static_cast<int>(std::round(elapsed.count()));
 
-            LogResponseSent(elapsed_int, response.result_int(), content_type_str);
+            logger::LogResponseSent(elapsed_int, response.result_int(), content_type_str);
             // Запись выполняется асинхронно, поэтому response перемещаем в область кучи
             auto safe_response = std::make_shared<http::response<Body, Fields>>(std::move(response));
 
@@ -194,7 +177,7 @@ namespace http_server
 
             if (ec)
             {
-                LogError(ec.value(), ec.message(), "accept");
+                logger::LogError(ec.value(), ec.message(), "accept");
                 return ReportError(ec, "accept"sv);
             }
 
