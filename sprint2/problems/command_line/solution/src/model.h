@@ -80,12 +80,12 @@ namespace model
             return start_.x == end_.x;
         }
 
-        Point GetStart() const noexcept
+        const Point GetStart() const noexcept
         {
             return start_;
         }
 
-        Point GetEnd() const noexcept
+        const Point GetEnd() const noexcept
         {
             return end_;
         }
@@ -127,12 +127,12 @@ namespace model
             return id_;
         }
 
-        Point GetPosition() const noexcept
+       const Point GetPosition() const noexcept
         {
             return position_;
         }
 
-        Offset GetOffset() const noexcept
+        const Offset GetOffset() const noexcept
         {
             return offset_;
         }
@@ -261,17 +261,17 @@ namespace model
             return id_;
         }
 
-        TwoDimVector GetPos()
+        const TwoDimVector GetPos()
         {
             return pos_;
         }
 
-        TwoDimVector GetSpeed()
+        const TwoDimVector GetSpeed()
         {
             return speed_;
         }
 
-        std::string GetDir()
+        const std::string GetDir()
         {
             return std::string(1, static_cast<char>(dir_));
         }
