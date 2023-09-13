@@ -30,7 +30,10 @@ add_executable(game_server
 	src/tests.h
 	src/application.h 
 	src/application.cpp
+	src/logger.h 
+	src/logger.cpp
 )
+
 
 target_include_directories(game_server PRIVATE CONAN_PKG::boost)
 target_link_libraries(game_server CONAN_PKG::boost)
