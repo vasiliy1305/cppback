@@ -1,30 +1,24 @@
+enable_testing()
+
 cmake_minimum_required(VERSION 3.11)
 
-# Проект называется Sandbox и написан на C++
-project(Sandbox CXX)
-# Исходый код будет компилироваться с поддержкой стандарта С++ 20
+project(samples CXX)
 set(CMAKE_CXX_STANDARD 20)
 
-# Подключаем сгенерированный скрипт conanbuildinfo.cmake, созданный Conan
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-# Выполняем макрос из conanbuildinfo.cmake, который настроит СMake на работу с библиотеками, установленными Conan
-conan_basic_setup()
+include(${CMAKE_BINARY_DIR}/conanbuildinfo_multi.cmake)
+conan_basic_setup(TARGETS)
 
-# Ищем Boost версии 1.78
-find_package(Boost 1.78.0 REQUIRED)
-if(Boost_FOUND)
-  # Boost найден, добавляем к каталогам заголовочных файлов проекта путь к
-  # заголовочным файлам Boost
-  include_directories(${Boost_INCLUDE_DIRS})
-endif()
+add_executable(application
+    src/main.cpp
+    src/leap_year.h
+    src/leap_year.cpp
+)
 
-# Платформы вроде linux требуют подключения библиотеки pthread для
-# поддержки стандартных потоков.
-# Следующие две строки подключат эту библиотеку на таких платформах
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
-
-# Проект содержит единственный исходный файл src/main.cpp
-add_executable(sandbox src/main.cpp)
-# Просим компоновщик подключить библиотеку для поддержки потоков
-target_link_libraries(sandbox PRIVATE Threads::Threads)
+# Создаём новую цель сборки - исполняемый файл с тестами
+add_executable(boost_test_example
+    tests/boost_test_main.cpp
+    src/leap_year.h
+    src/leap_year.cpp
+)
+# Линкуем тестирующее приложение с Boost, так как Boost.Test требует компоновки
+target_link_libraries(boost_test_example PRIVATE CONAN_PKG::boost)
