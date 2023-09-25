@@ -19,3 +19,16 @@ mkdir build_debug && cd build_debug
 conan install .. -s compiler.libcxx=libstdc++11 -s build_type=Debug
 cmake .. -DCMAKE_BUILD_TYPE=Debug
 cmake --build . 
+------------------------------------------------
+
+{
+    "players":{
+        "0":{"pos":[0, 0], "speed":[0, 0], "dir":"U"}
+    },
+    "lostObjects":{
+        "0":{
+            "type":1,
+            "pos":[36.5, 0]
+        }
+    }
+}

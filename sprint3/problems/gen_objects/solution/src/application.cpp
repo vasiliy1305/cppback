@@ -267,6 +267,16 @@ namespace app
                 }
                 boost::json::object resualt;
                 resualt["players"] = js_players;
+
+                const auto lost_loots = game_.GetLootsByToken(token);
+                boost::json::object js_lost_loots;
+                int i = 0;
+                for (const auto loot : lost_loots)
+                {
+                    js_lost_loots[std::to_string(i)] = LootToJsonObj(loot);
+                }
+                resualt["lostObjects"] = js_lost_loots;
+
                 body = json::serialize(resualt);
                 status = http::status::ok;
                 return {body, status};
@@ -294,13 +304,20 @@ namespace app
         return player;
     }
 
+    boost::json::value Application::LootToJsonObj(const model::Loot &loot)
+    {
+        const boost::json::array pos = {loot.GetPos().x, loot.GetPos().y};
+        boost::json::object loot_js;
+        loot_js["pos"] = pos;
+        loot_js["type"] = loot.GetType();
+        return loot_js;
+    }
+
     StringResponse Application::GetState(const StringRequest &req)
     {
         if (req.method() == http::verb::get || req.method() == http::verb::head)
         {
             auto [body, status] = State(GetToken(req));
-
-            // std::cerr <<  body << std::endl;
             return ReturnJsonContent(req, status, body);
         }
         else

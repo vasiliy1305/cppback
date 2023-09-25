@@ -100,6 +100,7 @@ namespace app
         boost::json::value OfficeToJsonObj(const model::Office &office);
         boost::json::value MapToJsonObj(const model::Map &map);
         boost::json::value DogToJsonObj(model::Dog &dog);
+        boost::json::value LootToJsonObj(const model::Loot &loot);
 
         std::pair<std::string, http::status> Players(const std::string token);
         std::pair<std::string, http::status> State(const std::string token);

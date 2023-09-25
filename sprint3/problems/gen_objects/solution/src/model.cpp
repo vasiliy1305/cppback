@@ -70,7 +70,7 @@ namespace model
         {
             try
             {
-                sessions_.push_back(std::make_shared<GameSession>(map_ptr));
+                sessions_.push_back(std::make_shared<GameSession>(map_ptr, loot_gen_));
             }
             catch (...)
             {
@@ -162,35 +162,14 @@ namespace model
                 // если сессия нет создать сессию
                 CreateSession(std::make_shared<Map>(maps_.at(map_id_to_index_.at(Map::Id(map_id))))); // todo - хранить сразу как вектор шередптр
             }
-            // get random road
-            std::random_device random_device_;
-            std::mt19937_64 generator_{[&]
-                                       {
-                                           std::uniform_int_distribution<std::mt19937_64::result_type> dist;
-                                           return dist(random_device_);
-                                       }()};
-            auto roads = maps_.at(map_id_to_index_.at(Map::Id(map_id))).GetRoads();
-            model::Road rnd_road = roads.at(generator_() % roads.size());
 
-            if (!randomize_spawn_points_)
-            {
-                rnd_road = roads.at(0);
-            }
+            auto rnd_road_pnt = sessions_.at(sessions_.size() - 1)->GetRandomRoadPoint(randomize_spawn_points_);
 
-            auto road_start = rnd_road.GetStart();
-            auto road_end = rnd_road.GetEnd();
-            double rnd_x = randomDouble(road_start.x, road_end.x);
-            double rnd_y = randomDouble(road_start.y, road_end.y);
-
-            if (!randomize_spawn_points_)
-            {
-                rnd_x = road_start.x;
-                rnd_y = road_start.y;
-            }
+            // auto rnd_road_pnt = GetRandomRoadPoint(map_id);
 
             // 2. создаем собаку на сене
 
-            auto dog_ptr = FindSession(Map::Id(map_id))->AddDog(Dog::Id(curr_dog_id_++), {rnd_x, rnd_y}); // что то тут не так
+            auto dog_ptr = FindSession(Map::Id(map_id))->AddDog(Dog::Id(curr_dog_id_++), rnd_road_pnt); //
 
             // 3 создать игрока - выдать ему собаку -вернуть токен и id
             auto player = players_.Add(dog_ptr, FindSession(Map::Id(map_id)), user_name);
@@ -205,6 +184,81 @@ namespace model
             // если карты нет 404
             return {nullptr, Token("")};
         }
+    }
+
+    // model::TwoDimVector Game::GetRandomRoadPoint(const std::string &map_id) // todo перенести этот метод в game_session
+    // {
+    //     // get random road
+    //     std::random_device random_device_;
+    //     std::mt19937_64 generator_{[&]
+    //                                {
+    //                                    std::uniform_int_distribution<std::mt19937_64::result_type> dist;
+    //                                    return dist(random_device_);
+    //                                }()};
+    //     auto roads = maps_.at(map_id_to_index_.at(Map::Id(map_id))).GetRoads();
+    //     model::Road rnd_road = roads.at(generator_() % roads.size());
+
+    //     if (!randomize_spawn_points_)
+    //     {
+    //         rnd_road = roads.at(0);
+    //     }
+
+    //     auto road_start = rnd_road.GetStart();
+    //     auto road_end = rnd_road.GetEnd();
+    //     double rnd_x = randomDouble(road_start.x, road_end.x);
+    //     double rnd_y = randomDouble(road_start.y, road_end.y);
+
+    //     if (!randomize_spawn_points_)
+    //     {
+    //         rnd_x = road_start.x;
+    //         rnd_y = road_start.y;
+    //     }
+
+    //     return {rnd_x, rnd_y};
+    // }
+
+    model::TwoDimVector GameSession::GetRandomRoadPoint(bool randomize_spawn_points)
+    {
+        // get random road
+        std::random_device random_device_;
+        std::mt19937_64 generator_{[&]
+                                   {
+                                       std::uniform_int_distribution<std::mt19937_64::result_type> dist;
+                                       return dist(random_device_);
+                                   }()};
+
+        auto roads = map_ptr_->GetRoads();
+        model::Road rnd_road = roads.at(generator_() % roads.size());
+
+        if (!randomize_spawn_points)
+        {
+            rnd_road = roads.at(0);
+        }
+
+        auto road_start = rnd_road.GetStart();
+        auto road_end = rnd_road.GetEnd();
+        double rnd_x = randomDouble(road_start.x, road_end.x);
+        double rnd_y = randomDouble(road_start.y, road_end.y);
+
+        if (!randomize_spawn_points)
+        {
+            rnd_x = road_start.x;
+            rnd_y = road_start.y;
+        }
+
+        return {rnd_x, rnd_y};
+    }
+
+    int GameSession::GetRandomNumber(int size)
+    {
+        std::random_device random_device_;
+        std::mt19937_64 generator_{[&]
+                                   {
+                                       std::uniform_int_distribution<std::mt19937_64::result_type> dist;
+                                       return dist(random_device_);
+                                   }()};
+
+        return generator_() % size;
     }
 
     std::vector<std::shared_ptr<Dog>> Game::GetDogsByToken(const std::string &token_str)
@@ -300,10 +354,14 @@ namespace model
                 dog->SetDir(""); // stop
             }
         }
-    }
 
-    void Dog::UpdateTime(int delta)
-    {
+        // пробуем создать loot
+        for (int i = 0; i < loot_gen_.Generate(std::chrono::milliseconds(delta_t), loots_.size(), dogs_.size()); i++)
+        {
+            auto pos = GetRandomRoadPoint(true);
+            auto type = GetRandomNumber(map_ptr_->GetLootTypeSize());
+            loots_.push_back(Loot(pos, type));
+        }
     }
 
     TwoDimVector operator+(const TwoDimVector &lhs, const TwoDimVector &rhs)
@@ -466,4 +524,19 @@ namespace model
             speed_ = {0, 0};
         }
     }
+
+    const std::vector<Loot> &Game::GetLootsByToken(const std::string &token_str)
+    {
+        Token token(token_str);
+        auto player_ptr = tokens_.FindPlayerByToken(token);
+        if (player_ptr)
+        {
+            return player_ptr->GetSession()->GetLoots();
+        }
+        else
+        {
+            return {};
+        }
+    }
+
 } // namespace model

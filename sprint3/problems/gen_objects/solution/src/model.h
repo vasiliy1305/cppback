@@ -128,7 +128,7 @@ namespace model
             return id_;
         }
 
-       const Point GetPosition() const noexcept
+        const Point GetPosition() const noexcept
         {
             return position_;
         }
@@ -202,6 +202,11 @@ namespace model
         double GetDogSpeed()
         {
             return dog_speed_;
+        }
+
+        int GetLootTypeSize()
+        {
+            return loot_types_size_;
         }
 
     private:
@@ -280,8 +285,6 @@ namespace model
 
         void SetDir(std::string dir);
 
-        void UpdateTime(int delta);
-
         void SetPos(TwoDimVector pos)
         {
             pos_ = pos;
@@ -300,10 +303,32 @@ namespace model
         double abs_speed_;
     };
 
+    class Loot
+    {
+    public:
+        Loot(TwoDimVector pos, int type) : pos_(pos), type_(type)
+        {
+        }
+
+        TwoDimVector GetPos() const
+        {
+            return pos_;
+        }
+
+        int GetType() const
+        {
+            return type_;
+        }
+
+    private:
+        TwoDimVector pos_;
+        int type_;
+    };
+
     class GameSession
     {
     public:
-        GameSession(std::shared_ptr<Map> map_ptr) : map_ptr_(map_ptr)
+        GameSession(std::shared_ptr<Map> map_ptr,  loot_gen::LootGenerator loot_gen) : map_ptr_(map_ptr), loot_gen_(loot_gen)
         {
         }
 
@@ -344,12 +369,22 @@ namespace model
         }
 
         void UpdateTime(int delta_t);
+        model::TwoDimVector GetRandomRoadPoint(bool randomize_spawn_points);
+        int GetRandomNumber(int size);
+
+        const std::vector<Loot> &GetLoots()
+        {
+            return loots_;
+        }
 
     private:
         using DogIdHasher = util::TaggedHasher<Dog::Id>;
         std::vector<std::shared_ptr<Dog>> dogs_;
         std::shared_ptr<Map> map_ptr_;
         std::unordered_map<Dog::Id, uint32_t, DogIdHasher> dog_id_to_index_;
+        std::vector<Loot> loots_;
+        loot_gen::LootGenerator loot_gen_;
+
     };
 
     namespace detail
@@ -428,8 +463,7 @@ namespace model
     class Game
     {
     public:
-
-        Game(loot_gen::LootGenerator loot_gen): loot_gen_(loot_gen)
+        Game(loot_gen::LootGenerator loot_gen) : loot_gen_(loot_gen)
         {
         }
 
@@ -464,6 +498,7 @@ namespace model
 
         std::pair<std::shared_ptr<model::Player>, Token> Join(const std::string &user_name, const std::string &map_id);
         std::vector<std::shared_ptr<Dog>> GetDogsByToken(const std::string &token_str);
+        const std::vector<Loot> &GetLootsByToken(const std::string &token_str);
 
         std::shared_ptr<model::Player> GetPlayerByToken(std::string token)
         {
@@ -503,6 +538,8 @@ namespace model
         bool randomize_spawn_points_ = false;
 
         loot_gen::LootGenerator loot_gen_;
+
+        // model::TwoDimVector GetRandomRoadPoint(const std::string &map_id);
     };
 
     TwoDimVector GetBorderPoint(Road road, std::shared_ptr<model::Dog> dog);
