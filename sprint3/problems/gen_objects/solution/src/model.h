@@ -330,6 +330,9 @@ namespace model
     public:
         GameSession(std::shared_ptr<Map> map_ptr,  loot_gen::LootGenerator loot_gen) : map_ptr_(map_ptr), loot_gen_(loot_gen)
         {
+            auto pos = GetRandomRoadPoint(true);
+            auto type = GetRandomNumber(map_ptr_->GetLootTypeSize());
+            loots_.push_back(Loot(pos, type));
         }
 
         GameSession() = delete;
