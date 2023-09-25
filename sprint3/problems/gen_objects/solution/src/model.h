@@ -12,6 +12,7 @@
 #include <algorithm>
 
 #include "tagged.h"
+#include "loot_generator.h"
 
 namespace model
 {
@@ -151,8 +152,8 @@ namespace model
         using Buildings = std::vector<Building>;
         using Offices = std::vector<Office>;
 
-        Map(Id id, std::string name, double dog_speed) noexcept
-            : id_(std::move(id)), name_(std::move(name)), dog_speed_(dog_speed)
+        Map(Id id, std::string name, double dog_speed, int loot_types_size) noexcept
+            : id_(std::move(id)), name_(std::move(name)), dog_speed_(dog_speed), loot_types_size_(loot_types_size)
         {
         }
 
@@ -214,6 +215,7 @@ namespace model
 
         OfficeIdToIndex warehouse_id_to_index_;
         Offices offices_;
+        int loot_types_size_;
     };
 
     struct TwoDimVector
@@ -426,6 +428,11 @@ namespace model
     class Game
     {
     public:
+
+        Game(loot_gen::LootGenerator loot_gen): loot_gen_(loot_gen)
+        {
+        }
+
         using Maps = std::vector<Map>;
 
         void AddMap(Map map);
@@ -494,6 +501,8 @@ namespace model
         uint32_t curr_dog_id_ = 0;
         double default_dog_speed_ = 1.0;
         bool randomize_spawn_points_ = false;
+
+        loot_gen::LootGenerator loot_gen_;
     };
 
     TwoDimVector GetBorderPoint(Road road, std::shared_ptr<model::Dog> dog);

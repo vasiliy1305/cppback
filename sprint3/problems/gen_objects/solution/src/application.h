@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "model.h"
+#include "json_loader.h"
 #include "http_server.h"
 #include <iostream>
 #include <string_view>
@@ -66,7 +66,7 @@ namespace app
     class Application
     {
     public:
-        Application(model::Game &game) : game_{game}
+        Application(model::Game &game, extra_data::ExtraData &extra_data) : game_{game}, extra_data_{extra_data}
         {
         }
 
@@ -82,6 +82,7 @@ namespace app
 
     private:
         model::Game game_;
+        extra_data::ExtraData extra_data_;
 
         std::string GetToken(const StringRequest &req);
 

@@ -98,6 +98,7 @@ int main(int argc, const char *argv[])
 
             // 1. Загружаем карту из файла и построить модель игры
             model::Game game = json_loader::LoadGame(args->config_file);
+            extra_data::ExtraData extra_data = json_loader::LoadExtraData(args->config_file);
             game.SetRandomizeSpawnPoints(args->randomize_spawn_points);
 
             // 2. Инициализируем io_context
@@ -117,7 +118,7 @@ int main(int argc, const char *argv[])
         } });
 
             // 4. Создаём обработчик HTTP-запросов и связываем его с моделью игры
-            http_handler::RequestHandler handler{game, args->www_root, args->tick_period, ioc};
+            http_handler::RequestHandler handler{game, args->www_root, args->tick_period, ioc, extra_data};
             // http_handler::LoggingRequestHandler logging_handler{handler};
 
             // 5. Запустить обработчик HTTP-запросов, делегируя их обработчику запросов

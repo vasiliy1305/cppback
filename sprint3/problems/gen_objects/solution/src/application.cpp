@@ -141,6 +141,11 @@ namespace app
         {
             offices.push_back(OfficeToJsonObj(office));
         }
+
+        // добавить lootTypes
+        auto loot_types = extra_data_.GetLootType(*map.GetId());
+        map_obj["lootTypes"] = *loot_types;
+
         map_obj["offices"] = offices;
         return map_obj;
     }

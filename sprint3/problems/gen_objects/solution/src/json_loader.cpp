@@ -8,7 +8,13 @@
 // #include <boost/json/src.hpp>
 
 // namespace json = boost::json;
+
 using namespace std::literals;
+
+namespace extra_data
+{
+
+} // namespace extra_data
 
 namespace json_loader
 {
@@ -53,7 +59,15 @@ namespace json_loader
         // Распарсить строку как JSON, используя boost::json::parse
         auto value = json::parse(json_str);
         // Загрузить модель игры из файла
-        model::Game game;
+        // lootGeneratorConfig
+        auto loot_gen_config = value.as_object().at("lootGeneratorConfig").as_object();
+        double probability = loot_gen_config.at("probability").as_double();
+        double period = loot_gen_config.at("period").as_double();
+        loot_gen::LootGenerator::TimeInterval interval(static_cast<int64_t>(period * 1000));
+
+        loot_gen::LootGenerator loot_gen(interval, probability);
+
+        model::Game game(loot_gen);
 
         if (value.as_object().contains("defaultDogSpeed"))
         {
@@ -126,7 +140,10 @@ namespace json_loader
         std::string id(map.at(JsonStrConst::id).as_string());
         std::string name(map.at(JsonStrConst::name).as_string());
 
-        model::Map model_map(model::Map::Id(id), name, def_dog_speed);
+        auto loot_types = map.at("lootTypes").as_array();
+        int loot_types_size = loot_types.size();
+
+        model::Map model_map(model::Map::Id(id), name, def_dog_speed, loot_types_size);
 
         if (map.as_object().contains("dogSpeed"))
         {
@@ -153,5 +170,22 @@ namespace json_loader
         }
         return model_map;
     }
+
+    extra_data::ExtraData LoadExtraData(const std::filesystem::path &json_path)
+    {
+        auto content = ReadTextFile(json_path);
+        auto value = json::parse(content);
+        auto maps = value.as_object().at(JsonStrConst::maps).as_array();
+        extra_data::ExtraData ext_data;
+
+        for (auto map : maps)
+        {
+            std::string id(map.at(JsonStrConst::id).as_string());
+            auto loot_types = map.at("lootTypes").as_array();
+            ext_data.SetLootType(id, loot_types);
+        }
+        return ext_data;
+    }
+
 }
 // namespace json_loader

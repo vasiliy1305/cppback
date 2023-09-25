@@ -8,6 +8,31 @@
 #include "model.h"
 
 namespace json = boost::json;
+
+namespace extra_data
+{
+    class ExtraData
+    {
+    public:
+        void SetLootType(std::string map_id, boost::json::array loot_types)
+        {
+            map_id_to_loot_types_[map_id] = loot_types;
+        }
+
+        std::optional<boost::json::array> GetLootType(std::string map_id)
+        {
+            if (map_id_to_loot_types_.count(map_id))
+            {
+                return map_id_to_loot_types_.at(map_id);
+            }
+            return std::nullopt;
+        }
+
+    private:
+        std::map<std::string, boost::json::array> map_id_to_loot_types_;
+    };
+} // namespace extra_data
+
 namespace json_loader
 {
 
@@ -53,5 +78,7 @@ namespace json_loader
     model::Building ParseBuilding(boost::json::value building);
     model::Office ParseOffice(boost::json::value office);
     model::Map ParseMap(boost::json::value map, double def_dog_speed);
+
+    extra_data::ExtraData LoadExtraData(const std::filesystem::path &json_path);
 
 } // namespace json_loader

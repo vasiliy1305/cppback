@@ -152,7 +152,7 @@ namespace http_handler
     class ApiHandler
     {
     public:
-        ApiHandler(model::Game &game, net::io_context &ioc, int period) : app_{game}, ioc_(ioc), period_(period)
+        ApiHandler(model::Game &game, net::io_context &ioc, int period, extra_data::ExtraData &extra_data) : app_{game, extra_data}, ioc_(ioc), period_(period)
         {
             if (period)
             {
@@ -242,7 +242,7 @@ namespace http_handler
     class RequestHandler
     {
     public:
-        explicit RequestHandler(model::Game &game, fs::path static_dir, int period, net::io_context &ioc) : api_handler_{game, ioc, period},
+        explicit RequestHandler(model::Game &game, fs::path static_dir, int period, net::io_context &ioc, extra_data::ExtraData &extra_data) : api_handler_{game, ioc, period, extra_data},
                                                                                                             content_handler_(static_dir)
 
         {
