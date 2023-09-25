@@ -322,7 +322,7 @@ namespace app
         }
         else
         {
-            return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only GET method is expected"), "GET");
+            return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only GET method is expected"), "GET, HEAD");
         }
     }
 
