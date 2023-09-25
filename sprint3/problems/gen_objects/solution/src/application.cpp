@@ -152,7 +152,7 @@ namespace app
 
     StringResponse Application::GetMap(const StringRequest &req)
     {
-        if (req.method() == http::verb::get)
+        if (req.method() == http::verb::get || req.method() == http::verb::head)
         {
             auto target_bsv = req.target();
             std::string target_str(target_bsv.begin(), target_bsv.end());
@@ -164,7 +164,7 @@ namespace app
             }
             return ReturnJsonContent(req, http::status::not_found, MakeMessege("mapNotFound", "Map not found"));
         }
-        return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only GET method is expected"), "GET");
+        return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only GET, HEAD method is expected"), "GET, HEAD");
     }
 
     StringResponse Application::JoinGame(const StringRequest &req)
