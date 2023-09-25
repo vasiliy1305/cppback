@@ -18,6 +18,18 @@ namespace extra_data
 
 namespace json_loader
 {
+    double getRandomNumberFrom0To1()
+    {
+        // Initialize random number generator
+        std::random_device rd;
+        std::mt19937 gen(rd());
+
+        // Initialize uniform distribution
+        std::uniform_real_distribution<> dis(0.0, 1.0);
+
+        return dis(gen);
+    }
+
     std::string ReadTextFile(const std::filesystem::path &json_path)
     {
         // Check if the file exists
@@ -65,7 +77,7 @@ namespace json_loader
         double period = loot_gen_config.at("period").as_double();
         loot_gen::LootGenerator::TimeInterval interval(static_cast<int64_t>(period * 1000));
 
-        loot_gen::LootGenerator loot_gen(interval, probability);
+        loot_gen::LootGenerator loot_gen(interval, probability, getRandomNumberFrom0To1); // todo - добавить генератор
 
         model::Game game(loot_gen);
 

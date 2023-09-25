@@ -36,6 +36,8 @@ namespace extra_data
 namespace json_loader
 {
 
+    double getRandomNumberFrom0To1();
+
     class JsonLoaderException : public std::exception
     {
     private:
