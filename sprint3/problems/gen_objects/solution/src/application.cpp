@@ -274,6 +274,7 @@ namespace app
                 for (const auto loot : lost_loots)
                 {
                     js_lost_loots[std::to_string(i)] = LootToJsonObj(loot);
+                    ++i;
                 }
                 resualt["lostObjects"] = js_lost_loots;
 
