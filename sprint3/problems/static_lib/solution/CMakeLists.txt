@@ -14,7 +14,6 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-
 # Добавляем библиотеку, указывая, что она статическая.
 add_library(MyLib STATIC
 	src/model.h
@@ -24,22 +23,10 @@ add_library(MyLib STATIC
 	src/loot_generator.cpp 
 )
 
-
-
 # Добавляем сторонние библиотеки. Указываем видимость PUBLIC, т. к. 
 # они должны быть ввидны и в библиотеке MyLib и в зависимостях.
 target_include_directories(MyLib PUBLIC CONAN_PKG::boost)
 target_link_libraries(MyLib PUBLIC CONAN_PKG::catch2 CONAN_PKG::boost Threads::Threads)
-
-
-
-# target_include_directories(game_server_tests PRIVATE  CONAN_PKG::boost)
-# target_link_libraries(game_server_tests PRIVATE CONAN_PKG::catch2 CONAN_PKG::boost Threads::Threads)
-
-# target_include_directories(game_server PRIVATE CONAN_PKG::boost)
-# target_link_libraries(game_server CONAN_PKG::boost)
-# target_include_directories(game_server PRIVATE ${Boost_INCLUDE_DIRS})
-
 
 add_executable(game_server
 	src/main.cpp
