@@ -14,14 +14,38 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
+
+# Добавляем библиотеку, указывая, что она статическая.
+add_library(MyLib STATIC
+	src/model.h
+	src/model.cpp
+	src/tagged.h
+	src/loot_generator.h
+	src/loot_generator.cpp 
+)
+
+
+
+# Добавляем сторонние библиотеки. Указываем видимость PUBLIC, т. к. 
+# они должны быть ввидны и в библиотеке MyLib и в зависимостях.
+target_include_directories(MyLib PUBLIC CONAN_PKG::boost)
+target_link_libraries(MyLib PUBLIC CONAN_PKG::catch2 CONAN_PKG::boost Threads::Threads)
+
+
+
+# target_include_directories(game_server_tests PRIVATE  CONAN_PKG::boost)
+# target_link_libraries(game_server_tests PRIVATE CONAN_PKG::catch2 CONAN_PKG::boost Threads::Threads)
+
+# target_include_directories(game_server PRIVATE CONAN_PKG::boost)
+# target_link_libraries(game_server CONAN_PKG::boost)
+# target_include_directories(game_server PRIVATE ${Boost_INCLUDE_DIRS})
+
+
 add_executable(game_server
 	src/main.cpp
 	src/http_server.cpp
 	src/http_server.h
 	src/sdk.h
-	src/model.h
-	src/model.cpp
-	src/tagged.h
 	src/boost_json.cpp
 	src/json_loader.h
 	src/json_loader.cpp
@@ -32,23 +56,14 @@ add_executable(game_server
 	src/application.cpp
 	src/logger.h 
 	src/logger.cpp
-	src/loot_generator.h
-	src/loot_generator.cpp 
 )
-
 
 add_executable(game_server_tests
-    src/model.h
-    src/model.cpp
-    src/loot_generator.h
-    src/loot_generator.cpp
-    src/tagged.h
-    # tests/model-tests.cpp
     tests/loot_generator_tests.cpp
 )
-target_include_directories(game_server_tests PRIVATE  CONAN_PKG::boost)
-target_link_libraries(game_server_tests PRIVATE CONAN_PKG::catch2 CONAN_PKG::boost Threads::Threads)
 
-target_include_directories(game_server PRIVATE CONAN_PKG::boost)
-target_link_libraries(game_server CONAN_PKG::boost)
-target_include_directories(game_server PRIVATE ${Boost_INCLUDE_DIRS})
+# Добавляем зависимость целей от статической библиотеки.
+# target_include_directories уже не нужен - он добавится автоматически
+# из зависимой библиотеки.
+target_link_libraries(game_server MyLib)
+target_link_libraries(game_server_tests ${CATCH2_LIB} MyLib) 
