@@ -1,5 +1,4 @@
 #pragma once
-
 #include <compare>
 #include <math.h>
 #include <optional>

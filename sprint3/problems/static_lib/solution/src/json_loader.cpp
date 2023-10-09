@@ -7,7 +7,6 @@
 // // Этот заголовочный файл надо подключить в одном и только одном .cpp-файле программы
 // #include <boost/json/src.hpp>
 
-// namespace json = boost::json;
 
 using namespace std::literals;
 

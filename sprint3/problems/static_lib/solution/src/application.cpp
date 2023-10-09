@@ -229,7 +229,6 @@ namespace app
             auto dogs = game_.GetDogsByToken(token);
             if (dogs.size()) // todo сделать нормально
             {
-
                 boost::json::object js_players;
                 for (auto dog : dogs)
                 {
@@ -258,7 +257,6 @@ namespace app
             auto dogs = game_.GetDogsByToken(token);
             if (dogs.size()) // todo!!!
             {
-                // std::dogs->size()
                 boost::json::object js_players;
                 for (auto dog : dogs)
                 {

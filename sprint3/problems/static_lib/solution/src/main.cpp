@@ -34,11 +34,6 @@ namespace
     }
 } // namespace
 
-// int main()
-// {
-//     AllTests();
-// }
-
 struct Args
 {
     int tick_period = -1;
@@ -89,10 +84,8 @@ int main(int argc, const char *argv[])
 {
     try
     {
-
         if (auto args = ParseCommandLine(argc, argv))
         {
-
             // 0. init log
             logger::InitBoostLog();
 
@@ -144,7 +137,3 @@ int main(int argc, const char *argv[])
     logger::LogServerExited(0, "");
     return 0;
 }
-
-
-
-

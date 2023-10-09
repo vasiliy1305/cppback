@@ -2,7 +2,6 @@
 
 namespace logger
 {
-
     void MyFormatter(logging::record_view const &rec, logging::formatting_ostream &strm)
     {
         strm << rec[logging::expressions::smessage];
