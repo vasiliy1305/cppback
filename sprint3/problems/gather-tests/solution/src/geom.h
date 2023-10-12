@@ -75,7 +75,7 @@ namespace geom
         double r;
     };
 
-    bool CheckCirclesForIntersection(Circle c1, Circle c2)
+    inline bool CheckCirclesForIntersection(Circle c1, Circle c2)
     {
         // Вычислим расстояние между точками функцией std::hypot
         return std::hypot(c1.x - c2.x, c1.y - c2.y) <= c1.r + c2.r;
@@ -93,7 +93,7 @@ namespace geom
         double x1, x2;
     };
 
-    std::optional<LineSegment> Intersect(LineSegment s1, LineSegment s2)
+    inline std::optional<LineSegment> Intersect(LineSegment s1, LineSegment s2)
     {
         double left = std::max(s1.x1, s2.x1);
         double right = std::min(s1.x2, s2.x2);
@@ -111,17 +111,17 @@ namespace geom
     }
 
     // Вычисляем проекции на оси
-    LineSegment ProjectX(Rect r)
+    inline LineSegment ProjectX(Rect r)
     {
         return LineSegment{.x1 = r.x, .x2 = r.x + r.w};
     }
 
-    LineSegment ProjectY(Rect r)
+    inline LineSegment ProjectY(Rect r)
     {
         return LineSegment{.x1 = r.y, .x2 = r.y + r.h};
     }
 
-    std::optional<Rect> Intersect(Rect r1, Rect r2)
+    inline std::optional<Rect> Intersect(Rect r1, Rect r2)
     {
         auto px = Intersect(ProjectX(r1), ProjectX(r2));
         auto py = Intersect(ProjectY(r1), ProjectY(r2));
@@ -157,7 +157,7 @@ namespace geom
 
     // Движемся из точки a в точку b и пытаемся подобрать точку c.
     // Функция корректно работает только при условии ненулевого перемещения.
-    CollectionResult TryCollectPoint(Point a, Point b, Point c)
+    inline CollectionResult TryCollectPoint(Point a, Point b, Point c)
     {
         // Проверим, что перемещение ненулевое.
         // Тут приходится использовать строгое равенство, а не приближённое,
