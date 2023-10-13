@@ -258,6 +258,34 @@ namespace model
         EAST = 'R'
     };
 
+    class Loot
+    {
+    public:
+        Loot(TwoDimVector pos, int type, int id) : pos_(pos), type_(type), id_(id)
+        {
+        }
+
+        TwoDimVector GetPos() const
+        {
+            return pos_;
+        }
+
+        int GetType() const
+        {
+            return type_;
+        }
+
+        int GetId() const
+        {
+            return id_;
+        }
+
+    private:
+        TwoDimVector pos_;
+        int type_;
+        int id_;
+    };
+
     class Dog
     {
     public:
@@ -296,6 +324,16 @@ namespace model
             pos_ = pos;
         }
 
+        void AddLoot(Loot loot)
+        {
+            loots_.push_back(loot);
+        }
+
+        std::vector<Loot> GetLoots()
+        {
+            return loots_;
+        }
+
         // единичный вектор направления двиижения
         TwoDimVector GetDirectionVec();
 
@@ -307,40 +345,14 @@ namespace model
         std ::string dir_str_;
 
         double abs_speed_;
-    };
 
-    class Loot
-    {
-    public:
-        Loot(TwoDimVector pos, int type, int id) : pos_(pos), type_(type), id_(id)
-        {
-        }
-
-        TwoDimVector GetPos() const
-        {
-            return pos_;
-        }
-
-        int GetType() const
-        {
-            return type_;
-        }
-
-        int GetId() const
-        {
-            return id_;
-        }
-
-    private:
-        TwoDimVector pos_;
-        int type_;
-        int id_;
+        std::vector<Loot> loots_;
     };
 
     class GameSession
     {
     public:
-        GameSession(std::shared_ptr<Map> map_ptr,  loot_gen::LootGenerator loot_gen) : map_ptr_(map_ptr), loot_gen_(loot_gen)
+        GameSession(std::shared_ptr<Map> map_ptr, loot_gen::LootGenerator loot_gen) : map_ptr_(map_ptr), loot_gen_(loot_gen)
         {
             // auto pos = GetRandomRoadPoint(true);
             // auto type = GetRandomNumber(map_ptr_->GetLootTypeSize());
@@ -400,7 +412,6 @@ namespace model
         std::vector<Loot> loots_;
         loot_gen::LootGenerator loot_gen_;
         int curr_loot_id_ = 0;
-
     };
 
     namespace detail

@@ -299,6 +299,17 @@ namespace app
         player["speed"] = speed;
         player["dir"] = dir;
 
+        boost::json::array js_loots;
+        auto loots = dog.GetLoots();
+        for(auto loot: loots)
+        {
+            boost::json::object js_loot;
+            js_loot["id"] = loot.GetId();
+            js_loot["type"] = loot.GetType();
+            js_loots.push_back(js_loot);
+        }
+        player["bag"] = js_loots;
+
         return player;
     }
 
