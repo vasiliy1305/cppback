@@ -360,7 +360,7 @@ namespace model
         {
             auto pos = GetRandomRoadPoint(true);
             auto type = GetRandomNumber(map_ptr_->GetLootTypeSize());
-            loots_.push_back(Loot(pos, type));
+            loots_.push_back(Loot(pos, type, curr_loot_id_++));
         }
     }
 

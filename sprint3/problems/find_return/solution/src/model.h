@@ -312,7 +312,7 @@ namespace model
     class Loot
     {
     public:
-        Loot(TwoDimVector pos, int type) : pos_(pos), type_(type)
+        Loot(TwoDimVector pos, int type, int id) : pos_(pos), type_(type), id_(id)
         {
         }
 
@@ -326,9 +326,15 @@ namespace model
             return type_;
         }
 
+        int GetId() const
+        {
+            return id_;
+        }
+
     private:
         TwoDimVector pos_;
         int type_;
+        int id_;
     };
 
     class GameSession
@@ -393,6 +399,7 @@ namespace model
         std::unordered_map<Dog::Id, uint32_t, DogIdHasher> dog_id_to_index_;
         std::vector<Loot> loots_;
         loot_gen::LootGenerator loot_gen_;
+        int curr_loot_id_ = 0;
 
     };
 

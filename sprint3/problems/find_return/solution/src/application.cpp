@@ -268,11 +268,10 @@ namespace app
 
                 const auto lost_loots = game_.GetLootsByToken(token);
                 boost::json::object js_lost_loots;
-                int i = 0;
                 for (const auto loot : lost_loots)
                 {
-                    js_lost_loots[std::to_string(i)] = LootToJsonObj(loot);
-                    ++i;
+                    const int id = loot.GetId();
+                    js_lost_loots[std::to_string(id)] = LootToJsonObj(loot);
                 }
                 resualt["lostObjects"] = js_lost_loots;
 
