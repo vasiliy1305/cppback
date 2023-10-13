@@ -524,6 +524,11 @@ namespace model
             randomize_spawn_points_ = rnd;
         }
 
+        void SetDefaultBagCapacity(int capacity)
+        {
+            default_bag_capacity_ = capacity;
+        }
+
     private:
         using MapIdHasher = util::TaggedHasher<Map::Id>;
         using MapIdToIndex = std::unordered_map<Map::Id, size_t, MapIdHasher>;
@@ -541,6 +546,7 @@ namespace model
         bool randomize_spawn_points_ = false;
 
         loot_gen::LootGenerator loot_gen_;
+        int default_bag_capacity_ = 3;
 
         // model::TwoDimVector GetRandomRoadPoint(const std::string &map_id);
     };

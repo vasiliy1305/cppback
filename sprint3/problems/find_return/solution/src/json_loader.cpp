@@ -86,6 +86,12 @@ namespace json_loader
             game.SetDfaultDogSpeed(defaultDogSpeed);
         }
 
+        if (value.as_object().contains("defaultBagCapacity"))
+        {
+            int defaultBagCapacity = value.as_object().at("defaultBagCapacity").as_int64();
+            game.SetDefaultBagCapacity(defaultBagCapacity);
+        }
+
         auto maps = value.as_object().at(JsonStrConst::maps).as_array();
 
         for (const auto &map : maps)
