@@ -7,7 +7,6 @@
 // // Этот заголовочный файл надо подключить в одном и только одном .cpp-файле программы
 // #include <boost/json/src.hpp>
 
-
 using namespace std::literals;
 
 namespace extra_data
@@ -96,7 +95,7 @@ namespace json_loader
 
         for (const auto &map : maps)
         {
-            game.AddMap(ParseMap(map, game.GetDefDogSpeed()));
+            game.AddMap(ParseMap(map, game.GetDefDogSpeed(), game.GetDefaultBagCapacity()));
         }
 
         return game;
@@ -152,7 +151,7 @@ namespace json_loader
         return model_office;
     }
 
-    model::Map ParseMap(boost::json::value map, double def_dog_speed)
+    model::Map ParseMap(boost::json::value map, double def_dog_speed, int def_bag_capacity)
     {
         std::string id(map.at(JsonStrConst::id).as_string());
         std::string name(map.at(JsonStrConst::name).as_string());
@@ -166,6 +165,16 @@ namespace json_loader
         {
             double dog_speed(map.at("dogSpeed").as_double());
             model_map.SetDogSpeed(dog_speed);
+        }
+
+        if (map.as_object().contains("bagCapacity"))
+        {
+            int bag_capacity(map.at("bagCapacity").as_int64());
+            model_map.SetBagCapacity(bag_capacity);
+        }
+        else
+        {
+            model_map.SetBagCapacity(def_bag_capacity);
         }
 
         auto roads = map.at(JsonStrConst::roads).as_array();

@@ -79,7 +79,7 @@ namespace json_loader
     model::Road ParseRoad(boost::json::value js_road);
     model::Building ParseBuilding(boost::json::value building);
     model::Office ParseOffice(boost::json::value office);
-    model::Map ParseMap(boost::json::value map, double def_dog_speed);
+    model::Map ParseMap(boost::json::value map, double def_dog_speed, int def_bag_capacity);
 
     extra_data::ExtraData LoadExtraData(const std::filesystem::path &json_path);
 

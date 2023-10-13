@@ -209,6 +209,11 @@ namespace model
             return loot_types_size_;
         }
 
+        void SetBagCapacity(int capacity)
+        {
+            bag_capacity_ = capacity;
+        }
+
     private:
         using OfficeIdToIndex = std::unordered_map<Office::Id, size_t, util::TaggedHasher<Office::Id>>;
 
@@ -217,6 +222,7 @@ namespace model
         Roads roads_;
         Buildings buildings_;
         double dog_speed_;
+        int bag_capacity_;
 
         OfficeIdToIndex warehouse_id_to_index_;
         Offices offices_;
@@ -527,6 +533,11 @@ namespace model
         void SetDefaultBagCapacity(int capacity)
         {
             default_bag_capacity_ = capacity;
+        }
+
+        int GetDefaultBagCapacity()
+        {
+            return default_bag_capacity_;
         }
 
     private:
