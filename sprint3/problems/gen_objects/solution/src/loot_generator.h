@@ -19,7 +19,7 @@ namespace loot_gen
          * probability - вероятность появления трофея в течение базового интервала времени
          * random_generator - генератор псевдослучайных чисел в диапазоне от [0 до 1]
          */
-        LootGenerator(TimeInterval base_interval, double probability,
+        LootGenerator(TimeInterval base_interval, double probability = 0.5, // todo - убрать знач по дефолту
                       RandomGenerator random_gen = DefaultGenerator)
             : base_interval_{base_interval}, probability_{probability}, random_generator_{std::move(random_gen)}
         {

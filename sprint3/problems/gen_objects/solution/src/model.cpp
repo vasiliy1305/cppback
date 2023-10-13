@@ -356,7 +356,8 @@ namespace model
         }
 
         // пробуем создать loot
-        for (int i = 0; i < loot_gen_.Generate(std::chrono::milliseconds(delta_t), loots_.size(), dogs_.size()); i++)
+        auto loot_cont = loot_gen_.Generate(std::chrono::milliseconds(delta_t), loots_.size(), dogs_.size());
+        for (int i = 0; i < loot_cont; i++)
         {
             auto pos = GetRandomRoadPoint(true);
             auto type = GetRandomNumber(map_ptr_->GetLootTypeSize());
