@@ -139,10 +139,17 @@ namespace model
             return offset_;
         }
 
+        double GetWidth() const
+        {
+            return WIDTH;
+        }
+
     private:
         Id id_;
         Point position_;
         Offset offset_;
+
+        const double WIDTH = 0.5; // уточнить размер
     };
 
     class Map
@@ -215,6 +222,11 @@ namespace model
             bag_capacity_ = capacity;
         }
 
+        int GetBagCapacity()
+        {
+            return bag_capacity_;
+        }
+
     private:
         using OfficeIdToIndex = std::unordered_map<Office::Id, size_t, util::TaggedHasher<Office::Id>>;
 
@@ -281,10 +293,17 @@ namespace model
             return id_;
         }
 
+        double GetWidth() const
+        {
+            return WIDTH;
+        }
+
     private:
         TwoDimVector pos_;
         int type_;
         int id_;
+
+         double WIDTH = 0.0;
     };
 
     class Dog
@@ -320,9 +339,15 @@ namespace model
 
         void SetDir(std::string dir);
 
-        void SetPos(TwoDimVector pos)
+        void SetPos(TwoDimVector pos) //
         {
+            previous_pos_ = pos_;
             pos_ = pos;
+        }
+
+        TwoDimVector GetPreviousPos()
+        {
+            return previous_pos_;
         }
 
         void AddLoot(Loot loot)
@@ -335,22 +360,41 @@ namespace model
             return loots_;
         }
 
+        void ClearLoots()
+        {
+            loots_ = {};
+        }
+
+        size_t GetLootSize()
+        {
+            return GetLoots().size();
+        }
+
+
         // единичный вектор направления двиижения
         TwoDimVector GetDirectionVec();
+
+        double GetWidth() const
+        {
+            return WIDTH;
+        }
 
     private:
         Id id_;
         TwoDimVector speed_;
         TwoDimVector pos_;
+        TwoDimVector previous_pos_;
         Direction dir_;
         std ::string dir_str_;
 
         double abs_speed_;
 
         std::vector<Loot> loots_;
+
+        const double WIDTH = 0.6; // уточнить размер
     };
 
-    class GameSession
+    class GameSession : public collision_detector::ItemGathererProvider // todo #1
     {
     public:
         GameSession(std::shared_ptr<Map> map_ptr, loot_gen::LootGenerator loot_gen) : map_ptr_(map_ptr), loot_gen_(loot_gen)
@@ -405,6 +449,51 @@ namespace model
             return loots_;
         }
 
+        // реализация интерфейса ItemGathererProvider
+        size_t ItemsCount() const // todo
+        {
+            return loots_.size() + map_ptr_->GetOffices().size(); // офисы тоже элементы
+        }
+
+        bool IsOffice(size_t idx) const
+        {
+            return idx < GetOfficeCount();
+        }
+
+        size_t GetOfficeCount() const
+        {
+            return map_ptr_->GetOffices().size();
+        }
+
+        collision_detector::Item GetItem(size_t idx) const
+        {
+            // будем считать что сначала идут офисы а потом предметы
+            if (IsOffice(idx))
+            {
+                collision_detector::Item item = {{map_ptr_->GetOffices().at(idx).GetPosition().x,
+                                                  map_ptr_->GetOffices().at(idx).GetPosition().y},
+                                                 map_ptr_->GetOffices().at(idx).GetWidth()};
+                return item;
+            }
+            else
+            {
+                idx -= GetOfficeCount();
+                collision_detector::Item item = {{loots_.at(idx).GetPos().x, loots_.at(idx).GetPos().y}, loots_.at(idx).GetWidth()};
+                return item;
+            }
+        }
+
+        size_t GatherersCount() const
+        {
+            return dogs_.size();
+        }
+
+        collision_detector::Gatherer GetGatherer(size_t idx) const // todo добавть перемешение а -> б
+        {
+            collision_detector::Gatherer gather = {{dogs_[idx]->GetPos().x, dogs_[idx]->GetPos().y}, {dogs_[idx]->GetPreviousPos().x, dogs_[idx]->GetPreviousPos().y}, dogs_[idx]->GetWidth()};
+            return gather;
+        }
+
     private:
         using DogIdHasher = util::TaggedHasher<Dog::Id>;
         std::vector<std::shared_ptr<Dog>> dogs_;
@@ -414,7 +503,6 @@ namespace model
         loot_gen::LootGenerator loot_gen_;
         int curr_loot_id_ = 0;
     };
-
 
     namespace detail
     {

@@ -286,9 +286,9 @@ namespace model
         }
     }
 
-    void GameSession::UpdateTime(int delta_t)
+    void GameSession::UpdateTime(int delta_t) // todo декомпозировать ф-ию
     {
-        for (auto dog : dogs_)
+        for (auto dog : dogs_) // move dog
         {
             auto dt = ((delta_t + 0.0) / 1000.0);
             auto curr_pos = dog->GetPos();
@@ -367,6 +367,59 @@ namespace model
         }
 
         // todo - добавить сбор предметов, когда именно ?
+
+        auto finded_gather_elm = collision_detector::FindGatherEvents((*this)); 
+
+
+        if(finded_gather_elm.size() != 0)
+        {
+            auto map_cap = map_ptr_->GetBagCapacity();
+            std::vector<int> processed_items = {};
+            processed_items.resize(finded_gather_elm.size()); // todo можно и обойтсь 
+
+            for( auto find_gat_it = finded_gather_elm.begin(); find_gat_it != finded_gather_elm.end(); find_gat_it++) // todo поменять на пеебор
+            {
+                
+                if(IsOffice(find_gat_it->item_id))
+                {
+                    // clear bag logic
+                    dogs_.at(find_gat_it->gatherer_id)->ClearLoots();
+                    continue; // todo убрать
+                }
+                else
+                {
+                    // check loot bag
+                    auto dog_bag_cap = dogs_[find_gat_it->gatherer_id]->GetLootSize();
+                    if(dog_bag_cap >= map_cap)
+                    {
+                        continue;
+                    }
+
+                    // check if item already processed
+                    bool alredyProcessed = false;
+                    for(auto it_local_proc = processed_items.begin(); it_local_proc != processed_items.end(); it_local_proc++)
+                    {
+                        if(*it_local_proc == find_gat_it->item_id)
+                            alredyProcessed = true;
+                    }
+                    
+                    // process item:
+                    if(alredyProcessed)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        // append to loot bag
+                        dogs_[find_gat_it->gatherer_id]->AddLoot({{0.0, 0.0}, loots_[find_gat_it->item_id - GetOfficeCount()].GetType(), find_gat_it->item_id});
+                        // append to processed list
+                        processed_items.push_back(find_gat_it->item_id);
+                        // erase processed element
+                        // it->EraseLootObj(find_gat_it->item_id);
+                    }
+                }
+            }
+        }
     }
 
     TwoDimVector operator+(const TwoDimVector &lhs, const TwoDimVector &rhs)
