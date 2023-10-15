@@ -494,6 +494,11 @@ namespace model
             return gather;
         }
 
+        void Eraseloot(size_t idx)
+        {
+            loots_.erase(loots_.begin() + idx);
+        }
+
     private:
         using DogIdHasher = util::TaggedHasher<Dog::Id>;
         std::vector<std::shared_ptr<Dog>> dogs_;

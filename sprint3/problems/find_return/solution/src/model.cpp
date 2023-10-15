@@ -416,6 +416,9 @@ namespace model
                         processed_items.push_back(find_gat_it->item_id);
                         // erase processed element
                         // it->EraseLootObj(find_gat_it->item_id);
+
+                        // избавится от кключан на карте
+                        Eraseloot(find_gat_it->item_id - GetOfficeCount());
                     }
                 }
             }
