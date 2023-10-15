@@ -160,7 +160,7 @@ namespace model
             if (map_id_to_game_index_.count(Map::Id(map_id)) == 0)
             {
                 // если сессия нет создать сессию
-                CreateSession(std::make_shared<Map>(maps_.at(map_id_to_index_.at(Map::Id(map_id))))); // todo - хранить сразу как вектор шередптр
+                CreateSession(std::make_shared<Map>(maps_.at(map_id_to_index_.at(Map::Id(map_id)))));
             }
 
             auto rnd_road_pnt = sessions_.at(sessions_.size() - 1)->GetRandomRoadPoint(randomize_spawn_points_);
@@ -185,37 +185,6 @@ namespace model
             return {nullptr, Token("")};
         }
     }
-
-    // model::TwoDimVector Game::GetRandomRoadPoint(const std::string &map_id) // todo перенести этот метод в game_session
-    // {
-    //     // get random road
-    //     std::random_device random_device_;
-    //     std::mt19937_64 generator_{[&]
-    //                                {
-    //                                    std::uniform_int_distribution<std::mt19937_64::result_type> dist;
-    //                                    return dist(random_device_);
-    //                                }()};
-    //     auto roads = maps_.at(map_id_to_index_.at(Map::Id(map_id))).GetRoads();
-    //     model::Road rnd_road = roads.at(generator_() % roads.size());
-
-    //     if (!randomize_spawn_points_)
-    //     {
-    //         rnd_road = roads.at(0);
-    //     }
-
-    //     auto road_start = rnd_road.GetStart();
-    //     auto road_end = rnd_road.GetEnd();
-    //     double rnd_x = randomDouble(road_start.x, road_end.x);
-    //     double rnd_y = randomDouble(road_start.y, road_end.y);
-
-    //     if (!randomize_spawn_points_)
-    //     {
-    //         rnd_x = road_start.x;
-    //         rnd_y = road_start.y;
-    //     }
-
-    //     return {rnd_x, rnd_y};
-    // }
 
     model::TwoDimVector GameSession::GetRandomRoadPoint(bool randomize_spawn_points)
     {
@@ -248,9 +217,6 @@ namespace model
 
         return {rnd_x, rnd_y};
     }
-
-
-
 
     int GameSession::GetRandomNumber(int size)
     {
@@ -286,7 +252,7 @@ namespace model
         }
     }
 
-    void GameSession::UpdateTime(int delta_t) // todo декомпозировать ф-ию
+    void GameSession::UpdateTime(int delta_t) // todo на будущ декомпозировать ф-ию на три 1- переместить собак 2- создать стаф 3- собрать стаф
     {
         for (auto dog : dogs_) // move dog
         {
@@ -366,59 +332,36 @@ namespace model
             loots_.push_back(Loot(pos, type, curr_loot_id_++));
         }
 
-        // todo - добавить сбор предметов, когда именно ?
-
-        auto finded_gather_elm = collision_detector::FindGatherEvents((*this)); 
-
-
-        if(finded_gather_elm.size() != 0)
+        // сбор
+        auto gathering_event = collision_detector::FindGatherEvents((*this));
+        if (gathering_event.size() != 0)
         {
-            auto map_cap = map_ptr_->GetBagCapacity();
-            std::vector<int> processed_items = {};
-            processed_items.resize(finded_gather_elm.size()); // todo можно и обойтсь 
+            std::vector<int> items;
+            items.resize(gathering_event.size()); 
 
-            for( auto find_gat_it = finded_gather_elm.begin(); find_gat_it != finded_gather_elm.end(); find_gat_it++) // todo поменять на пеебор
+            for (auto ge_it = gathering_event.begin(); ge_it != gathering_event.end(); ge_it++) 
             {
-                
-                if(IsOffice(find_gat_it->item_id))
+                if (IsOffice(ge_it->item_id))
                 {
-                    // clear bag logic
-                    dogs_.at(find_gat_it->gatherer_id)->ClearLoots();
-                    continue; // todo убрать
+                    dogs_.at(ge_it->gatherer_id)->ClearLoots();
                 }
                 else
                 {
-                    // check loot bag
-                    auto dog_bag_cap = dogs_[find_gat_it->gatherer_id]->GetLootSize();
-                    if(dog_bag_cap >= map_cap)
+                    if (dogs_[ge_it->gatherer_id]->GetLootSize() < map_ptr_->GetBagCapacity())
                     {
-                        continue;
-                    }
+                        bool procc = false;
+                        for (auto it_local_proc = items.begin(); it_local_proc != items.end(); it_local_proc++)
+                        {
+                            if (*it_local_proc == ge_it->item_id)
+                                procc = true;
+                        }
 
-                    // check if item already processed
-                    bool alredyProcessed = false;
-                    for(auto it_local_proc = processed_items.begin(); it_local_proc != processed_items.end(); it_local_proc++)
-                    {
-                        if(*it_local_proc == find_gat_it->item_id)
-                            alredyProcessed = true;
-                    }
-                    
-                    // process item:
-                    if(alredyProcessed)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        // append to loot bag
-                        dogs_[find_gat_it->gatherer_id]->AddLoot({{0.0, 0.0}, loots_[find_gat_it->item_id - GetOfficeCount()].GetType(), static_cast<int>(find_gat_it->item_id)});
-                        // append to processed list
-                        processed_items.push_back(find_gat_it->item_id);
-                        // erase processed element
-                        // it->EraseLootObj(find_gat_it->item_id);
-
-                        // избавится от кключан на карте
-                        Eraseloot(find_gat_it->item_id - GetOfficeCount());
+                        if (!procc)
+                        {
+                            dogs_[ge_it->gatherer_id]->AddLoot({{0.0, 0.0}, loots_[ge_it->item_id - OfficesCount()].GetType(), static_cast<int>(ge_it->item_id)});
+                            items.push_back(ge_it->item_id);
+                            Eraseloot(ge_it->item_id - OfficesCount());
+                        }
                     }
                 }
             }

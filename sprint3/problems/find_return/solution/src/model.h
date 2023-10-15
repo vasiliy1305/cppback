@@ -149,7 +149,7 @@ namespace model
         Point position_;
         Offset offset_;
 
-        const double WIDTH = 0.5; // уточнить размер
+        const double WIDTH = 0.5;
     };
 
     class Map
@@ -301,9 +301,9 @@ namespace model
     private:
         TwoDimVector pos_;
         int type_;
-        int id_; // todo int OR size_t?
+        int id_;
 
-         double WIDTH = 0.0;
+        double WIDTH = 0.0;
     };
 
     class Dog
@@ -339,7 +339,7 @@ namespace model
 
         void SetDir(std::string dir);
 
-        void SetPos(TwoDimVector pos) //
+        void SetPos(TwoDimVector pos)
         {
             previous_pos_ = pos_;
             pos_ = pos;
@@ -370,7 +370,6 @@ namespace model
             return GetLoots().size();
         }
 
-
         // единичный вектор направления двиижения
         TwoDimVector GetDirectionVec();
 
@@ -391,17 +390,14 @@ namespace model
 
         std::vector<Loot> loots_;
 
-        const double WIDTH = 0.6; // уточнить размер
+        const double WIDTH = 0.6;
     };
 
-    class GameSession : public collision_detector::ItemGathererProvider // todo #1
+    class GameSession : public collision_detector::ItemGathererProvider
     {
     public:
         GameSession(std::shared_ptr<Map> map_ptr, loot_gen::LootGenerator loot_gen) : map_ptr_(map_ptr), loot_gen_(loot_gen)
         {
-            // auto pos = GetRandomRoadPoint(true);
-            // auto type = GetRandomNumber(map_ptr_->GetLootTypeSize());
-            // loots_.push_back(Loot(pos, type));
         }
 
         GameSession() = delete;
@@ -450,37 +446,15 @@ namespace model
         }
 
         // реализация интерфейса ItemGathererProvider
-        size_t ItemsCount() const // todo
-        {
-            return loots_.size() + map_ptr_->GetOffices().size(); // офисы тоже элементы
-        }
 
-        bool IsOffice(size_t idx) const
-        {
-            return idx < GetOfficeCount();
-        }
-
-        size_t GetOfficeCount() const
+        size_t OfficesCount() const
         {
             return map_ptr_->GetOffices().size();
         }
 
-        collision_detector::Item GetItem(size_t idx) const
+        size_t ItemsCount() const
         {
-            // будем считать что сначала идут офисы а потом предметы
-            if (IsOffice(idx))
-            {
-                collision_detector::Item item = {{static_cast<double>(map_ptr_->GetOffices().at(idx).GetPosition().x),
-                                                  static_cast<double>(map_ptr_->GetOffices().at(idx).GetPosition().y)},
-                                                 map_ptr_->GetOffices().at(idx).GetWidth()};
-                return item;
-            }
-            else
-            {
-                idx -= GetOfficeCount();
-                collision_detector::Item item = {{loots_.at(idx).GetPos().x, loots_.at(idx).GetPos().y}, loots_.at(idx).GetWidth()};
-                return item;
-            }
+            return OfficesCount() + loots_.size(); // офисы тоже элементы
         }
 
         size_t GatherersCount() const
@@ -488,13 +462,32 @@ namespace model
             return dogs_.size();
         }
 
-        collision_detector::Gatherer GetGatherer(size_t idx) const // todo добавть перемешение а -> б
+        bool IsOffice(size_t idx) const
+        {
+            return idx < OfficesCount(); // кажется что можно сделать элегантнее но я не понимаю как
+        }
+
+        collision_detector::Item GetItem(size_t idx) const
+        {
+            if (IsOffice(idx))
+            {
+                collision_detector::Item item = {{static_cast<double>(map_ptr_->GetOffices().at(idx).GetPosition().x),
+                                                  static_cast<double>(map_ptr_->GetOffices().at(idx).GetPosition().y)},
+                                                 map_ptr_->GetOffices().at(idx).GetWidth()};
+                return item;
+            }
+            idx -= OfficesCount();
+            collision_detector::Item item = {{loots_.at(idx).GetPos().x, loots_.at(idx).GetPos().y}, loots_.at(idx).GetWidth()};
+            return item;
+        }
+
+        collision_detector::Gatherer GetGatherer(size_t idx) const
         {
             collision_detector::Gatherer gather = {{dogs_[idx]->GetPos().x, dogs_[idx]->GetPos().y}, {dogs_[idx]->GetPreviousPos().x, dogs_[idx]->GetPreviousPos().y}, dogs_[idx]->GetWidth()};
             return gather;
         }
 
-        void Eraseloot(size_t idx)
+        void Eraseloot(size_t idx) // возможна потенциальная ошибка
         {
             loots_.erase(loots_.begin() + idx);
         }
@@ -672,9 +665,7 @@ namespace model
         loot_gen::LootGenerator loot_gen_;
         int default_bag_capacity_ = 3;
 
-        // model::TwoDimVector GetRandomRoadPoint(const std::string &map_id);
-
-        std::vector<Loot> empty_; //todo патч поправить в будущем
+        std::vector<Loot> empty_; // todo патч поправить в будущем
     };
 
     TwoDimVector GetBorderPoint(Road road, std::shared_ptr<model::Dog> dog);

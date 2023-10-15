@@ -23,27 +23,22 @@ namespace collision_detector
     std::vector<GatheringEvent> FindGatherEvents(const ItemGathererProvider &provider) // todo переделать
     {
         std::vector<GatheringEvent> detected_events;
-        static auto eq_pt = [](geom::Point2D p1, geom::Point2D p2)
-        {
-            return p1.x == p2.x && p1.y == p2.y;
-        };
 
         for (size_t g = 0; g < provider.GatherersCount(); ++g)
         {
             Gatherer gatherer = provider.GetGatherer(g);
-            if (eq_pt(gatherer.start_pos, gatherer.end_pos))
+            if (!(gatherer.start_pos == gatherer.end_pos))
             {
-                continue;
-            }
-            for (size_t i = 0; i < provider.ItemsCount(); ++i)
-            {
-                Item item = provider.GetItem(i);
-                auto collect_result = TryCollectPoint(gatherer.start_pos, gatherer.end_pos, item.position);
-
-                if (collect_result.IsCollected(gatherer.width + item.width))
+                for (size_t i = 0; i < provider.ItemsCount(); ++i)
                 {
-                    GatheringEvent evt(i, g, collect_result.sq_distance, collect_result.proj_ratio);
-                    detected_events.push_back(evt);
+                    Item item = provider.GetItem(i);
+                    auto collect_result = TryCollectPoint(gatherer.start_pos, gatherer.end_pos, item.position);
+
+                    if (collect_result.IsCollected(gatherer.width + item.width))
+                    {
+                        GatheringEvent evt(i, g, collect_result.sq_distance, collect_result.proj_ratio);
+                        detected_events.push_back(evt);
+                    }
                 }
             }
         }
