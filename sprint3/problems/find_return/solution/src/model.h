@@ -13,6 +13,7 @@
 
 #include "tagged.h"
 #include "loot_generator.h"
+#include "collision_detector.h"
 
 namespace model
 {
@@ -413,6 +414,7 @@ namespace model
         loot_gen::LootGenerator loot_gen_;
         int curr_loot_id_ = 0;
     };
+
 
     namespace detail
     {

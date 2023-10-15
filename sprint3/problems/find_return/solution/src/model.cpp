@@ -249,6 +249,9 @@ namespace model
         return {rnd_x, rnd_y};
     }
 
+
+
+
     int GameSession::GetRandomNumber(int size)
     {
         std::random_device random_device_;
@@ -362,6 +365,8 @@ namespace model
             auto type = GetRandomNumber(map_ptr_->GetLootTypeSize());
             loots_.push_back(Loot(pos, type, curr_loot_id_++));
         }
+
+        // todo - добавить сбор предметов, когда именно ?
     }
 
     TwoDimVector operator+(const TwoDimVector &lhs, const TwoDimVector &rhs)

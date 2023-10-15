@@ -20,10 +20,9 @@ namespace collision_detector
         return CollectionResult(sq_distance, proj_ratio);
     }
 
-    std::vector<GatheringEvent> FindGatherEvents(const ItemGathererProvider &provider)
+    std::vector<GatheringEvent> FindGatherEvents(const ItemGathererProvider &provider) // todo переделать
     {
         std::vector<GatheringEvent> detected_events;
-
         static auto eq_pt = [](geom::Point2D p1, geom::Point2D p2)
         {
             return p1.x == p2.x && p1.y == p2.y;
