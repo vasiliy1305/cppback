@@ -301,7 +301,7 @@ namespace model
     private:
         TwoDimVector pos_;
         int type_;
-        int id_;
+        int id_; // todo int OR size_t?
 
          double WIDTH = 0.0;
     };
@@ -470,8 +470,8 @@ namespace model
             // будем считать что сначала идут офисы а потом предметы
             if (IsOffice(idx))
             {
-                collision_detector::Item item = {{map_ptr_->GetOffices().at(idx).GetPosition().x,
-                                                  map_ptr_->GetOffices().at(idx).GetPosition().y},
+                collision_detector::Item item = {{static_cast<double>(map_ptr_->GetOffices().at(idx).GetPosition().x),
+                                                  static_cast<double>(map_ptr_->GetOffices().at(idx).GetPosition().y)},
                                                  map_ptr_->GetOffices().at(idx).GetWidth()};
                 return item;
             }
@@ -668,6 +668,8 @@ namespace model
         int default_bag_capacity_ = 3;
 
         // model::TwoDimVector GetRandomRoadPoint(const std::string &map_id);
+
+        std::vector<Loot> empty_; //todo патч поправить в будущем
     };
 
     TwoDimVector GetBorderPoint(Road road, std::shared_ptr<model::Dog> dog);

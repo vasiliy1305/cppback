@@ -411,7 +411,7 @@ namespace model
                     else
                     {
                         // append to loot bag
-                        dogs_[find_gat_it->gatherer_id]->AddLoot({{0.0, 0.0}, loots_[find_gat_it->item_id - GetOfficeCount()].GetType(), find_gat_it->item_id});
+                        dogs_[find_gat_it->gatherer_id]->AddLoot({{0.0, 0.0}, loots_[find_gat_it->item_id - GetOfficeCount()].GetType(), static_cast<int>(find_gat_it->item_id)});
                         // append to processed list
                         processed_items.push_back(find_gat_it->item_id);
                         // erase processed element
@@ -593,7 +593,7 @@ namespace model
         }
         else
         {
-            return {};
+            return empty_;
         }
     }
 

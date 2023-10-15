@@ -43,6 +43,8 @@ add_executable(game_server
 	src/application.cpp
 	src/logger.h 
 	src/logger.cpp
+	src/collision_detector.h 
+	src/collision_detector.cpp 
 )
 
 add_executable(game_server_tests
