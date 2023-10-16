@@ -158,8 +158,13 @@ namespace json_loader
 
         auto loot_types = map.at("lootTypes").as_array();
         int loot_types_size = loot_types.size();
+        std::vector<int> loot_scores;
+        for(auto loot_js: loot_types)
+        {
+            loot_scores.push_back(loot_js.as_object()["value"].as_int64());
+        }
 
-        model::Map model_map(model::Map::Id(id), name, def_dog_speed, loot_types_size);
+        model::Map model_map(model::Map::Id(id), name, def_dog_speed, loot_types_size, loot_scores);
 
         if (map.as_object().contains("dogSpeed"))
         {

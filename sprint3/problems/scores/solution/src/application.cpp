@@ -309,6 +309,8 @@ namespace app
             js_loots.push_back(js_loot);
         }
         player["bag"] = js_loots;
+        player["score"] = dog.GetScore();
+        
 
         return player;
     }

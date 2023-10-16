@@ -160,8 +160,8 @@ namespace model
         using Buildings = std::vector<Building>;
         using Offices = std::vector<Office>;
 
-        Map(Id id, std::string name, double dog_speed, int loot_types_size) noexcept
-            : id_(std::move(id)), name_(std::move(name)), dog_speed_(dog_speed), loot_types_size_(loot_types_size)
+        Map(Id id, std::string name, double dog_speed, int loot_types_size, std::vector<int> loot_scores) noexcept
+            : id_(std::move(id)), name_(std::move(name)), dog_speed_(dog_speed), loot_types_size_(loot_types_size), loot_scores_(loot_scores)
         {
         }
 
@@ -227,6 +227,11 @@ namespace model
             return bag_capacity_;
         }
 
+        int GetLootScoreById(int id)
+        {
+            return loot_scores_.at(id);
+        }
+
     private:
         using OfficeIdToIndex = std::unordered_map<Office::Id, size_t, util::TaggedHasher<Office::Id>>;
 
@@ -240,6 +245,7 @@ namespace model
         OfficeIdToIndex warehouse_id_to_index_;
         Offices offices_;
         int loot_types_size_;
+        std::vector<int> loot_scores_;
     };
 
     struct TwoDimVector
@@ -274,7 +280,7 @@ namespace model
     class Loot
     {
     public:
-        Loot(TwoDimVector pos, int type, int id) : pos_(pos), type_(type), id_(id)
+        Loot(TwoDimVector pos, int type, int id, int value) : pos_(pos), type_(type), id_(id), value_(value)
         {
         }
 
@@ -298,10 +304,16 @@ namespace model
             return WIDTH;
         }
 
+        int GetValue()
+        {
+            return value_;
+        }
+
     private:
         TwoDimVector pos_;
         int type_;
         int id_;
+        int value_;
 
         double WIDTH = 0.0;
     };
@@ -362,6 +374,11 @@ namespace model
 
         void ClearLoots()
         {
+            // начислить очков и очистить рюкзак
+            for(auto loot: loots_)
+            {
+                score_ += loot.GetValue();
+            }
             loots_ = {};
         }
 
@@ -378,6 +395,16 @@ namespace model
             return WIDTH;
         }
 
+        int GetScore()
+        {
+            return score_;
+        }
+
+        // void IncScore(int score)
+        // {
+        //     score_ += score;
+        // }
+
     private:
         Id id_;
         TwoDimVector speed_;
@@ -387,6 +414,7 @@ namespace model
         std ::string dir_str_;
 
         double abs_speed_;
+        int score_ = 0;
 
         std::vector<Loot> loots_;
 
