@@ -15,7 +15,7 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 # Добавляем библиотеку, указывая, что она статическая.
-add_library(MyLib STATIC
+add_library(MyLib STATIC 
 	src/model.h
 	src/model.cpp
 	src/tagged.h

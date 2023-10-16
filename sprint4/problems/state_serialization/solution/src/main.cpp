@@ -37,9 +37,12 @@ namespace
 struct Args
 {
     int tick_period = -1;
+    int save_state_period = -1;
     std::string config_file;
     std::string www_root;
+    std::string state_file;
     bool randomize_spawn_points = false;
+    bool use_state = false;
 };
 
 [[nodiscard]] std::optional<Args> ParseCommandLine(int argc, const char *const argv[])
@@ -49,7 +52,14 @@ struct Args
     po::options_description desc{"Allowed options"s};
 
     Args args;
-    desc.add_options()("help,h", "produce help message")("tick-period,t", po::value(&args.tick_period)->value_name("milliseconds"s), "set tick period")("config-file,c", po::value(&args.config_file)->value_name("file"s), "set config file path")("www-root,w", po::value(&args.www_root)->value_name("dir"s), "set static files root")("randomize-spawn-points", "spawn dogs at random positions");
+    desc.add_options()
+    ("help,h", "produce help message")
+    ("tick-period,t", po::value(&args.tick_period)->value_name("milliseconds"s), "set tick period")
+    ("save-state-period", po::value(&args.save_state_period)->value_name("milliseconds"s), "set save state period")
+    ("config-file,c", po::value(&args.config_file)->value_name("file"s), "set config file path")
+    ("state-file", po::value(&args.state_file)->value_name("file"s), "set state file path")
+    ("www-root,w", po::value(&args.www_root)->value_name("dir"s), "set static files root")
+    ("randomize-spawn-points", "spawn dogs at random positions");
 
     po::variables_map vm;
     po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -73,9 +83,17 @@ struct Args
     {
         args.tick_period = -1;
     }
+    if (!vm.contains("save-state-period"s))
+    {
+        args.save_state_period = -1;
+    }
     if (vm.contains("randomize-spawn-points"))
     {
         args.randomize_spawn_points = true;
+    }
+    if (vm.contains("state-file"))
+    {
+        args.use_state = true;
     }
     return args;
 }
