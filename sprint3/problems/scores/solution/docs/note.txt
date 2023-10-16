@@ -1,0 +1,54 @@
+
+curl -X POST -H "Content-Type: application/json" -d '{"userName": "Scooby Doo", "mapId": "map1"}' http://127.0.0.1:8080/api/v1/game/join
+curl -X GET  -H "Authorization: Bearer bd0d1f0d838308f35773dc54968a1bc0" "http://127.0.0.1:8080/api/v1/game/players"
+curl -X GET  -H "Authorization: Bearer bd0d1f0d838308f35773dc54968a1bc0" "http://127.0.0.1:8080/api/v1/game/state"
+curl -X POST -H "Content-Type: application/json" -d '{"timeDelta":100}' http://127.0.0.1:8080/
+
+------------------------------------------------------------------------------------------------------------------------
+
+game_server --tick-period <time-in-ms> --config-file <config-path> --www-root <static-files-dir>
+
+------------------------------------
+conan install .. --build=missing -s build_type=Release -s compiler.libcxx=libstdc++11
+cmake ..
+cmake --build .
+
+
+mkdir build_debug && cd build_debug
+
+conan install .. -s compiler.libcxx=libstdc++11 -s build_type=Debug
+cmake .. -DCMAKE_BUILD_TYPE=Debug
+cmake --build . 
+
+------------------------------------------------------------
+
+{
+   "players":{
+      "13":{
+         "pos":[10.5,3.8],
+         "speed":[0.5, 0.],
+         "dir":"L",
+         "bag":[
+            {"id":9, "type":4},
+            {"id":8, "type":4}
+         ],
+         "score": 50
+      },
+      "15":{
+         "pos":[8.5,1.],
+         "speed":[0., 0.],
+         "dir":"L",
+         "bag":[
+            {"id":3, "type":4},
+            {"id":12, "type":4}
+         ],
+         "score": 0
+      }
+   },
+   "lostObjects":{
+      "11":{
+         "type":3,
+         "pos":[13.2,17.2]
+      }
+   }
+}

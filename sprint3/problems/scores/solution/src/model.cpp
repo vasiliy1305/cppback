@@ -330,7 +330,7 @@ namespace model
             // где то здесь ошибка которую я не могу найти, но начиная с теста gen-object тесты частенько падают (но не всегда какаята плавающая ошибка)
             auto pos = GetRandomRoadPoint(true);
             auto type = GetRandomNumber(map_ptr_->GetLootTypeSize());
-            loots_.push_back(Loot(pos, type, curr_loot_id_++));
+            loots_.push_back(Loot(pos, type, curr_loot_id_++, map_ptr_->GetLootScoreById(type)));
         }
 
         // сбор
@@ -359,7 +359,7 @@ namespace model
 
                         if (!procc)
                         {
-                            dogs_[ge_it->gatherer_id]->AddLoot({{0.0, 0.0}, loots_[ge_it->item_id - OfficesCount()].GetType(), static_cast<int>(ge_it->item_id)});
+                            dogs_[ge_it->gatherer_id]->AddLoot({{0.0, 0.0}, loots_[ge_it->item_id - OfficesCount()].GetType(), static_cast<int>(ge_it->item_id), map_ptr_->GetLootScoreById(static_cast<int>(ge_it->item_id))});
                             items.push_back(ge_it->item_id);
                             Eraseloot(ge_it->item_id - OfficesCount());
                         }
