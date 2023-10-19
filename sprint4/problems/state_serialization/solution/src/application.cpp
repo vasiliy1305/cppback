@@ -301,7 +301,7 @@ namespace app
 
         boost::json::array js_loots;
         auto loots = dog.GetLoots();
-        for(auto loot: loots)
+        for (auto loot : loots)
         {
             boost::json::object js_loot;
             js_loot["id"] = loot.GetId();
@@ -310,7 +310,6 @@ namespace app
         }
         player["bag"] = js_loots;
         player["score"] = dog.GetScore();
-        
 
         return player;
     }
@@ -402,6 +401,17 @@ namespace app
     void Application::UpdateTime(int delta_time)
     {
         game_.UpdateTime(delta_time);
+
+        if (save_periodical_)
+        {
+            time_from_last_save_ += delta_time;
+
+            if (time_from_last_save_ >= save_period_)
+            {
+                SaveGameToFile(state_file_, game_);
+                time_from_last_save_ = 0;
+            }
+        }
     }
 
     std::string Application::MakeMessege(std::string code, std::string message)

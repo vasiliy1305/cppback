@@ -8,6 +8,8 @@
 #include <vector>
 #include <boost/json.hpp>
 
+#include "file_loader.h"
+
 using namespace std::literals;
 namespace logging = boost::log;
 namespace keywords = boost::log::keywords;
@@ -66,7 +68,12 @@ namespace app
     class Application
     {
     public:
-        Application(model::Game &game, extra_data::ExtraData &extra_data) : game_{game}, extra_data_{extra_data}
+        Application(model::Game &game, extra_data::ExtraData &extra_data, std::string state_file, bool save_periodical, int save_period)
+            : game_{game}
+            , extra_data_{extra_data}
+            , state_file_(state_file)
+            , save_periodical_(save_periodical)
+            , save_period_(save_period)
         {
         }
 
@@ -79,9 +86,15 @@ namespace app
         StringResponse SetTimeDelta(const StringRequest &req);
 
         void UpdateTime(int delta_time);
+        void SetPeriodicalSave(std::string file, int period)
+        {
+            state_file_ = file;
+            save_period_ = period;
+            save_periodical_ = true;
+        }
 
     private:
-        model::Game &game_; // todo 
+        model::Game &game_; // todo
         extra_data::ExtraData extra_data_;
 
         std::string GetToken(const StringRequest &req);
@@ -105,6 +118,11 @@ namespace app
         std::pair<std::string, http::status> Players(const std::string token);
         std::pair<std::string, http::status> State(const std::string token);
         std::pair<std::string, http::status> Join(const std::string json_str);
+
+        std::string state_file_;
+        bool save_periodical_ = false;
+        int save_period_ = -1;
+        int time_from_last_save_ = 0;
     };
 
 } // end namespace app

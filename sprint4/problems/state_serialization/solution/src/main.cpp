@@ -11,7 +11,7 @@
 #include "request_handler.h"
 
 #include "tests.h"
-#include "file_loader.h"
+
 
 using namespace std::literals;
 namespace net = boost::asio;
@@ -131,7 +131,7 @@ int main(int argc, const char *argv[])
             // 4. Создаём обработчик HTTP-запросов и связываем его с моделью игры
             // std::cerr << " -1 " << std::endl;
 
-            http_handler::RequestHandler handler{game, args->www_root, args->tick_period, ioc, extra_data};
+            http_handler::RequestHandler handler{game, args->www_root, args->tick_period, ioc, extra_data, args->state_file, (args->save_state_period > 0), args->save_state_period};
             // http_handler::LoggingRequestHandler logging_handler{handler};
             // std::cerr << " -2 " << std::endl;
 
