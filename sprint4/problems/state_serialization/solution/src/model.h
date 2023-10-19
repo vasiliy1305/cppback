@@ -696,6 +696,11 @@ namespace model
             ar & curr_loot_id_;
         }
 
+        void SetLootGen(loot_gen::LootGenerator loot_gen)
+        {
+            loot_gen_ = loot_gen;
+        }
+
     private:
         // using DogIdHasher = util::TaggedHasher<Dog::Id>;
         std::vector<std::shared_ptr<Dog>> dogs_; //
@@ -772,8 +777,7 @@ namespace model
     class PlayerTokens
     {
     public:
-
-    PlayerTokens() = default;
+        PlayerTokens() = default;
         using TokenHasher = util::TaggedHasher<Token>;
         Token AddPlayer(Player &player);
         std::shared_ptr<Player> FindPlayerByToken(Token token);
@@ -797,7 +801,6 @@ namespace model
     {
     public:
         Players() = default;
-
 
         using MapIdHasher = util::TaggedHasher<Map::Id>;
         using DogIdHasher = util::TaggedHasher<Dog::Id>;
@@ -915,6 +918,10 @@ namespace model
         void SetLootGen(loot_gen::LootGenerator loot_gen)
         {
             loot_gen_ = loot_gen;
+            for (auto session : sessions_)
+            {
+                session->SetLootGen(loot_gen);
+            }
         }
 
         template <class Archive>

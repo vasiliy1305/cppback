@@ -47,6 +47,8 @@ add_executable(game_server
 	src/logger.cpp
 	src/collision_detector.h 
 	src/collision_detector.cpp 
+	src/file_loader.h 
+	src/file_loader.cpp 
 	
 )
 
@@ -54,8 +56,10 @@ add_executable(game_server_tests
 	tests/state-serialization-tests.cpp
 	src/collision_detector.h 
 	src/collision_detector.cpp 
-		src/json_loader.h
+	src/json_loader.h
 	src/json_loader.cpp
+	src/file_loader.h 
+	src/file_loader.cpp
 )
 
 # Добавляем зависимость целей от статической библиотеки.

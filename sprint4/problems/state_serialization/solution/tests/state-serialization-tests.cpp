@@ -251,6 +251,40 @@ SCENARIO_METHOD(Fixture, "GameSerialization")
     }
 }
 
+
+SCENARIO_METHOD(Fixture, "GameLoder")
+{
+    GIVEN("A Game")
+    {
+        model::Game game = json_loader::LoadGame("../../data/config.json");
+        {
+            SaveGameToFile("game_state", game);
+        }
+        {
+            double probability = 0.5;
+            double period = 1.0;
+            loot_gen::LootGenerator::TimeInterval interval(static_cast<int64_t>(period * 1000));
+            loot_gen::LootGenerator loot_gen(interval, probability); // todo - добавить генератор
+            model::Game restored(loot_gen);
+
+            LoadGameFromFile("game_state", restored);
+
+            game.SetLootGen(loot_gen); // todo добавить set loot gen to session
+            
+            CHECK(game.GetCurrDogId() == restored.GetCurrDogId());
+            CHECK(game.GetDefaultBagCapacity() == restored.GetDefaultBagCapacity());
+            CHECK(game.GetDefDogSpeed() == restored.GetDefDogSpeed());
+            CHECK(game.GetDogsByToken("") == restored.GetDogsByToken(""));
+            CHECK(game.GetLootsByToken("") == restored.GetLootsByToken(""));
+            // CHECK(game.GetMaps() == restored.GetMaps());
+            CHECK(game.GetPlayerByToken("") == restored.GetPlayerByToken(""));
+            // CHECK(game.GetPlayers() == restored.GetPlayers());
+            CHECK(game.GetSessions() == restored.GetSessions());
+
+        }
+    }
+}
+
 // SCENARIO_METHOD(Fixture, "Loot Serialization")
 // {
 //     GIVEN("a loot")
