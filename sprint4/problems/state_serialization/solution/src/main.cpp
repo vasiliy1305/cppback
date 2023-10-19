@@ -11,6 +11,7 @@
 #include "request_handler.h"
 
 #include "tests.h"
+#include "file_loader.h"
 
 using namespace std::literals;
 namespace net = boost::asio;
@@ -52,14 +53,7 @@ struct Args
     po::options_description desc{"Allowed options"s};
 
     Args args;
-    desc.add_options()
-    ("help,h", "produce help message")
-    ("tick-period,t", po::value(&args.tick_period)->value_name("milliseconds"s), "set tick period")
-    ("save-state-period", po::value(&args.save_state_period)->value_name("milliseconds"s), "set save state period")
-    ("config-file,c", po::value(&args.config_file)->value_name("file"s), "set config file path")
-    ("state-file", po::value(&args.state_file)->value_name("file"s), "set state file path")
-    ("www-root,w", po::value(&args.www_root)->value_name("dir"s), "set static files root")
-    ("randomize-spawn-points", "spawn dogs at random positions");
+    desc.add_options()("help,h", "produce help message")("tick-period,t", po::value(&args.tick_period)->value_name("milliseconds"s), "set tick period")("save-state-period", po::value(&args.save_state_period)->value_name("milliseconds"s), "set save state period")("config-file,c", po::value(&args.config_file)->value_name("file"s), "set config file path")("state-file", po::value(&args.state_file)->value_name("file"s), "set state file path")("www-root,w", po::value(&args.www_root)->value_name("dir"s), "set static files root")("randomize-spawn-points", "spawn dogs at random positions");
 
     po::variables_map vm;
     po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -107,10 +101,16 @@ int main(int argc, const char *argv[])
             // 0. init log
             logger::InitBoostLog();
 
-            // 1. Загружаем карту из файла и построить модель игры
+            // 1. Загружаем карту из файла и построить модель игры либо из созраненого состояния
+
             model::Game game = json_loader::LoadGame(args->config_file);
             extra_data::ExtraData extra_data = json_loader::LoadExtraData(args->config_file);
             game.SetRandomizeSpawnPoints(args->randomize_spawn_points);
+
+            if (args->use_state)
+            {
+                LoadGameFromFile(args->state_file, game);
+            }
 
             // 2. Инициализируем io_context
             const unsigned num_threads = std::thread::hardware_concurrency();
@@ -129,8 +129,11 @@ int main(int argc, const char *argv[])
         } });
 
             // 4. Создаём обработчик HTTP-запросов и связываем его с моделью игры
+            // std::cerr << " -1 " << std::endl;
+
             http_handler::RequestHandler handler{game, args->www_root, args->tick_period, ioc, extra_data};
             // http_handler::LoggingRequestHandler logging_handler{handler};
+            // std::cerr << " -2 " << std::endl;
 
             // 5. Запустить обработчик HTTP-запросов, делегируя их обработчику запросов
             const auto address = net::ip::make_address("0.0.0.0");
@@ -145,6 +148,15 @@ int main(int argc, const char *argv[])
             // 6. Запускаем обработку асинхронных операций
             RunWorkers(std::max(1u, num_threads), [&ioc]
                        { ioc.run(); });
+
+            // В этой точке все асинхронные операции уже завершены и можно
+            // сохранить состояние сервера в файл
+            // <-----------------------------------
+            std::cerr << " exit " << std::endl;
+            if (args->use_state)
+            {
+                SaveGameToFile(args->state_file, game);
+            }
         }
     }
     catch (const std::exception &ex)

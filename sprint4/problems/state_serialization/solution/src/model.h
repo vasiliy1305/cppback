@@ -832,6 +832,19 @@ namespace model
 
         Game() = default;
 
+        // Конструктор копирования
+        Game(const Game &other)
+        {
+            std::cout << "Конструктор копирования вызван\n";
+        }
+
+        // Оператор присваивания через копирование
+        Game &operator=(const Game &other)
+        {
+            std::cout << "Оператор присваивания через копирование вызван\n";
+            return *this;
+        }
+
         Game(loot_gen::LootGenerator loot_gen) : loot_gen_(loot_gen)
         {
         }

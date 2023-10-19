@@ -6,6 +6,6 @@
 using namespace model;
 using namespace std::literals;
 
-bool SaveGameToFile(const std::string &filename, const model::Game &game);
+void SaveGameToFile(const std::string &filename, const model::Game &game);
 
 bool LoadGameFromFile(const std::string &filename, model::Game &game);

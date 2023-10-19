@@ -81,7 +81,7 @@ namespace app
         void UpdateTime(int delta_time);
 
     private:
-        model::Game game_;
+        model::Game &game_; // todo 
         extra_data::ExtraData extra_data_;
 
         std::string GetToken(const StringRequest &req);
