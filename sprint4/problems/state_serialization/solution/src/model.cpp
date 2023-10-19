@@ -338,9 +338,9 @@ namespace model
         if (gathering_event.size() != 0)
         {
             std::vector<int> items;
-            items.resize(gathering_event.size()); 
+            items.resize(gathering_event.size());
 
-            for (auto ge_it = gathering_event.begin(); ge_it != gathering_event.end(); ge_it++) 
+            for (auto ge_it = gathering_event.begin(); ge_it != gathering_event.end(); ge_it++)
             {
                 if (IsOffice(ge_it->item_id))
                 {
@@ -395,10 +395,21 @@ namespace model
         return lhs + (rhs * (-1.0));
     }
 
+    bool operator==(const TwoDimVector &lhs, const TwoDimVector &rhs)
+    {
+        return (lhs.x == rhs.x) && (lhs.y == rhs.y);
+    }
+
     double ChebyshevDistance(TwoDimVector v1, TwoDimVector v2)
     {
         auto delta = v1 - v2;
         return std::max(std::abs(delta.x), std::abs(delta.y));
+    }
+
+    std::ostream &operator<<(std::ostream &os, const TwoDimVector &obj)
+    {
+        os << "{ x: " << obj.x << ", y: " << obj.y << " }";
+        return os;
     }
 
     double DistanceBetweenRoadAndPoint(Road road, TwoDimVector pos)

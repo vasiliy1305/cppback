@@ -21,6 +21,8 @@ add_library(MyLib STATIC
 	src/tagged.h
 	src/loot_generator.h
 	src/loot_generator.cpp 
+	src/model_serialization.h 
+	src/geom.h
 )
 
 # Добавляем сторонние библиотеки. Указываем видимость PUBLIC, т. к. 
@@ -45,10 +47,15 @@ add_executable(game_server
 	src/logger.cpp
 	src/collision_detector.h 
 	src/collision_detector.cpp 
+	
 )
 
 add_executable(game_server_tests
-    tests/loot_generator_tests.cpp
+	tests/state-serialization-tests.cpp
+	src/collision_detector.h 
+	src/collision_detector.cpp 
+		src/json_loader.h
+	src/json_loader.cpp
 )
 
 # Добавляем зависимость целей от статической библиотеки.

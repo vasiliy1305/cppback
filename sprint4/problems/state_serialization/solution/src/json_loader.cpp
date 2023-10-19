@@ -16,7 +16,7 @@ namespace extra_data
 
 namespace json_loader
 {
-    double getRandomNumberFrom0To1()
+    double getRandomNumberFrom0To1() // todo протестить этот
     {
         // Initialize random number generator
         std::random_device rd;

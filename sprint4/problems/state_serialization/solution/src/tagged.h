@@ -33,6 +33,9 @@ namespace util
         using ValueType = Value;
         using TagType = Tag;
 
+        Tagged() = default;
+
+
         explicit Tagged(Value &&v)
             : value_(std::move(v))
         {
@@ -56,6 +59,12 @@ namespace util
         // Будет просто вызван соответствующий оператор для поля value_
         auto operator<=>(const Tagged<Value, Tag> &) const = default;
 
+        template <class Archive>
+        void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
+        {
+            ar & value_;
+        }
+
     private:
         Value value_;
     };
@@ -70,5 +79,5 @@ namespace util
             return std::hash<typename TaggedValue::ValueType>{}(*value);
         }
     };
- 
+
 } // namespace util

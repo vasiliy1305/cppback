@@ -3,6 +3,7 @@
 
 #include "../src/loot_generator.h"
 
+
 using namespace std::literals;
 
 SCENARIO("Loot generation")

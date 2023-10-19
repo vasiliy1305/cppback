@@ -15,23 +15,45 @@
 #include "loot_generator.h"
 #include "collision_detector.h"
 
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/unordered_map.hpp>
+
 namespace model
 {
-
-    double randomDouble(double start, double end);
+    const double ROAD_WIDTH = 0.4;
 
     using Dimension = int;
     using Coord = Dimension;
+
+    double randomDouble(double start, double end);
 
     struct Point
     {
         Coord x, y;
     };
 
+    template <typename Archive>
+    void serialize(Archive &ar, Point &p, [[maybe_unused]] const unsigned version)
+    {
+        ar & p.x;
+        ar & p.y;
+    }
+
     struct Size
     {
         Dimension width, height;
     };
+
+    template <typename Archive>
+    void serialize(Archive &ar, Size &s, [[maybe_unused]] const unsigned version)
+    {
+        ar & s.width;
+        ar & s.height;
+    }
 
     struct Rectangle
     {
@@ -39,12 +61,49 @@ namespace model
         Size size;
     };
 
+    template <typename Archive>
+    void serialize(Archive &ar, Rectangle &r, [[maybe_unused]] const unsigned version)
+    {
+        ar & r.position;
+        ar & r.size;
+    }
+
     struct Offset
     {
         Dimension dx, dy;
     };
 
-    const double ROAD_WIDTH = 0.4;
+    template <typename Archive>
+    void serialize(Archive &ar, Offset &off, [[maybe_unused]] const unsigned version)
+    {
+        ar & off.dx;
+        ar & off.dy;
+    }
+
+    struct TwoDimVector
+    {
+        double x;
+        double y;
+    };
+
+    TwoDimVector operator+(const TwoDimVector &lhs, const TwoDimVector &rhs);
+
+    TwoDimVector operator-(const TwoDimVector &lhs, const TwoDimVector &rhs);
+
+    TwoDimVector operator*(const TwoDimVector &vec, double scalar);
+
+    TwoDimVector operator*(double scalar, const TwoDimVector &vec);
+
+    bool operator==(const TwoDimVector &lhs, const TwoDimVector &rhs);
+
+    std::ostream &operator<<(std::ostream &os, const TwoDimVector &obj);
+
+    template <typename Archive>
+    void serialize(Archive &ar, TwoDimVector &vec, [[maybe_unused]] const unsigned version)
+    {
+        ar & vec.x;
+        ar & vec.y;
+    }
 
     class Road
     {
@@ -61,6 +120,8 @@ namespace model
     public:
         constexpr static HorizontalTag HORIZONTAL{};
         constexpr static VerticalTag VERTICAL{};
+
+        Road() = default;
 
         Road(HorizontalTag, Point start, Coord end_x) noexcept
             : start_{start}, end_{end_x, start.y}
@@ -92,6 +153,13 @@ namespace model
             return end_;
         }
 
+        template <class Archive>
+        void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
+        {
+            ar & start_;
+            ar & end_;
+        }
+
     private:
         Point start_;
         Point end_;
@@ -100,6 +168,7 @@ namespace model
     class Building
     {
     public:
+        Building() = default;
         explicit Building(Rectangle bounds) noexcept
             : bounds_{bounds}
         {
@@ -110,6 +179,12 @@ namespace model
             return bounds_;
         }
 
+        template <class Archive>
+        void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
+        {
+            ar & bounds_;
+        }
+
     private:
         Rectangle bounds_;
     };
@@ -118,6 +193,8 @@ namespace model
     {
     public:
         using Id = util::Tagged<std::string, Office>;
+
+        Office() = default;
 
         Office(Id id, Point position, Offset offset) noexcept
             : id_{std::move(id)}, position_{position}, offset_{offset}
@@ -144,12 +221,20 @@ namespace model
             return WIDTH;
         }
 
+        template <class Archive>
+        void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
+        {
+            ar &*id_;
+            ar & position_;
+            ar & offset_;
+        }
+
     private:
         Id id_;
         Point position_;
         Offset offset_;
 
-        const double WIDTH = 0.5;
+        double WIDTH = 0.5;
     };
 
     class Map
@@ -160,6 +245,7 @@ namespace model
         using Buildings = std::vector<Building>;
         using Offices = std::vector<Office>;
 
+        Map() = default;
         Map(Id id, std::string name, double dog_speed, int loot_types_size, std::vector<int> loot_scores) noexcept
             : id_(std::move(id)), name_(std::move(name)), dog_speed_(dog_speed), loot_types_size_(loot_types_size), loot_scores_(loot_scores)
         {
@@ -232,6 +318,21 @@ namespace model
             return loot_scores_.at(id);
         }
 
+        template <class Archive>
+        void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
+        {
+            ar &*id_;
+            ar & name_;
+            ar & roads_;
+            ar & buildings_;
+            ar & dog_speed_;
+            ar & bag_capacity_;
+            ar & warehouse_id_to_index_;
+            ar & offices_;
+            ar & loot_types_size_;
+            ar & loot_scores_;
+        }
+
     private:
         using OfficeIdToIndex = std::unordered_map<Office::Id, size_t, util::TaggedHasher<Office::Id>>;
 
@@ -247,20 +348,6 @@ namespace model
         int loot_types_size_;
         std::vector<int> loot_scores_;
     };
-
-    struct TwoDimVector
-    {
-        double x;
-        double y;
-    };
-
-    TwoDimVector operator+(const TwoDimVector &lhs, const TwoDimVector &rhs);
-
-    TwoDimVector operator-(const TwoDimVector &lhs, const TwoDimVector &rhs);
-
-    TwoDimVector operator*(const TwoDimVector &vec, double scalar);
-
-    TwoDimVector operator*(double scalar, const TwoDimVector &vec);
 
     // в этой задаче удобнее использовать такую метрику так как дороги прямоугольные
     double ChebyshevDistance(TwoDimVector x1, TwoDimVector x2);
@@ -280,6 +367,7 @@ namespace model
     class Loot
     {
     public:
+        Loot() = default;
         Loot(TwoDimVector pos, int type, int id, int value) : pos_(pos), type_(type), id_(id), value_(value)
         {
         }
@@ -304,9 +392,24 @@ namespace model
             return WIDTH;
         }
 
-        int GetValue()
+        int GetValue() const
         {
             return value_;
+        }
+
+        bool operator==(const Loot &other) const
+        {
+            return (type_ == other.type_) && (pos_ == other.pos_) && (id_ == other.id_) && (value_ == other.value_) && (WIDTH == other.WIDTH);
+        }
+
+        template <class Archive>
+        void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
+        {
+            ar & pos_;
+            ar & type_;
+            ar & id_;
+            ar & value_;
+            ar & WIDTH;
         }
 
     private:
@@ -314,7 +417,6 @@ namespace model
         int type_;
         int id_;
         int value_;
-
         double WIDTH = 0.0;
     };
 
@@ -322,6 +424,8 @@ namespace model
     {
     public:
         using Id = util::Tagged<uint32_t, Dog>;
+
+        Dog() = default;
         Dog(Id id, TwoDimVector pos, double abs_speed) : id_(id), pos_(pos), abs_speed_(abs_speed)
         {
             speed_ = {0.0, 0.0};
@@ -329,27 +433,32 @@ namespace model
             dir_str_ = "";
         }
 
-        const Id &GetId()
+        const Id &GetId() const // добавил при сериализации
         {
             return id_;
         }
 
-        const TwoDimVector GetPos()
+        const TwoDimVector GetPos() const // добавил при сериализации
         {
             return pos_;
         }
 
-        const TwoDimVector GetSpeed()
+        const TwoDimVector GetSpeed() const // добавил при сериализации
         {
             return speed_;
         }
 
-        const std::string GetDir()
+        const std::string GetDir() const // добавил при сериализации
         {
             return std::string(1, static_cast<char>(dir_));
         }
 
         void SetDir(std::string dir);
+
+        void SetSpeed(TwoDimVector speed)
+        {
+            speed_ = speed;
+        }
 
         void SetPos(TwoDimVector pos)
         {
@@ -357,7 +466,12 @@ namespace model
             pos_ = pos;
         }
 
-        TwoDimVector GetPreviousPos()
+        void SetPreviousPos(TwoDimVector pos)
+        {
+            previous_pos_ = pos;
+        }
+
+        TwoDimVector GetPreviousPos() const // добавил при сериализации
         {
             return previous_pos_;
         }
@@ -367,7 +481,7 @@ namespace model
             loots_.push_back(loot);
         }
 
-        std::vector<Loot> GetLoots()
+        std::vector<Loot> GetLoots() const // добавил при сериализации
         {
             return loots_;
         }
@@ -375,35 +489,60 @@ namespace model
         void ClearLoots()
         {
             // начислить очков и очистить рюкзак
-            for(auto loot: loots_)
+            for (auto loot : loots_)
             {
                 score_ += loot.GetValue();
             }
             loots_ = {};
         }
 
-        size_t GetLootSize()
+        size_t GetLootSize() const // добавил при сериализации
         {
             return GetLoots().size();
         }
 
         // единичный вектор направления двиижения
-        TwoDimVector GetDirectionVec();
+        TwoDimVector GetDirectionVec(); // добавил при сериализации
 
         double GetWidth() const
         {
             return WIDTH;
         }
 
-        int GetScore()
+        int GetScore() const // добавил при сериализации
         {
             return score_;
         }
 
-        // void IncScore(int score)
-        // {
-        //     score_ += score;
-        // }
+        double GetAbsSpead() const // добавил при сериализации
+        {
+            return abs_speed_;
+        }
+
+        Direction GetDirection() const // добавил при сериализации
+        {
+            return dir_;
+        }
+
+        void SetScore(int score)
+        {
+            score_ = score;
+        }
+
+        template <class Archive>
+        void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
+        {
+            ar &*id_;
+            ar & speed_;
+            ar & pos_;
+            ar & previous_pos_;
+            ar & dir_;
+            ar & dir_str_;
+            ar & dir_str_;
+            ar & score_;
+            ar & loots_;
+            ar & WIDTH;
+        }
 
     private:
         Id id_;
@@ -412,36 +551,37 @@ namespace model
         TwoDimVector previous_pos_;
         Direction dir_;
         std ::string dir_str_;
-
         double abs_speed_;
         int score_ = 0;
-
         std::vector<Loot> loots_;
-
-        const double WIDTH = 0.6;
+        double WIDTH = 0.6;
     };
 
     class GameSession : public collision_detector::ItemGathererProvider
     {
     public:
+        using DogIdHasher = util::TaggedHasher<Dog::Id>;
+
+        GameSession() = default;
+
         GameSession(std::shared_ptr<Map> map_ptr, loot_gen::LootGenerator loot_gen) : map_ptr_(map_ptr), loot_gen_(loot_gen)
         {
         }
 
-        GameSession() = delete;
-        GameSession(const GameSession &) = delete;
-        GameSession &operator=(const GameSession &) = delete;
+        // GameSession() = delete;
+        // GameSession(const GameSession &) = delete;
+        // GameSession &operator=(const GameSession &) = delete;
 
         ~GameSession()
         {
         }
 
-        std::shared_ptr<Map> GetMap()
+        std::shared_ptr<Map> GetMap() const
         {
             return map_ptr_;
         }
 
-        std::vector<std::shared_ptr<Dog>> GetDogs()
+        std::vector<std::shared_ptr<Dog>> GetDogs() const
         {
             return dogs_;
         }
@@ -468,7 +608,7 @@ namespace model
         model::TwoDimVector GetRandomRoadPoint(bool randomize_spawn_points);
         int GetRandomNumber(int size);
 
-        const std::vector<Loot> &GetLoots()
+        const std::vector<Loot> &GetLoots() const
         {
             return loots_;
         }
@@ -520,9 +660,45 @@ namespace model
             loots_.erase(loots_.begin() + idx);
         }
 
+        int GetCurrLootId() const
+        {
+            return curr_loot_id_;
+        }
+
+        std::unordered_map<Dog::Id, uint32_t, DogIdHasher> GetDogIdToIndex() const
+        {
+            return dog_id_to_index_;
+        }
+
+        void InsertDog(Dog dog)
+        {
+            dogs_.push_back(std::make_shared<Dog>(dog));
+        }
+
+        void AddLoot(Loot loot)
+        {
+            loots_.push_back(loot);
+        }
+
+        void InsertIndexId(Dog::Id id, uint32_t index)
+        {
+            dog_id_to_index_[id] = index;
+        }
+
+        template <class Archive>
+        void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
+        {
+            ar & dogs_;
+            ar & map_ptr_;
+            ar & dog_id_to_index_;
+            ar & loots_;
+            // ar & loot_gen_;
+            ar & curr_loot_id_;
+        }
+
     private:
-        using DogIdHasher = util::TaggedHasher<Dog::Id>;
-        std::vector<std::shared_ptr<Dog>> dogs_;
+        // using DogIdHasher = util::TaggedHasher<Dog::Id>;
+        std::vector<std::shared_ptr<Dog>> dogs_; //
         std::shared_ptr<Map> map_ptr_;
         std::unordered_map<Dog::Id, uint32_t, DogIdHasher> dog_id_to_index_;
         std::vector<Loot> loots_;
@@ -544,6 +720,8 @@ namespace model
     public:
         using Id = util::Tagged<uint32_t, Player>;
 
+        Player() = default;
+
         Player(std::shared_ptr<GameSession> session, std::shared_ptr<Dog> dog, uint32_t id, std::string name) : session_(session), dog_(dog), id_{id}, name_(name)
         {
         }
@@ -553,19 +731,33 @@ namespace model
             return session_;
         }
 
-        std::shared_ptr<Dog> GetDog()
+        std::shared_ptr<Dog> GetDog() const
         {
             return dog_;
         }
 
-        Id GetId()
+        Id GetId() const
         {
             return id_;
         }
 
-        std::string GetName()
+        std::string GetName() const
         {
             return name_;
+        }
+
+        std::shared_ptr<GameSession> GetSession() const
+        {
+            return session_;
+        }
+
+        template <class Archive>
+        void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
+        {
+            ar & session_;
+            ar & dog_;
+            ar &*id_;
+            ar & name_;
         }
 
     private:
@@ -580,25 +772,51 @@ namespace model
     class PlayerTokens
     {
     public:
+
+    PlayerTokens() = default;
+        using TokenHasher = util::TaggedHasher<Token>;
         Token AddPlayer(Player &player);
         std::shared_ptr<Player> FindPlayerByToken(Token token);
 
+        std::unordered_map<Token, std::shared_ptr<Player>, TokenHasher> GetTokens() const
+        {
+            return token_to_player_;
+        }
+
+        template <class Archive>
+        void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
+        {
+            ar & token_to_player_;
+        }
+
     private:
-        using TokenHasher = util::TaggedHasher<Token>;
         std::unordered_map<Token, std::shared_ptr<Player>, TokenHasher> token_to_player_;
     };
 
     class Players
     {
     public:
-        std::shared_ptr<Player> Add(std::shared_ptr<Dog> dog, std::shared_ptr<GameSession> session, std::string name);
-        std::shared_ptr<Player> FindByDogIdAndMapId(Dog::Id dog_id, Map::Id map_id);
+        Players() = default;
 
-    private:
+
         using MapIdHasher = util::TaggedHasher<Map::Id>;
         using DogIdHasher = util::TaggedHasher<Dog::Id>;
         using MapIdandDogIdToPlayer = std::unordered_map<Map::Id, std::unordered_map<Dog::Id, uint32_t, DogIdHasher>, MapIdHasher>;
 
+        std::shared_ptr<Player> Add(std::shared_ptr<Dog> dog, std::shared_ptr<GameSession> session, std::string name);
+        std::shared_ptr<Player> FindByDogIdAndMapId(Dog::Id dog_id, Map::Id map_id);
+        std::vector<Player> GetPlayersVec() const
+        {
+            return players_;
+        }
+        template <class Archive>
+        void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
+        {
+            ar & map_and_dog_to_index_;
+            ar & players_;
+        }
+
+    private:
         MapIdandDogIdToPlayer map_and_dog_to_index_;
         std::vector<Player> players_;
     };
@@ -606,6 +824,11 @@ namespace model
     class Game
     {
     public:
+        using MapIdHasher = util::TaggedHasher<Map::Id>;
+        using MapIdToIndex = std::unordered_map<Map::Id, size_t, MapIdHasher>;
+
+        Game() = default;
+
         Game(loot_gen::LootGenerator loot_gen) : loot_gen_(loot_gen)
         {
         }
@@ -674,26 +897,57 @@ namespace model
             return default_bag_capacity_;
         }
 
+        std::vector<std::shared_ptr<GameSession>> GetSessions() const
+        {
+            return sessions_;
+        }
+
+        Players GetPlayers() const
+        {
+            return players_;
+        }
+
+        uint32_t GetCurrDogId() const
+        {
+            return curr_dog_id_;
+        }
+
+        void SetLootGen(loot_gen::LootGenerator loot_gen)
+        {
+            loot_gen_ = loot_gen;
+        }
+
+        template <class Archive>
+        void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
+        {
+            ar & sessions_;
+            ar & players_;
+            ar & tokens_;
+            ar & map_id_to_index_;
+            ar & curr_dog_id_;
+            ar & default_dog_speed_;
+            ar & randomize_spawn_points_;
+
+            ar & default_bag_capacity_;
+            ar & empty_;
+            ar & maps_;
+            ar & map_id_to_game_index_;
+        }
+
     private:
-        using MapIdHasher = util::TaggedHasher<Map::Id>;
-        using MapIdToIndex = std::unordered_map<Map::Id, size_t, MapIdHasher>;
+        std::vector<std::shared_ptr<GameSession>> sessions_; // +
+        Players players_;                                    // +
+        PlayerTokens tokens_;                                // +
+        MapIdToIndex map_id_to_index_;                       // - MapIdToIndex map_id_to_game_index_;
+        uint32_t curr_dog_id_ = 0;                           // +
 
+        double default_dog_speed_ = 1.0;      // -
+        bool randomize_spawn_points_ = false; // -
+        loot_gen::LootGenerator loot_gen_;    // -
+        int default_bag_capacity_ = 3;        // -
+        std::vector<Loot> empty_;             // -
         std::vector<Map> maps_;
-        std::vector<std::shared_ptr<GameSession>> sessions_;
-        Players players_;
-        PlayerTokens tokens_;
-
-        MapIdToIndex map_id_to_index_;
-        MapIdToIndex map_id_to_game_index_;
-
-        uint32_t curr_dog_id_ = 0;
-        double default_dog_speed_ = 1.0;
-        bool randomize_spawn_points_ = false;
-
-        loot_gen::LootGenerator loot_gen_;
-        int default_bag_capacity_ = 3;
-
-        std::vector<Loot> empty_; // todo патч поправить в будущем
+        MapIdToIndex map_id_to_game_index_; // -
     };
 
     TwoDimVector GetBorderPoint(Road road, std::shared_ptr<model::Dog> dog);
