@@ -22,12 +22,12 @@ int main(int argc, const char *argv[])
         {
             std::getline(std::cin, request);
             auto value = boost::json::parse(request);
-            std::string req_action = boost::json::value_to<std::string>(value.at("action")); // -> action
-            if (req_action == "exit")
+            std::string action = boost::json::value_to<std::string>(value.at("action")); // -> action
+            if (action == "exit")
             {
                 break;
             }
-            if (req_action == "add_book")
+            if (action == "add_book")
             {
                 auto payload = value.at("payload");
                 auto title = boost::json::value_to<std::string>(payload.at("title"));
@@ -44,7 +44,7 @@ int main(int argc, const char *argv[])
                     book_db.AddBook(title, author, year);
                 }
             }
-            if (req_action == "all_books")
+            if (action == "all_books")
             {
                 std::cout << book_db.AllBooks() << std::endl;
             }
