@@ -17,6 +17,7 @@ int main(int argc, const char *argv[])
 
         BookDb book_db(argv[1]);
         book_db.CreateBookTable();
+        book_db.PrepareTrans();
         std::string request;
         while (true)
         {
