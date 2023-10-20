@@ -16,11 +16,11 @@ std::basic_string_view<char>  BookDb::AddBook(std::string title, std::string aut
     {
         add_trans.exec_prepared(tag_add_book, title, author, year, ISBN);
         add_trans.commit();
-        return result_ok;
+        return result_true;
     }
     catch (...)
     {
-        return result_not_ok;
+        return result_false;
     }
 }
 
@@ -32,11 +32,11 @@ std::basic_string_view<char>  BookDb::AddBook(std::string title, std::string aut
     {
         add_trans.exec_prepared(tag_add_book_null_isbn, title, author, year);
         add_trans.commit();
-        return result_ok;
+        return result_true;
     }
     catch (...)
     {
-        return result_not_ok;
+        return result_false;
     }
 }
 
@@ -73,9 +73,6 @@ std::string BookDb::AllBooks()
 
 void BookDb::PrepareTrans()
 {
-    pqxx::zview tag_add_book_null_isbn = "add_book_null_isbn_trans"_zv;
     conn_.prepare(tag_add_book_null_isbn, "INSERT INTO books (title, author, year, ISBN) VALUES ($1, $2, $3, NULL)"_zv);
-
-    pqxx::zview tag_add_book = "add_book_trans"_zv;
     conn_.prepare(tag_add_book, "INSERT INTO books (title, author, year, ISBN) VALUES ($1, $2, $3, $4)"_zv);
 }

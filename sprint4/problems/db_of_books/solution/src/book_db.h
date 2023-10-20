@@ -28,9 +28,9 @@ private:
 
     // todo поправить имена
 
-    std::basic_string_view<char> result_ok = R"({"result":true})"sv;
-    std::basic_string_view<char> result_not_ok = R"({"result":false})"sv;
+    std::basic_string_view<char> result_true = R"({"result":true})"sv;
+    std::basic_string_view<char> result_false = R"({"result":false})"sv;
 
-    pqxx::zview tag_add_book_null_isbn;
-    pqxx::zview tag_add_book;
+    pqxx::zview tag_add_book_null_isbn  = "add_book_null_isbn_trans"_zv;
+    pqxx::zview tag_add_book  = "add_book_trans"_zv;
 };
