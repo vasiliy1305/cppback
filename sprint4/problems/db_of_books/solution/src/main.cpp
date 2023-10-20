@@ -38,11 +38,11 @@ int main(int argc, const char *argv[])
                 if (!payload.at("ISBN").is_null())
                 {
                     std::string isbn = boost::json::value_to<std::string>(payload.at("ISBN"));
-                    book_db.AddBook(title, author, year, isbn);
+                    std::cout << book_db.AddBook(title, author, year, isbn) << std::endl;
                 }
                 else
                 {
-                    book_db.AddBook(title, author, year);
+                    std::cout << book_db.AddBook(title, author, year) << std::endl;
                 }
             }
             if (action == "all_books")

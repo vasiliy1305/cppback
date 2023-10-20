@@ -16,10 +16,10 @@ public:
     }
 
     void CreateBookTable();
-    
+
     void PrepareTrans();
-    void AddBook(std::string title, std::string author, int year, std::string ISBN);
-    void AddBook(std::string title, std::string author, int year);
+    std::basic_string_view<char>  AddBook(std::string title, std::string author, int year, std::string ISBN);
+    std::basic_string_view<char>  AddBook(std::string title, std::string author, int year);
     std::string AllBooks();
 
 private:

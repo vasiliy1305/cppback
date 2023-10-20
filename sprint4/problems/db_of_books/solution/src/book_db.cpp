@@ -7,7 +7,7 @@ void BookDb::CreateBookTable()
     w_.commit();
 }
 
-void BookDb::AddBook(std::string title, std::string author, int year, std::string ISBN)
+std::basic_string_view<char>  BookDb::AddBook(std::string title, std::string author, int year, std::string ISBN)
 {
 
     pqxx::work add_trans(conn_);
@@ -16,15 +16,15 @@ void BookDb::AddBook(std::string title, std::string author, int year, std::strin
     {
         add_trans.exec_prepared(tag_add_book, title, author, year, ISBN);
         add_trans.commit();
-        std::cout << result_ok << std::endl;
+        return result_ok;
     }
     catch (...)
     {
-        std::cout << result_not_ok << std::endl;
+        return result_not_ok;
     }
 }
 
-void BookDb::AddBook(std::string title, std::string author, int year)
+std::basic_string_view<char>  BookDb::AddBook(std::string title, std::string author, int year)
 {
     pqxx::work add_trans(conn_);
 
@@ -32,11 +32,11 @@ void BookDb::AddBook(std::string title, std::string author, int year)
     {
         add_trans.exec_prepared(tag_add_book_null_isbn, title, author, year);
         add_trans.commit();
-        std::cout << result_ok << std::endl;
+        return result_ok;
     }
     catch (...)
     {
-        std::cout << result_not_ok << std::endl;
+        return result_not_ok;
     }
 }
 
