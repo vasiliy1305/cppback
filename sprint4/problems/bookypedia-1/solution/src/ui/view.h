@@ -35,7 +35,7 @@ namespace ui
         struct BookInfo
         {
             std::string title;
-            int publication_year;
+            int publication_year; // заменить на year
         };
 
     } // namespace detail
