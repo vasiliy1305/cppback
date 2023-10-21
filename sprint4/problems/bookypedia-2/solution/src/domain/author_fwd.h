@@ -1,11 +1,8 @@
 #pragma once
 
-namespace domain {
-
-class Author;
-
-class Book;
-
-class AuthorRepository;
-
-}  // namespace domain
+namespace domain
+{
+    class Author;
+    class AuthorRepository;
+    class Book;
+} // namespace domain

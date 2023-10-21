@@ -5,9 +5,7 @@
 
 namespace menu
 {
-
-    Menu::Menu(std::istream &input, std::ostream &output)
-        : input_{input}, output_{output}
+    Menu::Menu(std::istream &input, std::ostream &output): input_{input}, output_{output}
     {
     }
 
@@ -108,5 +106,4 @@ namespace menu
         }
         return true;
     }
-
-} // namespace menu
+} 

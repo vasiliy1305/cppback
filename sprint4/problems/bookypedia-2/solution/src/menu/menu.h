@@ -6,7 +6,6 @@
 
 namespace menu
 {
-
     class Menu
     {
     public:
@@ -14,11 +13,8 @@ namespace menu
 
         Menu(std::istream &input, std::ostream &output);
 
-        void AddAction(std::string action_name, std::string args, std::string description,
-                       Handler handler);
-
+        void AddAction(std::string action_name, std::string args, std::string description, Handler handler);
         void Run();
-
         void ShowInstructions() const;
 
     private:
@@ -30,7 +26,6 @@ namespace menu
         };
 
         [[nodiscard]] bool ParseCommand(std::istream &input);
-
         std::istream &input_;
         std::ostream &output_;
         std::map<std::string, ActionInfo> actions_;
