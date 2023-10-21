@@ -7,6 +7,7 @@
 #include <pqxx/transaction>
 #include <pqxx/result>
 #include <pqxx/pqxx>
+#include "model.h"
 
 class ConnectionPool
 {
@@ -94,8 +95,8 @@ private:
     size_t used_connections_ = 0;
 };
 
-// void CreateTable(pqxx::connection &conn);
+void CreateTable(pqxx::connection &conn);
 
-// void DumpLeftDogsToDatabase(pqxx::connection &conn, std::vector<model::DogLeftDump> &vec_input);
+void DumpLeftDogsToDatabase(pqxx::connection &conn, std::vector<model::DogStat> &dogs);
 
-// void ReadScoresFromDatabase(pqxx::connection &conn, int offset, int limit, std::vector<model::DogLeftDump> &vec_input);
+void ReadScoresFromDatabase(pqxx::connection &conn, int offset, int limit, std::vector<model::DogStat> &vec_input);

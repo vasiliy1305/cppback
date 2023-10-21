@@ -24,6 +24,7 @@
 
 namespace model
 {
+
     const double ROAD_WIDTH = 0.4;
 
     using Dimension = int;
@@ -418,6 +419,14 @@ namespace model
         int id_;
         int value_;
         double WIDTH = 0.0;
+    };
+
+    struct DogStat
+    {
+        int id;
+        std::string name;
+        int score;
+        int time;
     };
 
     class Dog
@@ -954,10 +963,6 @@ namespace model
             ar & map_id_to_game_index_;
         }
 
-
-
-
-
     private:
         std::vector<std::shared_ptr<GameSession>> sessions_; // +
         Players players_;                                    // +
@@ -972,7 +977,6 @@ namespace model
         std::vector<Loot> empty_;             // -
         std::vector<Map> maps_;
         MapIdToIndex map_id_to_game_index_; // -
-
     };
 
     TwoDimVector GetBorderPoint(Road road, std::shared_ptr<model::Dog> dog);
