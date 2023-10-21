@@ -3,9 +3,4 @@
 [Cookie: None]
 /api/v1/maps 
 /api/v1/maps/map1
-
-/api/v1/game/join
-/api/v1/game/players
-/api/v1/game/state
-/api/v1/game/tick
-/api/v1/game/player/action
+/api/v1/maps/town
