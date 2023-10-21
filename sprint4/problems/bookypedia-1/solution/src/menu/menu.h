@@ -2,6 +2,8 @@
 #include <functional>
 #include <iosfwd>
 #include <map>
+#include <string>
+
 
 namespace menu {
 
