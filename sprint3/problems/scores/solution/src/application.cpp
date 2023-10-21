@@ -8,7 +8,7 @@ StringResponse MakeStringResponse(http::status status, std::string_view body, un
     response.body() = body;
     response.content_length(body.size());
     response.keep_alive(keep_alive);
-    // response.set(http::field::cache_control, "no-cache");
+
     for (auto field : http_fields)
     {
         response.set(field.first, field.second);

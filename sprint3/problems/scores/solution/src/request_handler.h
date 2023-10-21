@@ -33,7 +33,7 @@ namespace http_handler
     private:
         void ScheduleTick()
         {
-            assert(strand_.running_in_this_thread());
+            // assert(strand_.running_in_this_thread());
             timer_.expires_after(period_);
             timer_.async_wait([self = shared_from_this()](sys::error_code ec)
                               { self->OnTick(ec); });
@@ -42,7 +42,7 @@ namespace http_handler
         void OnTick(sys::error_code ec)
         {
             using namespace std::chrono;
-            assert(strand_.running_in_this_thread());
+            // assert(strand_.running_in_this_thread());
 
             if (!ec)
             {

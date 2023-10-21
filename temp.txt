@@ -1,0 +1,1069 @@
+[main] Building folder: solution 
+[build] Starting build
+[proc] Executing command: /usr/bin/cmake --build /home/va/cppback/sprint4/problems/state_serialization/solution/build --config Debug --target all --
+[build] [1/2  50% :: 5.960] Building CXX object CMakeFiles/game_server_tests.dir/tests/state-serialization-tests.cpp.o
+[build] FAILED: CMakeFiles/game_server_tests.dir/tests/state-serialization-tests.cpp.o 
+[build] /usr/bin/c++ -DBOOST_STACKTRACE_ADDR2LINE_LOCATION=\"/usr/bin/addr2line\" -DBOOST_STACKTRACE_USE_ADDR2LINE -DBOOST_STACKTRACE_USE_BACKTRACE -DBOOST_STACKTRACE_USE_NOOP -I/home/va/cppback/sprint4/problems/state_serialization/solution/CONAN_PKG::boost -isystem /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include -isystem /home/va/.conan/data/catch2/3.1.0/_/_/package/d8ad4136d6fea97bf70b090257767bde693665d9/include -isystem /home/va/.conan/data/zlib/1.2.13/_/_/package/d13c97721d7bdc192ca6529684f2b79beeae8a7c/include -isystem /home/va/.conan/data/bzip2/1.0.8/_/_/package/ad18e1e856ff78d73ad6f3c9a214f85abf2d0550/include -isystem /home/va/.conan/data/libbacktrace/cci.20210118/_/_/package/d13c97721d7bdc192ca6529684f2b79beeae8a7c/include -g -std=gnu++20 -MD -MT CMakeFiles/game_server_tests.dir/tests/state-serialization-tests.cpp.o -MF CMakeFiles/game_server_tests.dir/tests/state-serialization-tests.cpp.o.d -o CMakeFiles/game_server_tests.dir/tests/state-serialization-tests.cpp.o -c /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp
+[build] In file included from /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/extended_type_info_typeid.hpp:37,
+[build]                  from /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/oserializer.hpp:42,
+[build]                  from /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_oarchive.hpp:23,
+[build]                  from /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_oarchive.hpp:22,
+[build]                  from /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_oarchive.hpp:29,
+[build]                  from /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_oarchive.hpp:31,
+[build]                  from /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:18,
+[build]                  from /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:4:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp: In instantiation of ‘static void boost::serialization::access::construct(T*) [with T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Map>, long unsigned int>]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:83:22:   required from ‘void boost::serialization::load_construct_data(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Map>, long unsigned int>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:131:24:   required from ‘void boost::serialization::load_construct_data_adl(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Map>, long unsigned int>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/detail/stack_constructor.hpp:51:54:   required from ‘boost::serialization::detail::stack_construct<Archive, T>::stack_construct(Archive&, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Map>, long unsigned int>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/archive_input_unordered_map.hpp:41:48:   required from ‘void boost::serialization::stl::archive_input_unordered_map<Archive, Container>::operator()(Archive&, Container&, unsigned int) [with Archive = boost::archive::text_iarchive; Container = std::unordered_map<util::Tagged<std::__cxx11::basic_string<char>, model::Map>, long unsigned int, util::TaggedHasher<util::Tagged<std::__cxx11::basic_string<char>, model::Map> > >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/unordered_collections_load_imp.hpp:65:14:   required from ‘void boost::serialization::stl::load_unordered_collection(Archive&, Container&) [with Archive = boost::archive::text_iarchive; Container = std::unordered_map<util::Tagged<std::__cxx11::basic_string<char>, model::Map>, long unsigned int, util::TaggedHasher<util::Tagged<std::__cxx11::basic_string<char>, model::Map> > >; InputFunction = archive_input_unordered_map<boost::archive::text_iarchive, std::unordered_map<util::Tagged<std::__cxx11::basic_string<char>, model::Map>, long unsigned int, util::TaggedHasher<util::Tagged<std::__cxx11::basic_string<char>, model::Map> > > >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/unordered_map.hpp:73:6:   [ skipping 23 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: error: no matching function for call to ‘std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Map>, long unsigned int>::pair()’
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] In file included from /usr/include/c++/12/bits/stl_algobase.h:64,
+[build]                  from /usr/include/c++/12/string:50,
+[build]                  from /home/va/.conan/data/catch2/3.1.0/_/_/package/d8ad4136d6fea97bf70b090257767bde693665d9/include/catch2/internal/catch_stringref.hpp:12,
+[build]                  from /home/va/.conan/data/catch2/3.1.0/_/_/package/d8ad4136d6fea97bf70b090257767bde693665d9/include/catch2/catch_assertion_info.hpp:13,
+[build]                  from /home/va/.conan/data/catch2/3.1.0/_/_/package/d8ad4136d6fea97bf70b090257767bde693665d9/include/catch2/internal/catch_assertion_handler.hpp:11,
+[build]                  from /home/va/.conan/data/catch2/3.1.0/_/_/package/d8ad4136d6fea97bf70b090257767bde693665d9/include/catch2/internal/catch_test_macro_impl.hpp:12,
+[build]                  from /home/va/.conan/data/catch2/3.1.0/_/_/package/d8ad4136d6fea97bf70b090257767bde693665d9/include/catch2/catch_test_macros.hpp:11,
+[build]                  from /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:1:
+[build] /usr/include/c++/12/bits/stl_pair.h:297:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<_U1, _U2>() constexpr std::pair<_T1, _T2>::pair(std::pair<_U1, _U2>&&) [with _U2 = _U1; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = long unsigned int]’
+[build]   297 |         pair(pair<_U1, _U2>&& __p)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:297:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 1 argument, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:288:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<const _U1&, const _U2&>() constexpr std::pair<_T1, _T2>::pair(const std::pair<_U1, _U2>&) [with _U2 = _U1; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = long unsigned int]’
+[build]   288 |         pair(const pair<_U1, _U2>& __p)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:288:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 1 argument, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:279:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<_U1, _U2>() constexpr std::pair<_T1, _T2>::pair(_U1&&, _U2&&) [with _U2 = _U1; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = long unsigned int]’
+[build]   279 |         pair(_U1&& __x, _U2&& __y)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:279:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 2 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:217:9: note: candidate: ‘template<class ... _Args1, long unsigned int ..._Indexes1, class ... _Args2, long unsigned int ..._Indexes2> constexpr std::pair<_T1, _T2>::pair(std::tuple<_Args1 ...>&, std::tuple<_Args2 ...>&, std::_Index_tuple<_Indexes1 ...>, std::_Index_tuple<_Indexes2 ...>) [with _Args1 = {_Args1 ...}; long unsigned int ..._Indexes1 = {_Indexes1 ...}; _Args2 = {_Args2 ...}; long unsigned int ..._Indexes2 = {_Indexes2 ...}; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = long unsigned int]’
+[build]   217 |         pair(tuple<_Args1...>&, tuple<_Args2...>&,
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:217:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 4 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:200:9: note: candidate: ‘template<class ... _Args1, class ... _Args2> constexpr std::pair<_T1, _T2>::pair(std::piecewise_construct_t, std::tuple<_Args1 ...>, std::tuple<_Args2 ...>) [with _Args1 = {_Args1 ...}; _Args2 = {_Args2 ...}; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = long unsigned int]’
+[build]   200 |         pair(piecewise_construct_t, tuple<_Args1...>, tuple<_Args2...>);
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:200:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 3 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:269:7: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair(const _T1&, const _T2&) requires  _S_constructible<const _T1&, const _T2&>() [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = long unsigned int]’
+[build]   269 |       pair(const _T1& __x, const _T2& __y)
+[build]       |       ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:269:7: note:   candidate expects 2 arguments, 0 provided
+[build] /usr/include/c++/12/bits/stl_pair.h:228:7: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair() requires (is_default_constructible_v<_T1>) && (is_default_constructible_v<_T2>) [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = long unsigned int]’
+[build]   228 |       pair()
+[build]       |       ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:228:7: note: constraints not satisfied
+[build] /usr/include/c++/12/bits/stl_pair.h:196:17: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair(std::pair<_T1, _T2>&&) [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = long unsigned int]’
+[build]   196 |       constexpr pair(pair&&) = default;         ///< Move constructor
+[build]       |                 ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:196:17: note:   candidate expects 1 argument, 0 provided
+[build] /usr/include/c++/12/bits/stl_pair.h:195:17: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair(const std::pair<_T1, _T2>&) [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = long unsigned int]’
+[build]   195 |       constexpr pair(const pair&) = default;    ///< Copy constructor
+[build]       |                 ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:195:17: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp: In instantiation of ‘static void boost::serialization::access::construct(T*) [with T = model::Loot]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:83:22:   required from ‘void boost::serialization::load_construct_data(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Loot]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:131:24:   required from ‘void boost::serialization::load_construct_data_adl(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Loot]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/detail/stack_constructor.hpp:51:54:   required from ‘boost::serialization::detail::stack_construct<Archive, T>::stack_construct(Archive&, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Loot]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/collections_load_imp.hpp:94:66:   required from ‘typename boost::disable_if<boost::serialization::detail::is_default_constructible<typename T::value_type>, void>::type boost::serialization::stl::collection_load_impl(Archive&, T&, boost::serialization::collection_size_type, boost::serialization::item_version_type) [with Archive = boost::archive::text_iarchive; T = std::vector<model::Loot>; typename boost::disable_if<boost::serialization::detail::is_default_constructible<typename T::value_type>, void>::type = void; typename T::value_type = model::Loot]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/vector.hpp:90:30:   required from ‘void boost::serialization::load(Archive&, std::vector<_ValT, _Allocator>&, unsigned int, mpl_::false_) [with Archive = boost::archive::text_iarchive; U = model::Loot; Allocator = std::allocator<model::Loot>; mpl_::false_ = mpl_::bool_<false>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/vector.hpp:166:9:   [ skipping 23 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: error: no matching function for call to ‘model::Loot::Loot()’
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:364:9: note: candidate: ‘model::Loot::Loot(model::TwoDimVector, int, int, int)’
+[build]   364 |         Loot(TwoDimVector pos, int type, int id, int value) : pos_(pos), type_(type), id_(id), value_(value)
+[build]       |         ^~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:364:9: note:   candidate expects 4 arguments, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:361:11: note: candidate: ‘constexpr model::Loot::Loot(const model::Loot&)’
+[build]   361 |     class Loot
+[build]       |           ^~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:361:11: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:361:11: note: candidate: ‘constexpr model::Loot::Loot(model::Loot&&)’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:361:11: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp: In instantiation of ‘static void boost::serialization::access::construct(T*) [with T = model::Map]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:83:22:   required from ‘void boost::serialization::load_construct_data(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Map]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:131:24:   required from ‘void boost::serialization::load_construct_data_adl(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Map]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/detail/stack_constructor.hpp:51:54:   required from ‘boost::serialization::detail::stack_construct<Archive, T>::stack_construct(Archive&, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Map]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/collections_load_imp.hpp:94:66:   required from ‘typename boost::disable_if<boost::serialization::detail::is_default_constructible<typename T::value_type>, void>::type boost::serialization::stl::collection_load_impl(Archive&, T&, boost::serialization::collection_size_type, boost::serialization::item_version_type) [with Archive = boost::archive::text_iarchive; T = std::vector<model::Map>; typename boost::disable_if<boost::serialization::detail::is_default_constructible<typename T::value_type>, void>::type = void; typename T::value_type = model::Map]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/vector.hpp:90:30:   required from ‘void boost::serialization::load(Archive&, std::vector<_ValT, _Allocator>&, unsigned int, mpl_::false_) [with Archive = boost::archive::text_iarchive; U = model::Map; Allocator = std::allocator<model::Map>; mpl_::false_ = mpl_::bool_<false>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/vector.hpp:166:9:   [ skipping 23 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: error: no matching function for call to ‘model::Map::Map()’
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:243:9: note: candidate: ‘model::Map::Map(Id, std::string, double, int, std::vector<int>)’
+[build]   243 |         Map(Id id, std::string name, double dog_speed, int loot_types_size, std::vector<int> loot_scores) noexcept
+[build]       |         ^~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:243:9: note:   candidate expects 5 arguments, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:235:11: note: candidate: ‘model::Map::Map(const model::Map&)’
+[build]   235 |     class Map
+[build]       |           ^~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:235:11: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:235:11: note: candidate: ‘model::Map::Map(model::Map&&)’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:235:11: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp: In instantiation of ‘static void boost::serialization::access::construct(T*) [with T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Map>, std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > > >]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:83:22:   required from ‘void boost::serialization::load_construct_data(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Map>, std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > > >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:131:24:   required from ‘void boost::serialization::load_construct_data_adl(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Map>, std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > > >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/detail/stack_constructor.hpp:51:54:   required from ‘boost::serialization::detail::stack_construct<Archive, T>::stack_construct(Archive&, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Map>, std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > > >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/archive_input_unordered_map.hpp:41:48:   required from ‘void boost::serialization::stl::archive_input_unordered_map<Archive, Container>::operator()(Archive&, Container&, unsigned int) [with Archive = boost::archive::text_iarchive; Container = std::unordered_map<util::Tagged<std::__cxx11::basic_string<char>, model::Map>, std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > >, util::TaggedHasher<util::Tagged<std::__cxx11::basic_string<char>, model::Map> > >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/unordered_collections_load_imp.hpp:65:14:   required from ‘void boost::serialization::stl::load_unordered_collection(Archive&, Container&) [with Archive = boost::archive::text_iarchive; Container = std::unordered_map<util::Tagged<std::__cxx11::basic_string<char>, model::Map>, std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > >, util::TaggedHasher<util::Tagged<std::__cxx11::basic_string<char>, model::Map> > >; InputFunction = archive_input_unordered_map<boost::archive::text_iarchive, std::unordered_map<util::Tagged<std::__cxx11::basic_string<char>, model::Map>, std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > >, util::TaggedHasher<util::Tagged<std::__cxx11::basic_string<char>, model::Map> > > >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/unordered_map.hpp:73:6:   [ skipping 37 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: error: no matching function for call to ‘std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Map>, std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > > >::pair()’
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:297:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<_U1, _U2>() constexpr std::pair<_T1, _T2>::pair(std::pair<_U1, _U2>&&) [with _U2 = _U1; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > >]’
+[build]   297 |         pair(pair<_U1, _U2>&& __p)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:297:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 1 argument, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:288:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<const _U1&, const _U2&>() constexpr std::pair<_T1, _T2>::pair(const std::pair<_U1, _U2>&) [with _U2 = _U1; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > >]’
+[build]   288 |         pair(const pair<_U1, _U2>& __p)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:288:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 1 argument, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:279:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<_U1, _U2>() constexpr std::pair<_T1, _T2>::pair(_U1&&, _U2&&) [with _U2 = _U1; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > >]’
+[build]   279 |         pair(_U1&& __x, _U2&& __y)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:279:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 2 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:217:9: note: candidate: ‘template<class ... _Args1, long unsigned int ..._Indexes1, class ... _Args2, long unsigned int ..._Indexes2> constexpr std::pair<_T1, _T2>::pair(std::tuple<_Args1 ...>&, std::tuple<_Args2 ...>&, std::_Index_tuple<_Indexes1 ...>, std::_Index_tuple<_Indexes2 ...>) [with _Args1 = {_Args1 ...}; long unsigned int ..._Indexes1 = {_Indexes1 ...}; _Args2 = {_Args2 ...}; long unsigned int ..._Indexes2 = {_Indexes2 ...}; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > >]’
+[build]   217 |         pair(tuple<_Args1...>&, tuple<_Args2...>&,
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:217:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 4 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:200:9: note: candidate: ‘template<class ... _Args1, class ... _Args2> constexpr std::pair<_T1, _T2>::pair(std::piecewise_construct_t, std::tuple<_Args1 ...>, std::tuple<_Args2 ...>) [with _Args1 = {_Args1 ...}; _Args2 = {_Args2 ...}; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > >]’
+[build]   200 |         pair(piecewise_construct_t, tuple<_Args1...>, tuple<_Args2...>);
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:200:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 3 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:269:7: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair(const _T1&, const _T2&) requires  _S_constructible<const _T1&, const _T2&>() [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > >]’
+[build]   269 |       pair(const _T1& __x, const _T2& __y)
+[build]       |       ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:269:7: note:   candidate expects 2 arguments, 0 provided
+[build] /usr/include/c++/12/bits/stl_pair.h:228:7: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair() requires (is_default_constructible_v<_T1>) && (is_default_constructible_v<_T2>) [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > >]’
+[build]   228 |       pair()
+[build]       |       ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:228:7: note: constraints not satisfied
+[build] /usr/include/c++/12/bits/stl_pair.h:196:17: note: candidate: ‘std::pair<_T1, _T2>::pair(std::pair<_T1, _T2>&&) [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > >]’
+[build]   196 |       constexpr pair(pair&&) = default;         ///< Move constructor
+[build]       |                 ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:196:17: note:   candidate expects 1 argument, 0 provided
+[build] /usr/include/c++/12/bits/stl_pair.h:195:17: note: candidate: ‘std::pair<_T1, _T2>::pair(const std::pair<_T1, _T2>&) [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Map>; _T2 = std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > >]’
+[build]   195 |       constexpr pair(const pair&) = default;    ///< Copy constructor
+[build]       |                 ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:195:17: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp: In instantiation of ‘static void boost::serialization::access::construct(T*) [with T = model::Player]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:83:22:   required from ‘void boost::serialization::load_construct_data(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Player]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:131:24:   required from ‘void boost::serialization::load_construct_data_adl(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Player]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/detail/stack_constructor.hpp:51:54:   required from ‘boost::serialization::detail::stack_construct<Archive, T>::stack_construct(Archive&, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Player]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/collections_load_imp.hpp:94:66:   required from ‘typename boost::disable_if<boost::serialization::detail::is_default_constructible<typename T::value_type>, void>::type boost::serialization::stl::collection_load_impl(Archive&, T&, boost::serialization::collection_size_type, boost::serialization::item_version_type) [with Archive = boost::archive::text_iarchive; T = std::vector<model::Player>; typename boost::disable_if<boost::serialization::detail::is_default_constructible<typename T::value_type>, void>::type = void; typename T::value_type = model::Player]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/vector.hpp:90:30:   required from ‘void boost::serialization::load(Archive&, std::vector<_ValT, _Allocator>&, unsigned int, mpl_::false_) [with Archive = boost::archive::text_iarchive; U = model::Player; Allocator = std::allocator<model::Player>; mpl_::false_ = mpl_::bool_<false>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/vector.hpp:166:9:   [ skipping 37 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: error: no matching function for call to ‘model::Player::Player()’
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:712:9: note: candidate: ‘model::Player::Player(std::shared_ptr<model::GameSession>, std::shared_ptr<model::Dog>, uint32_t, std::string)’
+[build]   712 |         Player(std::shared_ptr<GameSession> session, std::shared_ptr<Dog> dog, uint32_t id, std::string name) : session_(session), dog_(dog), id_{id}, name_(name)
+[build]       |         ^~~~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:712:9: note:   candidate expects 4 arguments, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:707:11: note: candidate: ‘model::Player::Player(const model::Player&)’
+[build]   707 |     class Player
+[build]       |           ^~~~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:707:11: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:707:11: note: candidate: ‘model::Player::Player(model::Player&&)’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:707:11: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp: In instantiation of ‘static void boost::serialization::access::construct(T*) [with T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>, std::shared_ptr<model::Player> >]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:83:22:   required from ‘void boost::serialization::load_construct_data(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>, std::shared_ptr<model::Player> >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:131:24:   required from ‘void boost::serialization::load_construct_data_adl(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>, std::shared_ptr<model::Player> >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/detail/stack_constructor.hpp:51:54:   required from ‘boost::serialization::detail::stack_construct<Archive, T>::stack_construct(Archive&, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>, std::shared_ptr<model::Player> >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/archive_input_unordered_map.hpp:41:48:   required from ‘void boost::serialization::stl::archive_input_unordered_map<Archive, Container>::operator()(Archive&, Container&, unsigned int) [with Archive = boost::archive::text_iarchive; Container = std::unordered_map<util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>, std::shared_ptr<model::Player>, util::TaggedHasher<util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag> > >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/unordered_collections_load_imp.hpp:65:14:   required from ‘void boost::serialization::stl::load_unordered_collection(Archive&, Container&) [with Archive = boost::archive::text_iarchive; Container = std::unordered_map<util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>, std::shared_ptr<model::Player>, util::TaggedHasher<util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag> > >; InputFunction = archive_input_unordered_map<boost::archive::text_iarchive, std::unordered_map<util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>, std::shared_ptr<model::Player>, util::TaggedHasher<util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag> > > >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/unordered_map.hpp:73:6:   [ skipping 37 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: error: no matching function for call to ‘std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>, std::shared_ptr<model::Player> >::pair()’
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:297:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<_U1, _U2>() constexpr std::pair<_T1, _T2>::pair(std::pair<_U1, _U2>&&) [with _U2 = _U1; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>; _T2 = std::shared_ptr<model::Player>]’
+[build]   297 |         pair(pair<_U1, _U2>&& __p)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:297:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 1 argument, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:288:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<const _U1&, const _U2&>() constexpr std::pair<_T1, _T2>::pair(const std::pair<_U1, _U2>&) [with _U2 = _U1; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>; _T2 = std::shared_ptr<model::Player>]’
+[build]   288 |         pair(const pair<_U1, _U2>& __p)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:288:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 1 argument, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:279:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<_U1, _U2>() constexpr std::pair<_T1, _T2>::pair(_U1&&, _U2&&) [with _U2 = _U1; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>; _T2 = std::shared_ptr<model::Player>]’
+[build]   279 |         pair(_U1&& __x, _U2&& __y)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:279:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 2 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:217:9: note: candidate: ‘template<class ... _Args1, long unsigned int ..._Indexes1, class ... _Args2, long unsigned int ..._Indexes2> constexpr std::pair<_T1, _T2>::pair(std::tuple<_Args1 ...>&, std::tuple<_Args2 ...>&, std::_Index_tuple<_Indexes1 ...>, std::_Index_tuple<_Indexes2 ...>) [with _Args1 = {_Args1 ...}; long unsigned int ..._Indexes1 = {_Indexes1 ...}; _Args2 = {_Args2 ...}; long unsigned int ..._Indexes2 = {_Indexes2 ...}; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>; _T2 = std::shared_ptr<model::Player>]’
+[build]   217 |         pair(tuple<_Args1...>&, tuple<_Args2...>&,
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:217:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 4 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:200:9: note: candidate: ‘template<class ... _Args1, class ... _Args2> constexpr std::pair<_T1, _T2>::pair(std::piecewise_construct_t, std::tuple<_Args1 ...>, std::tuple<_Args2 ...>) [with _Args1 = {_Args1 ...}; _Args2 = {_Args2 ...}; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>; _T2 = std::shared_ptr<model::Player>]’
+[build]   200 |         pair(piecewise_construct_t, tuple<_Args1...>, tuple<_Args2...>);
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:200:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 3 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:269:7: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair(const _T1&, const _T2&) requires  _S_constructible<const _T1&, const _T2&>() [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>; _T2 = std::shared_ptr<model::Player>]’
+[build]   269 |       pair(const _T1& __x, const _T2& __y)
+[build]       |       ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:269:7: note:   candidate expects 2 arguments, 0 provided
+[build] /usr/include/c++/12/bits/stl_pair.h:228:7: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair() requires (is_default_constructible_v<_T1>) && (is_default_constructible_v<_T2>) [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>; _T2 = std::shared_ptr<model::Player>]’
+[build]   228 |       pair()
+[build]       |       ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:228:7: note: constraints not satisfied
+[build] /usr/include/c++/12/bits/stl_pair.h:196:17: note: candidate: ‘std::pair<_T1, _T2>::pair(std::pair<_T1, _T2>&&) [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>; _T2 = std::shared_ptr<model::Player>]’
+[build]   196 |       constexpr pair(pair&&) = default;         ///< Move constructor
+[build]       |                 ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:196:17: note:   candidate expects 1 argument, 0 provided
+[build] /usr/include/c++/12/bits/stl_pair.h:195:17: note: candidate: ‘std::pair<_T1, _T2>::pair(const std::pair<_T1, _T2>&) [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::detail::TokenTag>; _T2 = std::shared_ptr<model::Player>]’
+[build]   195 |       constexpr pair(const pair&) = default;    ///< Copy constructor
+[build]       |                 ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:195:17: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp: In instantiation of ‘static void boost::serialization::access::construct(T*) [with T = model::Road]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:83:22:   required from ‘void boost::serialization::load_construct_data(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Road]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:131:24:   required from ‘void boost::serialization::load_construct_data_adl(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Road]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/detail/stack_constructor.hpp:51:54:   required from ‘boost::serialization::detail::stack_construct<Archive, T>::stack_construct(Archive&, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Road]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/collections_load_imp.hpp:94:66:   required from ‘typename boost::disable_if<boost::serialization::detail::is_default_constructible<typename T::value_type>, void>::type boost::serialization::stl::collection_load_impl(Archive&, T&, boost::serialization::collection_size_type, boost::serialization::item_version_type) [with Archive = boost::archive::text_iarchive; T = std::vector<model::Road>; typename boost::disable_if<boost::serialization::detail::is_default_constructible<typename T::value_type>, void>::type = void; typename T::value_type = model::Road]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/vector.hpp:90:30:   required from ‘void boost::serialization::load(Archive&, std::vector<_ValT, _Allocator>&, unsigned int, mpl_::false_) [with Archive = boost::archive::text_iarchive; U = model::Road; Allocator = std::allocator<model::Road>; mpl_::false_ = mpl_::bool_<false>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/vector.hpp:166:9:   [ skipping 65 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: error: no matching function for call to ‘model::Road::Road()’
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:129:9: note: candidate: ‘model::Road::Road(VerticalTag, model::Point, model::Coord)’
+[build]   129 |         Road(VerticalTag, Point start, Coord end_y) noexcept
+[build]       |         ^~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:129:9: note:   candidate expects 3 arguments, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:124:9: note: candidate: ‘model::Road::Road(HorizontalTag, model::Point, model::Coord)’
+[build]   124 |         Road(HorizontalTag, Point start, Coord end_x) noexcept
+[build]       |         ^~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:124:9: note:   candidate expects 3 arguments, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:108:11: note: candidate: ‘constexpr model::Road::Road(const model::Road&)’
+[build]   108 |     class Road
+[build]       |           ^~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:108:11: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:108:11: note: candidate: ‘constexpr model::Road::Road(model::Road&&)’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:108:11: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp: In instantiation of ‘static void boost::serialization::access::construct(T*) [with T = model::Building]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:83:22:   required from ‘void boost::serialization::load_construct_data(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Building]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:131:24:   required from ‘void boost::serialization::load_construct_data_adl(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Building]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/detail/stack_constructor.hpp:51:54:   required from ‘boost::serialization::detail::stack_construct<Archive, T>::stack_construct(Archive&, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Building]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/collections_load_imp.hpp:94:66:   required from ‘typename boost::disable_if<boost::serialization::detail::is_default_constructible<typename T::value_type>, void>::type boost::serialization::stl::collection_load_impl(Archive&, T&, boost::serialization::collection_size_type, boost::serialization::item_version_type) [with Archive = boost::archive::text_iarchive; T = std::vector<model::Building>; typename boost::disable_if<boost::serialization::detail::is_default_constructible<typename T::value_type>, void>::type = void; typename T::value_type = model::Building]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/vector.hpp:90:30:   required from ‘void boost::serialization::load(Archive&, std::vector<_ValT, _Allocator>&, unsigned int, mpl_::false_) [with Archive = boost::archive::text_iarchive; U = model::Building; Allocator = std::allocator<model::Building>; mpl_::false_ = mpl_::bool_<false>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/vector.hpp:166:9:   [ skipping 65 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: error: no matching function for call to ‘model::Building::Building()’
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:169:18: note: candidate: ‘model::Building::Building(model::Rectangle)’
+[build]   169 |         explicit Building(Rectangle bounds) noexcept
+[build]       |                  ^~~~~~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:169:18: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:166:11: note: candidate: ‘constexpr model::Building::Building(const model::Building&)’
+[build]   166 |     class Building
+[build]       |           ^~~~~~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:166:11: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:166:11: note: candidate: ‘constexpr model::Building::Building(model::Building&&)’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:166:11: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp: In instantiation of ‘static void boost::serialization::access::construct(T*) [with T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Office>, long unsigned int>]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:83:22:   required from ‘void boost::serialization::load_construct_data(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Office>, long unsigned int>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:131:24:   required from ‘void boost::serialization::load_construct_data_adl(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Office>, long unsigned int>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/detail/stack_constructor.hpp:51:54:   required from ‘boost::serialization::detail::stack_construct<Archive, T>::stack_construct(Archive&, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Office>, long unsigned int>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/archive_input_unordered_map.hpp:41:48:   required from ‘void boost::serialization::stl::archive_input_unordered_map<Archive, Container>::operator()(Archive&, Container&, unsigned int) [with Archive = boost::archive::text_iarchive; Container = std::unordered_map<util::Tagged<std::__cxx11::basic_string<char>, model::Office>, long unsigned int, util::TaggedHasher<util::Tagged<std::__cxx11::basic_string<char>, model::Office> > >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/unordered_collections_load_imp.hpp:65:14:   required from ‘void boost::serialization::stl::load_unordered_collection(Archive&, Container&) [with Archive = boost::archive::text_iarchive; Container = std::unordered_map<util::Tagged<std::__cxx11::basic_string<char>, model::Office>, long unsigned int, util::TaggedHasher<util::Tagged<std::__cxx11::basic_string<char>, model::Office> > >; InputFunction = archive_input_unordered_map<boost::archive::text_iarchive, std::unordered_map<util::Tagged<std::__cxx11::basic_string<char>, model::Office>, long unsigned int, util::TaggedHasher<util::Tagged<std::__cxx11::basic_string<char>, model::Office> > > >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/unordered_map.hpp:73:6:   [ skipping 65 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: error: no matching function for call to ‘std::pair<const util::Tagged<std::__cxx11::basic_string<char>, model::Office>, long unsigned int>::pair()’
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:297:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<_U1, _U2>() constexpr std::pair<_T1, _T2>::pair(std::pair<_U1, _U2>&&) [with _U2 = _U1; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Office>; _T2 = long unsigned int]’
+[build]   297 |         pair(pair<_U1, _U2>&& __p)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:297:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 1 argument, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:288:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<const _U1&, const _U2&>() constexpr std::pair<_T1, _T2>::pair(const std::pair<_U1, _U2>&) [with _U2 = _U1; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Office>; _T2 = long unsigned int]’
+[build]   288 |         pair(const pair<_U1, _U2>& __p)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:288:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 1 argument, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:279:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<_U1, _U2>() constexpr std::pair<_T1, _T2>::pair(_U1&&, _U2&&) [with _U2 = _U1; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Office>; _T2 = long unsigned int]’
+[build]   279 |         pair(_U1&& __x, _U2&& __y)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:279:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 2 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:217:9: note: candidate: ‘template<class ... _Args1, long unsigned int ..._Indexes1, class ... _Args2, long unsigned int ..._Indexes2> constexpr std::pair<_T1, _T2>::pair(std::tuple<_Args1 ...>&, std::tuple<_Args2 ...>&, std::_Index_tuple<_Indexes1 ...>, std::_Index_tuple<_Indexes2 ...>) [with _Args1 = {_Args1 ...}; long unsigned int ..._Indexes1 = {_Indexes1 ...}; _Args2 = {_Args2 ...}; long unsigned int ..._Indexes2 = {_Indexes2 ...}; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Office>; _T2 = long unsigned int]’
+[build]   217 |         pair(tuple<_Args1...>&, tuple<_Args2...>&,
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:217:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 4 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:200:9: note: candidate: ‘template<class ... _Args1, class ... _Args2> constexpr std::pair<_T1, _T2>::pair(std::piecewise_construct_t, std::tuple<_Args1 ...>, std::tuple<_Args2 ...>) [with _Args1 = {_Args1 ...}; _Args2 = {_Args2 ...}; _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Office>; _T2 = long unsigned int]’
+[build]   200 |         pair(piecewise_construct_t, tuple<_Args1...>, tuple<_Args2...>);
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:200:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 3 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:269:7: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair(const _T1&, const _T2&) requires  _S_constructible<const _T1&, const _T2&>() [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Office>; _T2 = long unsigned int]’
+[build]   269 |       pair(const _T1& __x, const _T2& __y)
+[build]       |       ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:269:7: note:   candidate expects 2 arguments, 0 provided
+[build] /usr/include/c++/12/bits/stl_pair.h:228:7: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair() requires (is_default_constructible_v<_T1>) && (is_default_constructible_v<_T2>) [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Office>; _T2 = long unsigned int]’
+[build]   228 |       pair()
+[build]       |       ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:228:7: note: constraints not satisfied
+[build] /usr/include/c++/12/bits/stl_pair.h:196:17: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair(std::pair<_T1, _T2>&&) [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Office>; _T2 = long unsigned int]’
+[build]   196 |       constexpr pair(pair&&) = default;         ///< Move constructor
+[build]       |                 ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:196:17: note:   candidate expects 1 argument, 0 provided
+[build] /usr/include/c++/12/bits/stl_pair.h:195:17: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair(const std::pair<_T1, _T2>&) [with _T1 = const util::Tagged<std::__cxx11::basic_string<char>, model::Office>; _T2 = long unsigned int]’
+[build]   195 |       constexpr pair(const pair&) = default;    ///< Copy constructor
+[build]       |                 ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:195:17: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp: In instantiation of ‘static void boost::serialization::access::construct(T*) [with T = model::Office]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:83:22:   required from ‘void boost::serialization::load_construct_data(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Office]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:131:24:   required from ‘void boost::serialization::load_construct_data_adl(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Office]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/detail/stack_constructor.hpp:51:54:   required from ‘boost::serialization::detail::stack_construct<Archive, T>::stack_construct(Archive&, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Office]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/collections_load_imp.hpp:94:66:   required from ‘typename boost::disable_if<boost::serialization::detail::is_default_constructible<typename T::value_type>, void>::type boost::serialization::stl::collection_load_impl(Archive&, T&, boost::serialization::collection_size_type, boost::serialization::item_version_type) [with Archive = boost::archive::text_iarchive; T = std::vector<model::Office>; typename boost::disable_if<boost::serialization::detail::is_default_constructible<typename T::value_type>, void>::type = void; typename T::value_type = model::Office]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/vector.hpp:90:30:   required from ‘void boost::serialization::load(Archive&, std::vector<_ValT, _Allocator>&, unsigned int, mpl_::false_) [with Archive = boost::archive::text_iarchive; U = model::Office; Allocator = std::allocator<model::Office>; mpl_::false_ = mpl_::bool_<false>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/vector.hpp:166:9:   [ skipping 65 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: error: no matching function for call to ‘model::Office::Office()’
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:194:9: note: candidate: ‘model::Office::Office(Id, model::Point, model::Offset)’
+[build]   194 |         Office(Id id, Point position, Offset offset) noexcept
+[build]       |         ^~~~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:194:9: note:   candidate expects 3 arguments, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:189:11: note: candidate: ‘constexpr model::Office::Office(const model::Office&)’
+[build]   189 |     class Office
+[build]       |           ^~~~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:189:11: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:189:11: note: candidate: ‘constexpr model::Office::Office(model::Office&&)’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:189:11: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp: In instantiation of ‘static void boost::serialization::access::construct(T*) [with T = model::GameSession]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:83:22:   required from ‘void boost::serialization::load_construct_data(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::GameSession]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:131:24:   required from ‘void boost::serialization::load_construct_data_adl(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::GameSession]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:342:66:   required from ‘void boost::archive::detail::pointer_iserializer<Archive, T>::load_object_ptr(boost::archive::detail::basic_iarchive&, void*, unsigned int) const [with Archive = boost::archive::text_iarchive; T = model::GameSession]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:290:7:   required from ‘class boost::archive::detail::pointer_iserializer<boost::archive::text_iarchive, model::GameSession>’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:52:43:   required from ‘const boost::archive::detail::basic_pointer_iserializer* boost::archive::detail::interface_iarchive<Archive>::register_type(T*) [with T = model::GameSession; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:483:36:   [ skipping 71 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: error: use of deleted function ‘model::GameSession::GameSession()’
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:560:9: note: declared here
+[build]   560 |         GameSession() = delete;
+[build]       |         ^~~~~~~~~~~
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp: In instantiation of ‘static void boost::serialization::access::construct(T*) [with T = std::pair<const util::Tagged<unsigned int, model::Dog>, unsigned int>]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:83:22:   required from ‘void boost::serialization::load_construct_data(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<unsigned int, model::Dog>, unsigned int>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:131:24:   required from ‘void boost::serialization::load_construct_data_adl(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<unsigned int, model::Dog>, unsigned int>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/detail/stack_constructor.hpp:51:54:   required from ‘boost::serialization::detail::stack_construct<Archive, T>::stack_construct(Archive&, unsigned int) [with Archive = boost::archive::text_iarchive; T = std::pair<const util::Tagged<unsigned int, model::Dog>, unsigned int>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/archive_input_unordered_map.hpp:41:48:   required from ‘void boost::serialization::stl::archive_input_unordered_map<Archive, Container>::operator()(Archive&, Container&, unsigned int) [with Archive = boost::archive::text_iarchive; Container = std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/unordered_collections_load_imp.hpp:65:14:   required from ‘void boost::serialization::stl::load_unordered_collection(Archive&, Container&) [with Archive = boost::archive::text_iarchive; Container = std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > >; InputFunction = archive_input_unordered_map<boost::archive::text_iarchive, std::unordered_map<util::Tagged<unsigned int, model::Dog>, unsigned int, util::TaggedHasher<util::Tagged<unsigned int, model::Dog> > > >]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/unordered_map.hpp:73:6:   [ skipping 89 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: error: no matching function for call to ‘std::pair<const util::Tagged<unsigned int, model::Dog>, unsigned int>::pair()’
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:297:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<_U1, _U2>() constexpr std::pair<_T1, _T2>::pair(std::pair<_U1, _U2>&&) [with _U2 = _U1; _T1 = const util::Tagged<unsigned int, model::Dog>; _T2 = unsigned int]’
+[build]   297 |         pair(pair<_U1, _U2>&& __p)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:297:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 1 argument, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:288:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<const _U1&, const _U2&>() constexpr std::pair<_T1, _T2>::pair(const std::pair<_U1, _U2>&) [with _U2 = _U1; _T1 = const util::Tagged<unsigned int, model::Dog>; _T2 = unsigned int]’
+[build]   288 |         pair(const pair<_U1, _U2>& __p)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:288:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 1 argument, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:279:9: note: candidate: ‘template<class _U1, class _U2>  requires  _S_constructible<_U1, _U2>() constexpr std::pair<_T1, _T2>::pair(_U1&&, _U2&&) [with _U2 = _U1; _T1 = const util::Tagged<unsigned int, model::Dog>; _T2 = unsigned int]’
+[build]   279 |         pair(_U1&& __x, _U2&& __y)
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:279:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 2 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:217:9: note: candidate: ‘template<class ... _Args1, long unsigned int ..._Indexes1, class ... _Args2, long unsigned int ..._Indexes2> constexpr std::pair<_T1, _T2>::pair(std::tuple<_Args1 ...>&, std::tuple<_Args2 ...>&, std::_Index_tuple<_Indexes1 ...>, std::_Index_tuple<_Indexes2 ...>) [with _Args1 = {_Args1 ...}; long unsigned int ..._Indexes1 = {_Indexes1 ...}; _Args2 = {_Args2 ...}; long unsigned int ..._Indexes2 = {_Indexes2 ...}; _T1 = const util::Tagged<unsigned int, model::Dog>; _T2 = unsigned int]’
+[build]   217 |         pair(tuple<_Args1...>&, tuple<_Args2...>&,
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:217:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 4 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:200:9: note: candidate: ‘template<class ... _Args1, class ... _Args2> constexpr std::pair<_T1, _T2>::pair(std::piecewise_construct_t, std::tuple<_Args1 ...>, std::tuple<_Args2 ...>) [with _Args1 = {_Args1 ...}; _Args2 = {_Args2 ...}; _T1 = const util::Tagged<unsigned int, model::Dog>; _T2 = unsigned int]’
+[build]   200 |         pair(piecewise_construct_t, tuple<_Args1...>, tuple<_Args2...>);
+[build]       |         ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:200:9: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: note:   candidate expects 3 arguments, 0 provided
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:269:7: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair(const _T1&, const _T2&) requires  _S_constructible<const _T1&, const _T2&>() [with _T1 = const util::Tagged<unsigned int, model::Dog>; _T2 = unsigned int]’
+[build]   269 |       pair(const _T1& __x, const _T2& __y)
+[build]       |       ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:269:7: note:   candidate expects 2 arguments, 0 provided
+[build] /usr/include/c++/12/bits/stl_pair.h:228:7: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair() requires (is_default_constructible_v<_T1>) && (is_default_constructible_v<_T2>) [with _T1 = const util::Tagged<unsigned int, model::Dog>; _T2 = unsigned int]’
+[build]   228 |       pair()
+[build]       |       ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:228:7: note: constraints not satisfied
+[build] /usr/include/c++/12/bits/stl_pair.h:196:17: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair(std::pair<_T1, _T2>&&) [with _T1 = const util::Tagged<unsigned int, model::Dog>; _T2 = unsigned int]’
+[build]   196 |       constexpr pair(pair&&) = default;         ///< Move constructor
+[build]       |                 ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:196:17: note:   candidate expects 1 argument, 0 provided
+[build] /usr/include/c++/12/bits/stl_pair.h:195:17: note: candidate: ‘constexpr std::pair<_T1, _T2>::pair(const std::pair<_T1, _T2>&) [with _T1 = const util::Tagged<unsigned int, model::Dog>; _T2 = unsigned int]’
+[build]   195 |       constexpr pair(const pair&) = default;    ///< Copy constructor
+[build]       |                 ^~~~
+[build] /usr/include/c++/12/bits/stl_pair.h:195:17: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp: In instantiation of ‘static void boost::serialization::access::construct(T*) [with T = model::Dog]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:83:22:   required from ‘void boost::serialization::load_construct_data(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Dog]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/serialization.hpp:131:24:   required from ‘void boost::serialization::load_construct_data_adl(Archive&, T*, unsigned int) [with Archive = boost::archive::text_iarchive; T = model::Dog]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:342:66:   required from ‘void boost::archive::detail::pointer_iserializer<Archive, T>::load_object_ptr(boost::archive::detail::basic_iarchive&, void*, unsigned int) const [with Archive = boost::archive::text_iarchive; T = model::Dog]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:290:7:   required from ‘class boost::archive::detail::pointer_iserializer<boost::archive::text_iarchive, model::Dog>’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:52:43:   required from ‘const boost::archive::detail::basic_pointer_iserializer* boost::archive::detail::interface_iarchive<Archive>::register_type(T*) [with T = model::Dog; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:483:36:   [ skipping 99 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/serialization/access.hpp:130:9: error: no matching function for call to ‘model::Dog::Dog()’
+[build]   130 |         ::new(t)T;
+[build]       |         ^~~~~~~~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:420:9: note: candidate: ‘model::Dog::Dog(Id, model::TwoDimVector, double)’
+[build]   420 |         Dog(Id id, TwoDimVector pos, double abs_speed) : id_(id), pos_(pos), abs_speed_(abs_speed)
+[build]       |         ^~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:420:9: note:   candidate expects 3 arguments, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:416:11: note: candidate: ‘constexpr model::Dog::Dog(const model::Dog&)’
+[build]   416 |     class Dog
+[build]       |           ^~~
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:416:11: note:   candidate expects 1 argument, 0 provided
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:416:11: note: candidate: ‘constexpr model::Dog::Dog(model::Dog&&)’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:416:11: note:   candidate expects 1 argument, 0 provided
+[build] In file included from /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_oprimitive.hpp:32,
+[build]                  from /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_oarchive.hpp:30:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/check.hpp: In instantiation of ‘void boost::archive::detail::check_const_loading() [with T = const double]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:611:37:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = const double]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:75:32:   [ skipping 111 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/check.hpp:164:5: error: static assertion failed: typex::value
+[build]   164 |     BOOST_STATIC_ASSERT(typex::value);
+[build]       |     ^~~~~~~~~~~~~~~~~~~
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/check.hpp:164:5: note: ‘mpl_::bool_<false>::value’ evaluates to false
+[build] In file included from /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:23,
+[build]                  from /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:19:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp: In instantiation of ‘void boost::archive::basic_text_iprimitive<IStream>::load(T&) [with T = const double; IStream = std::basic_istream<char>]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:56:50:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load(T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:110:16:   required from ‘static void boost::archive::load_access::load_primitive(Archive&, T&) [with Archive = boost::archive::text_iarchive; T = const double]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:386:40:   required from ‘static void boost::archive::detail::load_non_pointer_type<Archive>::load_primitive::invoke(Archive&, T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:463:22:   required from ‘static void boost::archive::detail::load_non_pointer_type<Archive>::invoke(Archive&, T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = const double]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   [ skipping 115 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: error: no match for ‘operator>>’ (operand types are ‘std::basic_istream<char>’ and ‘const double’)
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] In file included from /usr/include/c++/12/sstream:38,
+[build]                  from /usr/include/c++/12/chrono:41,
+[build]                  from /home/va/.conan/data/catch2/3.1.0/_/_/package/d8ad4136d6fea97bf70b090257767bde693665d9/include/catch2/catch_tostring.hpp:538,
+[build]                  from /home/va/.conan/data/catch2/3.1.0/_/_/package/d8ad4136d6fea97bf70b090257767bde693665d9/include/catch2/internal/catch_decomposer.hpp:11,
+[build]                  from /home/va/.conan/data/catch2/3.1.0/_/_/package/d8ad4136d6fea97bf70b090257767bde693665d9/include/catch2/internal/catch_assertion_handler.hpp:12:
+[build] /usr/include/c++/12/istream:168:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>::__istream_type& std::basic_istream<_CharT, _Traits>::operator>>(bool&) [with _CharT = char; _Traits = std::char_traits<char>; __istream_type = std::basic_istream<char>]’ (near match)
+[build]   168 |       operator>>(bool& __n)
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:168:7: note:   conversion of argument 1 would be ill-formed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: error: cannot bind non-const lvalue reference of type ‘bool&’ to a value of type ‘double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:172:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>& std::basic_istream<_CharT, _Traits>::operator>>(short int&) [with _CharT = char; _Traits = std::char_traits<char>]’ (near match)
+[build]   172 |       operator>>(short& __n);
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:172:7: note:   conversion of argument 1 would be ill-formed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: error: cannot bind non-const lvalue reference of type ‘short int&’ to a value of type ‘double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:175:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>::__istream_type& std::basic_istream<_CharT, _Traits>::operator>>(short unsigned int&) [with _CharT = char; _Traits = std::char_traits<char>; __istream_type = std::basic_istream<char>]’ (near match)
+[build]   175 |       operator>>(unsigned short& __n)
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:175:7: note:   conversion of argument 1 would be ill-formed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: error: cannot bind non-const lvalue reference of type ‘short unsigned int&’ to a value of type ‘double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:179:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>& std::basic_istream<_CharT, _Traits>::operator>>(int&) [with _CharT = char; _Traits = std::char_traits<char>]’ (near match)
+[build]   179 |       operator>>(int& __n);
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:179:7: note:   conversion of argument 1 would be ill-formed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: error: cannot bind non-const lvalue reference of type ‘int&’ to a value of type ‘double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:182:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>::__istream_type& std::basic_istream<_CharT, _Traits>::operator>>(unsigned int&) [with _CharT = char; _Traits = std::char_traits<char>; __istream_type = std::basic_istream<char>]’ (near match)
+[build]   182 |       operator>>(unsigned int& __n)
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:182:7: note:   conversion of argument 1 would be ill-formed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: error: cannot bind non-const lvalue reference of type ‘unsigned int&’ to a value of type ‘double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:186:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>::__istream_type& std::basic_istream<_CharT, _Traits>::operator>>(long int&) [with _CharT = char; _Traits = std::char_traits<char>; __istream_type = std::basic_istream<char>]’ (near match)
+[build]   186 |       operator>>(long& __n)
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:186:7: note:   conversion of argument 1 would be ill-formed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: error: cannot bind non-const lvalue reference of type ‘long int&’ to a value of type ‘double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:190:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>::__istream_type& std::basic_istream<_CharT, _Traits>::operator>>(long unsigned int&) [with _CharT = char; _Traits = std::char_traits<char>; __istream_type = std::basic_istream<char>]’ (near match)
+[build]   190 |       operator>>(unsigned long& __n)
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:190:7: note:   conversion of argument 1 would be ill-formed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: error: cannot bind non-const lvalue reference of type ‘long unsigned int&’ to a value of type ‘double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:195:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>::__istream_type& std::basic_istream<_CharT, _Traits>::operator>>(long long int&) [with _CharT = char; _Traits = std::char_traits<char>; __istream_type = std::basic_istream<char>]’ (near match)
+[build]   195 |       operator>>(long long& __n)
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:195:7: note:   conversion of argument 1 would be ill-formed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: error: cannot bind non-const lvalue reference of type ‘long long int&’ to a value of type ‘double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:199:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>::__istream_type& std::basic_istream<_CharT, _Traits>::operator>>(long long unsigned int&) [with _CharT = char; _Traits = std::char_traits<char>; __istream_type = std::basic_istream<char>]’ (near match)
+[build]   199 |       operator>>(unsigned long long& __n)
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:199:7: note:   conversion of argument 1 would be ill-formed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: error: cannot bind non-const lvalue reference of type ‘long long unsigned int&’ to a value of type ‘double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:214:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>::__istream_type& std::basic_istream<_CharT, _Traits>::operator>>(float&) [with _CharT = char; _Traits = std::char_traits<char>; __istream_type = std::basic_istream<char>]’ (near match)
+[build]   214 |       operator>>(float& __f)
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:214:7: note:   conversion of argument 1 would be ill-formed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: error: cannot bind non-const lvalue reference of type ‘float&’ to a value of type ‘double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:218:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>::__istream_type& std::basic_istream<_CharT, _Traits>::operator>>(double&) [with _CharT = char; _Traits = std::char_traits<char>; __istream_type = std::basic_istream<char>]’ (near match)
+[build]   218 |       operator>>(double& __f)
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:218:7: note:   conversion of argument 1 would be ill-formed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: error: binding reference of type ‘double&’ to ‘const double’ discards qualifiers
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:222:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>::__istream_type& std::basic_istream<_CharT, _Traits>::operator>>(long double&) [with _CharT = char; _Traits = std::char_traits<char>; __istream_type = std::basic_istream<char>]’ (near match)
+[build]   222 |       operator>>(long double& __f)
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:222:7: note:   conversion of argument 1 would be ill-formed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: error: cannot bind non-const lvalue reference of type ‘long double&’ to a value of type ‘double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:120:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>::__istream_type& std::basic_istream<_CharT, _Traits>::operator>>(__istream_type& (*)(__istream_type&)) [with _CharT = char; _Traits = std::char_traits<char>; __istream_type = std::basic_istream<char>]’
+[build]   120 |       operator>>(__istream_type& (*__pf)(__istream_type&))
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:120:36: note:   no known conversion for argument 1 from ‘const double’ to ‘std::basic_istream<char>::__istream_type& (*)(std::basic_istream<char>::__istream_type&)’ {aka ‘std::basic_istream<char>& (*)(std::basic_istream<char>&)’}
+[build]   120 |       operator>>(__istream_type& (*__pf)(__istream_type&))
+[build]       |                  ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+[build] /usr/include/c++/12/istream:124:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>::__istream_type& std::basic_istream<_CharT, _Traits>::operator>>(__ios_type& (*)(__ios_type&)) [with _CharT = char; _Traits = std::char_traits<char>; __istream_type = std::basic_istream<char>; __ios_type = std::basic_ios<char>]’
+[build]   124 |       operator>>(__ios_type& (*__pf)(__ios_type&))
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:124:32: note:   no known conversion for argument 1 from ‘const double’ to ‘std::basic_istream<char>::__ios_type& (*)(std::basic_istream<char>::__ios_type&)’ {aka ‘std::basic_ios<char>& (*)(std::basic_ios<char>&)’}
+[build]   124 |       operator>>(__ios_type& (*__pf)(__ios_type&))
+[build]       |                  ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+[build] /usr/include/c++/12/istream:131:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>::__istream_type& std::basic_istream<_CharT, _Traits>::operator>>(std::ios_base& (*)(std::ios_base&)) [with _CharT = char; _Traits = std::char_traits<char>; __istream_type = std::basic_istream<char>]’
+[build]   131 |       operator>>(ios_base& (*__pf)(ios_base&))
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:131:30: note:   no known conversion for argument 1 from ‘const double’ to ‘std::ios_base& (*)(std::ios_base&)’
+[build]   131 |       operator>>(ios_base& (*__pf)(ios_base&))
+[build]       |                  ~~~~~~~~~~~~^~~~~~~~~~~~~~~~
+[build] /usr/include/c++/12/istream:235:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>::__istream_type& std::basic_istream<_CharT, _Traits>::operator>>(void*&) [with _CharT = char; _Traits = std::char_traits<char>; __istream_type = std::basic_istream<char>]’
+[build]   235 |       operator>>(void*& __p)
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:235:25: note:   no known conversion for argument 1 from ‘const double’ to ‘void*&’
+[build]   235 |       operator>>(void*& __p)
+[build]       |                  ~~~~~~~^~~
+[build] /usr/include/c++/12/istream:259:7: note: candidate: ‘std::basic_istream<_CharT, _Traits>& std::basic_istream<_CharT, _Traits>::operator>>(__streambuf_type*) [with _CharT = char; _Traits = std::char_traits<char>; __streambuf_type = std::basic_streambuf<char>]’
+[build]   259 |       operator>>(__streambuf_type* __sb);
+[build]       |       ^~~~~~~~
+[build] /usr/include/c++/12/istream:259:36: note:   no known conversion for argument 1 from ‘const double’ to ‘std::basic_istream<char>::__streambuf_type*’ {aka ‘std::basic_streambuf<char>*’}
+[build]   259 |       operator>>(__streambuf_type* __sb);
+[build]       |                  ~~~~~~~~~~~~~~~~~~^~~~
+[build] In file included from /home/va/.conan/data/catch2/3.1.0/_/_/package/d8ad4136d6fea97bf70b090257767bde693665d9/include/catch2/internal/catch_source_line_info.hpp:11,
+[build]                  from /home/va/.conan/data/catch2/3.1.0/_/_/package/d8ad4136d6fea97bf70b090257767bde693665d9/include/catch2/catch_assertion_info.hpp:12:
+[build] /usr/include/c++/12/cstddef:128:5: note: candidate: ‘template<class _IntegerType> constexpr std::__byte_op_t<_IntegerType> std::operator>>(byte, _IntegerType)’
+[build]   128 |     operator>>(byte __b, _IntegerType __shift) noexcept
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/cstddef:128:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   cannot convert ‘((boost::archive::basic_text_iprimitive<std::basic_istream<char> >*)this)->boost::archive::basic_text_iprimitive<std::basic_istream<char> >::is’ (type ‘std::basic_istream<char>’) to type ‘std::byte’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] In file included from /usr/include/c++/12/string:54:
+[build] /usr/include/c++/12/bits/basic_string.tcc:940:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, __cxx11::basic_string<_CharT, _Traits, _Allocator>&)’
+[build]   940 |     operator>>(basic_istream<_CharT, _Traits>& __in,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/basic_string.tcc:940:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::__cxx11::basic_string<_CharT, _Traits, _Allocator>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] In file included from /usr/include/c++/12/istream:1016:
+[build] /usr/include/c++/12/bits/istream.tcc:960:5: note: candidate: ‘template<class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, _CharT&)’
+[build]   960 |     operator>>(basic_istream<_CharT, _Traits>& __in, _CharT& __c)
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/istream.tcc:960:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   deduced conflicting types for parameter ‘_CharT’ (‘char’ and ‘const double’)
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:756:5: note: candidate: ‘template<class _Traits> std::basic_istream<char, _Traits>& std::operator>>(basic_istream<char, _Traits>&, unsigned char&)’
+[build]   756 |     operator>>(basic_istream<char, _Traits>& __in, unsigned char& __c)
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/istream:756:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   cannot convert ‘t’ (type ‘const double’) to type ‘unsigned char&’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:761:5: note: candidate: ‘template<class _Traits> std::basic_istream<char, _Traits>& std::operator>>(basic_istream<char, _Traits>&, signed char&)’
+[build]   761 |     operator>>(basic_istream<char, _Traits>& __in, signed char& __c)
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/istream:761:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   cannot convert ‘t’ (type ‘const double’) to type ‘signed char&’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:859:5: note: candidate: ‘template<class _CharT, class _Traits, long unsigned int _Num> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, _CharT (&)[_Num])’
+[build]   859 |     operator>>(basic_istream<_CharT, _Traits>& __in, _CharT (&__s)[_Num])
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/istream:859:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘_CharT [_Num]’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:868:5: note: candidate: ‘template<class _Traits, long unsigned int _Num> std::basic_istream<char, _Traits>& std::operator>>(basic_istream<char, _Traits>&, unsigned char (&)[_Num])’
+[build]   868 |     operator>>(basic_istream<char, _Traits>& __in, unsigned char (&__s)[_Num])
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/istream:868:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘unsigned char [_Num]’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:873:5: note: candidate: ‘template<class _Traits, long unsigned int _Num> std::basic_istream<char, _Traits>& std::operator>>(basic_istream<char, _Traits>&, signed char (&)[_Num])’
+[build]   873 |     operator>>(basic_istream<char, _Traits>& __in, signed char (&__s)[_Num])
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/istream:873:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘signed char [_Num]’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/istream:1006:5: note: candidate: ‘template<class _Istream, class _Tp> _Istream&& std::operator>>(_Istream&&, _Tp&&)’
+[build]  1006 |     operator>>(_Istream&& __is, _Tp&& __x)
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/istream:1006:5: note:   template argument deduction/substitution failed:
+[build] /usr/include/c++/12/istream: In substitution of ‘template<class _Istream, class _Tp> _Istream&& std::operator>>(_Istream&&, _Tp&&) [with _Istream = std::basic_istream<char>&; _Tp = const double&]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15:   required from ‘void boost::archive::basic_text_iprimitive<IStream>::load(T&) [with T = const double; IStream = std::basic_istream<char>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:56:50:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load(T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:110:16:   required from ‘static void boost::archive::load_access::load_primitive(Archive&, T&) [with Archive = boost::archive::text_iarchive; T = const double]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:386:40:   required from ‘static void boost::archive::detail::load_non_pointer_type<Archive>::load_primitive::invoke(Archive&, T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:463:22:   required from ‘static void boost::archive::detail::load_non_pointer_type<Archive>::invoke(Archive&, T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   [ skipping 116 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /usr/include/c++/12/istream:1006:5: error: template constraint failure for ‘template<class _Is, class _Tp>  requires (__derived_from_ios_base<_Is>) && requires(_Is& __is, _Tp&& __t) {__is >> (forward<_Tp>)(__t);} using __rvalue_stream_extraction_t = _Is&&’
+[build] /usr/include/c++/12/istream:1006:5: note: constraints not satisfied
+[build] In file included from /home/va/.conan/data/catch2/3.1.0/_/_/package/d8ad4136d6fea97bf70b090257767bde693665d9/include/catch2/internal/catch_reusable_string_stream.hpp:15,
+[build]                  from /home/va/.conan/data/catch2/3.1.0/_/_/package/d8ad4136d6fea97bf70b090257767bde693665d9/include/catch2/catch_tostring.hpp:20:
+[build] /usr/include/c++/12/ostream: In substitution of ‘template<class _Is, class _Tp>  requires (__derived_from_ios_base<_Is>) && requires(_Is& __is, _Tp&& __t) {__is >> (forward<_Tp>)(__t);} using __rvalue_stream_extraction_t = _Is&& [with _Is = std::basic_istream<char>&; _Tp = const double&]’:
+[build] /usr/include/c++/12/istream:1006:5:   required by substitution of ‘template<class _Istream, class _Tp> _Istream&& std::operator>>(_Istream&&, _Tp&&) [with _Istream = std::basic_istream<char>&; _Tp = const double&]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15:   required from ‘void boost::archive::basic_text_iprimitive<IStream>::load(T&) [with T = const double; IStream = std::basic_istream<char>]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:56:50:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load(T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:110:16:   required from ‘static void boost::archive::load_access::load_primitive(Archive&, T&) [with Archive = boost::archive::text_iarchive; T = const double]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:386:40:   required from ‘static void boost::archive::detail::load_non_pointer_type<Archive>::load_primitive::invoke(Archive&, T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:463:22:   [ skipping 117 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /usr/include/c++/12/ostream:721:13:   required for the satisfaction of ‘__derived_from_ios_base<_Is>’ [with _Is = std::basic_istream<char, std::char_traits<char> >&]
+[build] /usr/include/c++/12/ostream:721:39: note: the expression ‘is_class_v<_Tp> [with _Tp = std::basic_istream<char, std::char_traits<char> >&]’ evaluated to ‘false’
+[build]   721 |     concept __derived_from_ios_base = is_class_v<_Tp>
+[build]       |                                       ^~~~~~~~~~~~~~~
+[build] In file included from /usr/include/c++/12/random:51,
+[build]                  from /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:6:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp: In instantiation of ‘void boost::archive::basic_text_iprimitive<IStream>::load(T&) [with T = const double; IStream = std::basic_istream<char>]’:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:56:50:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load(T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:110:16:   required from ‘static void boost::archive::load_access::load_primitive(Archive&, T&) [with Archive = boost::archive::text_iarchive; T = const double]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:386:40:   required from ‘static void boost::archive::detail::load_non_pointer_type<Archive>::load_primitive::invoke(Archive&, T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:463:22:   required from ‘static void boost::archive::detail::load_non_pointer_type<Archive>::invoke(Archive&, T&) [with T = const double; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = const double]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   [ skipping 115 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/iserializer.hpp:626:18:   required from ‘void boost::archive::load(Archive&, T&) [with Archive = text_iarchive; T = model::Game]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/common_iarchive.hpp:67:22:   required from ‘void boost::archive::detail::common_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iarchive.hpp:70:52:   required from ‘void boost::archive::basic_text_iarchive<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/text_iarchive.hpp:82:52:   required from ‘void boost::archive::text_iarchive_impl<Archive>::load_override(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/detail/interface_iarchive.hpp:68:36:   required from ‘Archive& boost::archive::detail::interface_iarchive<Archive>::operator>>(T&) [with T = model::Game; Archive = boost::archive::text_iarchive]’
+[build] /home/va/cppback/sprint4/problems/state_serialization/solution/tests/state-serialization-tests.cpp:61:30:   required from here
+[build] /usr/include/c++/12/bits/random.tcc:927:5: note: candidate: ‘template<class _IntType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, uniform_int_distribution<_IntType>&)’
+[build]   927 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:927:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::uniform_int_distribution<_IntType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:988:5: note: candidate: ‘template<class _RealType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, uniform_real_distribution<_IntType>&)’
+[build]   988 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:988:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::uniform_real_distribution<_IntType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:2173:5: note: candidate: ‘template<class _RealType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, cauchy_distribution<_RealType>&)’
+[build]  2173 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:2173:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::cauchy_distribution<_RealType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] In file included from /usr/include/c++/12/random:49:
+[build] /usr/include/c++/12/bits/random.h:3725:5: note: candidate: ‘template<class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, bernoulli_distribution&)’
+[build]  3725 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.h:3725:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   cannot convert ‘t’ (type ‘const double’) to type ‘std::bernoulli_distribution&’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:1130:5: note: candidate: ‘template<class _IntType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, geometric_distribution<_IntType>&)’
+[build]  1130 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:1130:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::geometric_distribution<_IntType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:1781:5: note: candidate: ‘template<class _RealType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, exponential_distribution<_RealType>&)’
+[build]  1781 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:1781:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::exponential_distribution<_RealType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:2567:5: note: candidate: ‘template<class _RealType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, weibull_distribution<_RealType>&)’
+[build]  2567 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:2567:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::weibull_distribution<_RealType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:2641:5: note: candidate: ‘template<class _RealType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, extreme_value_distribution<_RealType>&)’
+[build]  2641 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:2641:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::extreme_value_distribution<_RealType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:177:5: note: candidate: ‘template<class _UIntType, _UIntType __a, _UIntType __c, _UIntType __m, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, linear_congruential_engine<_UIntType, __a, __c, __m>&)’
+[build]   177 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:177:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::linear_congruential_engine<_UIntType, __a, __c, __m>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:504:5: note: candidate: ‘template<class _UIntType1, long unsigned int __w1, long unsigned int __n1, long unsigned int __m1, long unsigned int __r1, _UIntType1 __a1, long unsigned int __u1, _UIntType1 __d1, long unsigned int __s1, _UIntType1 __b1, long unsigned int __t1, _UIntType1 __c1, long unsigned int __l1, _UIntType1 __f1, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, mersenne_twister_engine<_UIntType, __w, __n, __m, __r, __a, __u, __d, __s, __b, __t, __c, __l, __f>&)’
+[build]   504 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:504:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::mersenne_twister_engine<_UIntType, __w, __n, __m, __r, __a, __u, __d, __s, __b, __t, __c, __l, __f>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:656:5: note: candidate: ‘template<class _UIntType, long unsigned int __w, long unsigned int __s, long unsigned int __r, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, subtract_with_carry_engine<_UIntType, __w, __s, __r>&)’
+[build]   656 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:656:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::subtract_with_carry_engine<_UIntType, __w, __s, __r>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:723:5: note: candidate: ‘template<class _RandomNumberEngine, long unsigned int __p, long unsigned int __r, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, discard_block_engine<_RandomNumberEngine, __p, __r>&)’
+[build]   723 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:723:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::discard_block_engine<_RandomNumberEngine, __p, __r>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:887:5: note: candidate: ‘template<class _RandomNumberEngine, long unsigned int __k, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, shuffle_order_engine<_RandomNumberEngine, __k>&)’
+[build]   887 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:887:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::shuffle_order_engine<_RandomNumberEngine, __k>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:1245:5: note: candidate: ‘template<class _IntType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, negative_binomial_distribution<_IntType>&)’
+[build]  1245 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:1245:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::negative_binomial_distribution<_IntType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:1455:5: note: candidate: ‘template<class _IntType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, poisson_distribution<_IntType>&)’
+[build]  1455 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:1455:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::poisson_distribution<_IntType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:1722:5: note: candidate: ‘template<class _IntType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, binomial_distribution<_IntType>&)’
+[build]  1722 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:1722:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::binomial_distribution<_IntType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:1951:5: note: candidate: ‘template<class _RealType1, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, normal_distribution<_RealType>&)’
+[build]  1951 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:1951:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::normal_distribution<_RealType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:2016:5: note: candidate: ‘template<class _RealType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, lognormal_distribution<_RealType>&)’
+[build]  2016 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:2016:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::lognormal_distribution<_RealType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:2087:5: note: candidate: ‘template<class _RealType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, chi_squared_distribution<_RealType>&)’
+[build]  2087 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:2087:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::chi_squared_distribution<_RealType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:2249:5: note: candidate: ‘template<class _RealType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, fisher_f_distribution<_RealType>&)’
+[build]  2249 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:2249:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::fisher_f_distribution<_RealType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:2322:5: note: candidate: ‘template<class _RealType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, student_t_distribution<_RealType>&)’
+[build]  2322 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:2322:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::student_t_distribution<_RealType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:2492:5: note: candidate: ‘template<class _RealType1, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, gamma_distribution<_RealType>&)’
+[build]  2492 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:2492:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::gamma_distribution<_RealType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:2800:5: note: candidate: ‘template<class _IntType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, discrete_distribution<_IntType>&)’
+[build]  2800 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:2800:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::discrete_distribution<_IntType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:3007:5: note: candidate: ‘template<class _RealType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, piecewise_constant_distribution<_RealType>&)’
+[build]  3007 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:3007:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::piecewise_constant_distribution<_RealType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/bits/random.tcc:3213:5: note: candidate: ‘template<class _RealType, class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, piecewise_linear_distribution<_RealType>&)’
+[build]  3213 |     operator>>(std::basic_istream<_CharT, _Traits>& __is,
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/bits/random.tcc:3213:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::piecewise_linear_distribution<_RealType>’ and ‘const double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] In file included from /home/va/cppback/sprint4/problems/state_serialization/solution/tests/../src/model.h:9:
+[build] /usr/include/c++/12/iomanip:71:5: note: candidate: ‘template<class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, _Resetiosflags)’
+[build]    71 |     operator>>(basic_istream<_CharT, _Traits>& __is, _Resetiosflags __f)
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/iomanip:71:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   cannot convert ‘t’ (type ‘const double’) to type ‘std::_Resetiosflags’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/iomanip:101:5: note: candidate: ‘template<class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, _Setiosflags)’
+[build]   101 |     operator>>(basic_istream<_CharT, _Traits>& __is, _Setiosflags __f)
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/iomanip:101:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   cannot convert ‘t’ (type ‘const double’) to type ‘std::_Setiosflags’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/iomanip:132:5: note: candidate: ‘template<class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, _Setbase)’
+[build]   132 |     operator>>(basic_istream<_CharT, _Traits>& __is, _Setbase __f)
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/iomanip:132:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   cannot convert ‘t’ (type ‘const double’) to type ‘std::_Setbase’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/iomanip:170:5: note: candidate: ‘template<class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, _Setfill<_CharT>)’
+[build]   170 |     operator>>(basic_istream<_CharT, _Traits>& __is, _Setfill<_CharT> __f)
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/iomanip:170:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::_Setfill<_CharT>’ and ‘double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/iomanip:200:5: note: candidate: ‘template<class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, _Setprecision)’
+[build]   200 |     operator>>(basic_istream<_CharT, _Traits>& __is, _Setprecision __f)
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/iomanip:200:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   cannot convert ‘t’ (type ‘const double’) to type ‘std::_Setprecision’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/iomanip:230:5: note: candidate: ‘template<class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, _Setw)’
+[build]   230 |     operator>>(basic_istream<_CharT, _Traits>& __is, _Setw __f)
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/iomanip:230:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   cannot convert ‘t’ (type ‘const double’) to type ‘std::_Setw’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/iomanip:264:5: note: candidate: ‘template<class _CharT, class _Traits, class _MoneyT> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, _Get_money<_MoneyT>)’
+[build]   264 |     operator>>(basic_istream<_CharT, _Traits>& __is, _Get_money<_MoneyT> __f)
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/iomanip:264:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::_Get_money<_MoneyT>’ and ‘double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] /usr/include/c++/12/iomanip:418:5: note: candidate: ‘template<class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, _Get_time<_CharT>)’
+[build]   418 |     operator>>(basic_istream<_CharT, _Traits>& __is, _Get_time<_CharT> __f)
+[build]       |     ^~~~~~~~
+[build] /usr/include/c++/12/iomanip:418:5: note:   template argument deduction/substitution failed:
+[build] /home/va/.conan/data/boost/1.78.0/_/_/package/1671931156455a119d7c3f14d951ac5fdbc5cd10/include/boost/archive/basic_text_iprimitive.hpp:89:15: note:   mismatched types ‘std::_Get_time<_CharT>’ and ‘double’
+[build]    89 |         if(is >> t)
+[build]       |            ~~~^~~~
+[build] ninja: build stopped: subcommand failed.
+[proc] The command: /usr/bin/cmake --build /home/va/cppback/sprint4/problems/state_serialization/solution/build --config Debug --target all -- exited with code: 1
+[driver] Build completed: 00:00:06.775
+[build] Build finished with exit code 1
+
