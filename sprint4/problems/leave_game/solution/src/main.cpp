@@ -9,8 +9,8 @@
 
 #include "json_loader.h"
 #include "request_handler.h"
-
 #include "tests.h"
+#include "database.h"
 
 
 using namespace std::literals;

@@ -1,3 +1,4 @@
+
 cmake_minimum_required(VERSION 3.11)
 
 project(game_server CXX)
@@ -6,29 +7,32 @@ set(CMAKE_CXX_STANDARD 20)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup(TARGETS)
 
+get_property(importTargets DIRECTORY "${CMAKE_SOURCE_DIR}" PROPERTY IMPORTED_TARGETS)
+message(STATUS "${importTargets}") 
+
 find_package(Boost 1.78.0 REQUIRED)
-if(Boost_FOUND)
-  include_directories(${Boost_INCLUDE_DIRS})
-endif()
+
+include(CTest)
+include(${CONAN_BUILD_DIRS_CATCH2}/Catch.cmake) 
+
+add_compile_definitions(BOOST_BEAST_USE_STD_STRING_VIEW)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-# Добавляем библиотеку, указывая, что она статическая.
-add_library(MyLib STATIC 
-	src/model.h
-	src/model.cpp
-	src/tagged.h
-	src/loot_generator.h
-	src/loot_generator.cpp 
-	src/model_serialization.h 
-	src/geom.h
-)
+add_library(game_server_static_lib
+src/model.h
+src/model.cpp
+src/tagged.h
+src/loot_generator.h
+src/loot_generator.cpp 
+src/model_serialization.h 
+src/geom.h
+  )
 
-# Добавляем сторонние библиотеки. Указываем видимость PUBLIC, т. к. 
-# они должны быть ввидны и в библиотеке MyLib и в зависимостях.
-target_include_directories(MyLib PUBLIC CONAN_PKG::boost)
-target_link_libraries(MyLib PUBLIC CONAN_PKG::catch2 CONAN_PKG::boost Threads::Threads)
+
+  
+target_link_libraries(game_server_static_lib PUBLIC CONAN_PKG::boost)
 
 add_executable(game_server
 	src/main.cpp
@@ -49,6 +53,10 @@ add_executable(game_server
 	src/collision_detector.cpp 
 	src/file_loader.h 
 	src/file_loader.cpp 
+	src/database.h 
+	src/database.cpp 
+	src/tagged_uuid.h 
+	src/tagged_uuid.cpp 
 	
 )
 
@@ -62,8 +70,13 @@ add_executable(game_server_tests
 	src/file_loader.cpp
 )
 
-# Добавляем зависимость целей от статической библиотеки.
-# target_include_directories уже не нужен - он добавится автоматически
-# из зависимой библиотеки.
-target_link_libraries(game_server MyLib)
-target_link_libraries(game_server_tests ${CATCH2_LIB} MyLib) 
+
+target_link_libraries(game_server PRIVATE Threads::Threads)
+target_link_libraries(game_server PRIVATE CONAN_PKG::boost)
+target_link_libraries(game_server PRIVATE game_server_static_lib)
+target_link_libraries(game_server PUBLIC CONAN_PKG::boost Threads::Threads CONAN_PKG::libpq CONAN_PKG::libpqxx)
+
+
+target_link_libraries(game_server_tests PRIVATE CONAN_PKG::catch2 CONAN_PKG::boost Threads::Threads game_server_static_lib) 
+
+catch_discover_tests(game_server_tests) 
