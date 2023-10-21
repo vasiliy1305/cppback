@@ -62,6 +62,8 @@ namespace ui
             std::string name;
             std::getline(cmd_input, name);
             boost::algorithm::trim(name);
+            if (name.size() == 0)
+                throw std::exception();
             use_cases_.AddAuthor(std::move(name));
         }
         catch (const std::exception &)
