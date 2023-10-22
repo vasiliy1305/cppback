@@ -400,7 +400,21 @@ namespace app
 
     void Application::UpdateTime(int delta_time)
     {
-        game_.UpdateTime(delta_time);
+        std::vector<model::DogStat> retrit_dogs;
+        game_.UpdateTime(delta_time, retrit_dogs);
+        try
+        {
+            if (retrit_dogs.size())
+            {
+                auto conn = pool_.GetConnection();
+                PutDogsToDb(*conn, retrit_dogs);
+            }
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << '\n';
+            // todo может что то более осмысленное
+        }
 
         if (save_periodical_)
         {

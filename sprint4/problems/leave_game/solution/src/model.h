@@ -423,7 +423,7 @@ namespace model
 
     struct DogStat
     {
-        int id;
+        uint id;
         std::string name;
         int score;
         int time;
@@ -435,7 +435,7 @@ namespace model
         using Id = util::Tagged<uint32_t, Dog>;
 
         Dog() = default;
-        Dog(Id id, TwoDimVector pos, double abs_speed) : id_(id), pos_(pos), abs_speed_(abs_speed)
+        Dog(Id id, TwoDimVector pos, double abs_speed, std::string name) : id_(id), pos_(pos), abs_speed_(abs_speed), name_(name)
         {
             speed_ = {0.0, 0.0};
             dir_ = Direction::NORTH;
@@ -551,6 +551,33 @@ namespace model
             ar & score_;
             ar & loots_;
             ar & WIDTH;
+            ar & curr_retr_time_;
+            ar & name_;
+            ar & all_time_;
+        }
+
+        void updateTimes(int time)
+        {
+            all_time_ += time;
+            if (speed_ == TwoDimVector{0, 0}) // лучше использовать примерно 0
+            {
+                curr_retr_time_ += time;
+            }
+        }
+
+        int GetRetrTime() const
+        {
+            return curr_retr_time_;
+        }
+
+        int GetAllTime() const
+        {
+            return all_time_;
+        }
+
+        std::string GetName() const
+        {
+            return name_;
         }
 
     private:
@@ -564,6 +591,9 @@ namespace model
         int score_ = 0;
         std::vector<Loot> loots_;
         double WIDTH = 0.6;
+        int curr_retr_time_ = 0;
+        int all_time_ = 0;
+        std::string name_;
     };
 
     class GameSession : public collision_detector::ItemGathererProvider
@@ -573,10 +603,10 @@ namespace model
 
         GameSession() = default;
 
-        GameSession(std::shared_ptr<Map> map_ptr, loot_gen::LootGenerator loot_gen) : map_ptr_(map_ptr), loot_gen_(loot_gen)
+        GameSession(std::shared_ptr<Map> map_ptr, loot_gen::LootGenerator loot_gen, int retr_time)
+            : map_ptr_(map_ptr), loot_gen_(loot_gen), retr_time_(retr_time)
         {
         }
-
 
         ~GameSession()
         {
@@ -601,16 +631,16 @@ namespace model
             return nullptr;
         }
 
-        std::shared_ptr<Dog> AddDog(Dog::Id id, TwoDimVector pos)
+        std::shared_ptr<Dog> AddDog(Dog::Id id, TwoDimVector pos, std::string name)
         {
 
             dog_id_to_index_[id] = dogs_.size();
-            dogs_.push_back(std::make_shared<Dog>(Dog(id, pos, map_ptr_->GetDogSpeed())));
+            dogs_.push_back(std::make_shared<Dog>(Dog(id, pos, map_ptr_->GetDogSpeed(), name)));
 
             return (dogs_.at(dogs_.size() - 1));
         }
 
-        void UpdateTime(int delta_t);
+        void UpdateTime(int delta_t, std::vector<DogStat> &retrit_candidates);
         model::TwoDimVector GetRandomRoadPoint(bool randomize_spawn_points);
         int GetRandomNumber(int size);
 
@@ -707,14 +737,19 @@ namespace model
             loot_gen_ = loot_gen;
         }
 
+        void DeleteDogById(Dog::Id id)
+        {
+            dogs_.erase(dogs_.begin() +  dog_id_to_index_.at(id));
+        }
+
     private:
-        // using DogIdHasher = util::TaggedHasher<Dog::Id>;
         std::vector<std::shared_ptr<Dog>> dogs_; //
         std::shared_ptr<Map> map_ptr_;
         std::unordered_map<Dog::Id, uint32_t, DogIdHasher> dog_id_to_index_;
         std::vector<Loot> loots_;
         loot_gen::LootGenerator loot_gen_;
         int curr_loot_id_ = 0;
+        int retr_time_ = 0;
     };
 
     namespace detail
@@ -814,6 +849,10 @@ namespace model
 
         std::shared_ptr<Player> Add(std::shared_ptr<Dog> dog, std::shared_ptr<GameSession> session, std::string name);
         std::shared_ptr<Player> FindByDogIdAndMapId(Dog::Id dog_id, Map::Id map_id);
+        void DeletePlayer(Dog::Id dog_id, Map::Id map_id)
+        {
+            players_.erase(players_.begin() + map_and_dog_to_index_.at(map_id).at(dog_id));
+        }
         std::vector<Player> GetPlayersVec() const
         {
             return players_;
@@ -903,7 +942,7 @@ namespace model
             return default_dog_speed_;
         }
 
-        void UpdateTime(int delta);
+        void UpdateTime(int delta, std::vector<DogStat> &retrit_candidates);
         void SetRandomizeSpawnPoints(bool rnd)
         {
             randomize_spawn_points_ = rnd;
@@ -967,18 +1006,18 @@ namespace model
         }
 
     private:
-        std::vector<std::shared_ptr<GameSession>> sessions_; 
-        Players players_;                                    
-        PlayerTokens tokens_;                                
-        MapIdToIndex map_id_to_index_;                       
-        uint32_t curr_dog_id_ = 0;                           
-        double default_dog_speed_ = 1.0;      
-        bool randomize_spawn_points_ = false; 
-        loot_gen::LootGenerator loot_gen_;    
-        int default_bag_capacity_ = 3;        
-        std::vector<Loot> empty_;             
+        std::vector<std::shared_ptr<GameSession>> sessions_;
+        Players players_;
+        PlayerTokens tokens_;
+        MapIdToIndex map_id_to_index_;
+        uint32_t curr_dog_id_ = 0;
+        double default_dog_speed_ = 1.0;
+        bool randomize_spawn_points_ = false;
+        loot_gen::LootGenerator loot_gen_;
+        int default_bag_capacity_ = 3;
+        std::vector<Loot> empty_;
         std::vector<Map> maps_;
-        MapIdToIndex map_id_to_game_index_; 
+        MapIdToIndex map_id_to_game_index_;
         double dog_retirement_rime_ = 60.0;
     };
 

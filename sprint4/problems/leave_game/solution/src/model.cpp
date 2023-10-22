@@ -70,7 +70,7 @@ namespace model
         {
             try
             {
-                sessions_.push_back(std::make_shared<GameSession>(map_ptr, loot_gen_));
+                sessions_.push_back(std::make_shared<GameSession>(map_ptr, loot_gen_, dog_retirement_rime_ * 1000));
             }
             catch (...)
             {
@@ -169,7 +169,7 @@ namespace model
 
             // 2. создаем собаку на сене
 
-            auto dog_ptr = FindSession(Map::Id(map_id))->AddDog(Dog::Id(curr_dog_id_++), rnd_road_pnt); //
+            auto dog_ptr = FindSession(Map::Id(map_id))->AddDog(Dog::Id(curr_dog_id_++), rnd_road_pnt, user_name); //
 
             // 3 создать игрока - выдать ему собаку -вернуть токен и id
             auto player = players_.Add(dog_ptr, FindSession(Map::Id(map_id)), user_name);
@@ -244,16 +244,36 @@ namespace model
         }
     }
 
-    void Game::UpdateTime(int delta)
+    void Game::UpdateTime(int delta, std::vector<DogStat> &retrit_candidates)
     {
         for (auto session : sessions_)
-        {
-            session->UpdateTime(delta);
+        {std::vector<DogStat> retrit_candidates2;
+            session->UpdateTime(delta, retrit_candidates2); // переделать ((
+            // todo удалить владельца собаки
+            for(auto dog: retrit_candidates2)
+            {
+                players_.DeletePlayer(Dog::Id(dog.id), session->GetMap()->GetId());
+            }  
         }
     }
 
-    void GameSession::UpdateTime(int delta_t) // todo на будущ декомпозировать ф-ию на три 1- переместить собак 2- создать стаф 3- собрать стаф
+    void GameSession::UpdateTime(int delta_t, std::vector<DogStat> &retrit_candidates) // todo на будущ декомпозировать ф-ию на 4, 1- переместить собак 2- создать стаф 3- собрать стаф
     {
+        for (auto dog : dogs_) // move dog// update retr time
+        {
+            dog->updateTimes(delta_t);
+
+            if (dog->GetRetrTime() >= retr_time_)
+            {
+                retrit_candidates.push_back(DogStat{*(dog->GetId()), dog->GetName(), dog->GetScore(), dog->GetAllTime()});
+            }
+        }
+
+        for (auto dog : retrit_candidates) // отправит на пенсию
+        {
+            DeleteDogById(Dog::Id(dog.id));
+        }
+
         for (auto dog : dogs_) // move dog
         {
             auto dt = ((delta_t + 0.0) / 1000.0);
@@ -553,8 +573,6 @@ namespace model
         {
             return empty_;
         }
-    } 
-
-
+    }
 
 } // namespace model
