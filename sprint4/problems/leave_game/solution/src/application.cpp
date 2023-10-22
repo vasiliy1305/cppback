@@ -381,7 +381,7 @@ namespace app
 
     StringResponse Application::GetRecords(const StringRequest &req)
     {
-        if (req.method() == http::verb::get)
+        if (req.method() == http::verb::get || req.method() == http::verb::head)
         {
             auto conn = pool_.GetConnection();
             std::vector<model::DogStat> dogs;
@@ -393,10 +393,13 @@ namespace app
                 js_dog["name"] = dog.name;
                 js_dog["score"] = dog.score;
                 js_dog["playTime"] = (dog.time * 1.0) / 1000.0; // todo - перепроверить может в мс
+                js_dogs.push_back(js_dog);
             }
 
+            return ReturnJsonContent(req, http::status::ok, json::serialize(js_dogs));
+
         }
-        return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only POST method is expected"), "POST");
+        return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only get, head method is expected"), "POST");
     }
 
     StringResponse Application::SetTimeDelta(const StringRequest &req)
