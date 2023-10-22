@@ -577,9 +577,6 @@ namespace model
         {
         }
 
-        // GameSession() = delete;
-        // GameSession(const GameSession &) = delete;
-        // GameSession &operator=(const GameSession &) = delete;
 
         ~GameSession()
         {
@@ -961,22 +958,28 @@ namespace model
             ar & empty_;
             ar & maps_;
             ar & map_id_to_game_index_;
+            ar & dog_retirement_rime_;
+        }
+
+        void SetDogRetirementTime(double dog_retirement_rime)
+        {
+            dog_retirement_rime_ = dog_retirement_rime;
         }
 
     private:
-        std::vector<std::shared_ptr<GameSession>> sessions_; // +
-        Players players_;                                    // +
-        PlayerTokens tokens_;                                // +
-        MapIdToIndex map_id_to_index_;                       // - MapIdToIndex map_id_to_game_index_;
-        uint32_t curr_dog_id_ = 0;                           // +
-
-        double default_dog_speed_ = 1.0;      // -
-        bool randomize_spawn_points_ = false; // -
-        loot_gen::LootGenerator loot_gen_;    // -
-        int default_bag_capacity_ = 3;        // -
-        std::vector<Loot> empty_;             // -
+        std::vector<std::shared_ptr<GameSession>> sessions_; 
+        Players players_;                                    
+        PlayerTokens tokens_;                                
+        MapIdToIndex map_id_to_index_;                       
+        uint32_t curr_dog_id_ = 0;                           
+        double default_dog_speed_ = 1.0;      
+        bool randomize_spawn_points_ = false; 
+        loot_gen::LootGenerator loot_gen_;    
+        int default_bag_capacity_ = 3;        
+        std::vector<Loot> empty_;             
         std::vector<Map> maps_;
-        MapIdToIndex map_id_to_game_index_; // -
+        MapIdToIndex map_id_to_game_index_; 
+        double dog_retirement_rime_ = 60.0;
     };
 
     TwoDimVector GetBorderPoint(Road road, std::shared_ptr<model::Dog> dog);

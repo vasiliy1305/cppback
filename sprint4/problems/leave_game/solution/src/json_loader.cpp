@@ -73,11 +73,19 @@ namespace json_loader
         auto loot_gen_config = value.as_object().at("lootGeneratorConfig").as_object();
         double probability = loot_gen_config.at("probability").as_double();
         double period = loot_gen_config.at("period").as_double();
+        
+
         loot_gen::LootGenerator::TimeInterval interval(static_cast<int64_t>(period * 1000));
 
         loot_gen::LootGenerator loot_gen(interval, probability, getRandomNumberFrom0To1); // todo - добавить генератор
 
         model::Game game(loot_gen);
+
+        if (value.as_object().contains("dogRetirementTime"))
+        {
+            double dog_retirement_rime = value.as_object().at("dogRetirementTime").as_double();
+            game.SetDogRetirementTime(dog_retirement_rime);
+        }
 
         if (value.as_object().contains("defaultDogSpeed"))
         {
@@ -97,6 +105,7 @@ namespace json_loader
         {
             game.AddMap(ParseMap(map, game.GetDefDogSpeed(), game.GetDefaultBagCapacity()));
         }
+        
 
         return game;
     }
@@ -159,7 +168,7 @@ namespace json_loader
         auto loot_types = map.at("lootTypes").as_array();
         int loot_types_size = loot_types.size();
         std::vector<int> loot_scores;
-        for(auto loot_js: loot_types)
+        for (auto loot_js : loot_types)
         {
             loot_scores.push_back(loot_js.as_object()["value"].as_int64());
         }
