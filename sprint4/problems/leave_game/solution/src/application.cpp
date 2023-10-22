@@ -379,6 +379,26 @@ namespace app
         return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only POST method is expected"), "POST");
     }
 
+    StringResponse Application::GetRecords(const StringRequest &req)
+    {
+        if (req.method() == http::verb::get)
+        {
+            auto conn = pool_.GetConnection();
+            std::vector<model::DogStat> dogs;
+            ReadScores(*conn, 0, 100, dogs);
+            json::array js_dogs;
+            for(auto dog: dogs)
+            {
+                json::object js_dog;
+                js_dog["name"] = dog.name;
+                js_dog["score"] = dog.score;
+                js_dog["playTime"] = (dog.time * 1.0) / 1000.0; // todo - перепроверить может в мс
+            }
+
+        }
+        return ReturnMethodNotAllowed(req, MakeMessege("invalidMethod", "Only POST method is expected"), "POST");
+    }
+
     StringResponse Application::SetTimeDelta(const StringRequest &req)
     {
         if (req.method() == http::verb::post)

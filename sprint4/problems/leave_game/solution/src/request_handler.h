@@ -144,7 +144,8 @@ namespace http_handler
         STATE,
         MOVE,
         BADREQUEST,
-        TICK
+        TICK,
+        RECORDS
     };
 
     ApiRequestType GetApiReqType(const std::string &path);
@@ -207,6 +208,10 @@ namespace http_handler
             else if (request_type == ApiRequestType::MOVE)
             {
                 send(app_.SetPlayerAction(req));
+            }
+            else if (request_type == ApiRequestType::RECORDS)
+            {
+                send(app_.GetRecords(req));
             }
             else if (request_type == ApiRequestType::TICK)
             {

@@ -149,6 +149,10 @@ namespace http_handler
         {
             return ApiRequestType::JOIN;
         }
+        else if (path == "/api/v1/game/records"s)
+        {
+            return ApiRequestType::RECORDS;
+        }
         else if (path == "/api/v1/game/players"s)
         {
             return ApiRequestType::PLAYERS;

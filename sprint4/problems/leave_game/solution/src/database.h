@@ -99,4 +99,4 @@ void CreateTable(pqxx::connection &conn);
 
 void PutDogsToDb(pqxx::connection &conn, std::vector<model::DogStat> &dogs);
 
-void ReadScores(pqxx::connection &conn, int offset, int limit, std::vector<model::DogStat> &vec_input);
+void ReadScores(pqxx::connection &conn, int offset, int limit, std::vector<model::DogStat> &dogs);

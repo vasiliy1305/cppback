@@ -90,6 +90,7 @@ namespace app
         StringResponse SetPlayerAction(const StringRequest &req);
         StringResponse JoinGame(const StringRequest &req);
         StringResponse SetTimeDelta(const StringRequest &req);
+        StringResponse GetRecords(const StringRequest &req);
 
         void UpdateTime(int delta_time);
         void SetPeriodicalSave(std::string file, int period)
