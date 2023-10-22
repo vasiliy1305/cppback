@@ -1000,7 +1000,6 @@
  1284  history >> history.txt
  
  
- mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11 && cmake .. -DCMAKE_BUILD_TYPE=Debug && cmake --build .
   372  git checkout main
   373  git branch -d final-task
   374  git branch
