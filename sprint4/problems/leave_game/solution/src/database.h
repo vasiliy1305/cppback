@@ -97,6 +97,6 @@ private:
 
 void CreateTable(pqxx::connection &conn);
 
-void DumpLeftDogsToDatabase(pqxx::connection &conn, std::vector<model::DogStat> &dogs);
+void PutDogsToDb(pqxx::connection &conn, std::vector<model::DogStat> &dogs);
 
-void ReadScoresFromDatabase(pqxx::connection &conn, int offset, int limit, std::vector<model::DogStat> &vec_input);
+void ReadScores(pqxx::connection &conn, int offset, int limit, std::vector<model::DogStat> &vec_input);

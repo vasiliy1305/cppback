@@ -9,6 +9,7 @@
 #include <boost/json.hpp>
 
 #include "file_loader.h"
+#include "database.h"
 
 using namespace std::literals;
 namespace logging = boost::log;
@@ -68,13 +69,18 @@ namespace app
     class Application
     {
     public:
-        Application(model::Game &game, extra_data::ExtraData &extra_data, std::string state_file, bool save_periodical, int save_period)
-            : game_{game}
-            , extra_data_{extra_data}
-            , state_file_(state_file)
-            , save_periodical_(save_periodical)
-            , save_period_(save_period)
+        Application(model::Game &game, extra_data::ExtraData &extra_data, std::string state_file, bool save_periodical, int save_period, ConnectionPool& pool)
+            : game_{game}, extra_data_{extra_data}, state_file_(state_file), save_periodical_(save_periodical), save_period_(save_period), pool_(pool)
         {
+            try
+            {
+                auto connection = pool_.GetConnection();
+                CreateTable(*connection);
+            }
+            catch (...)
+            {
+                std::cout << "db init error\n";
+            }
         }
 
         StringResponse GetMaps(const StringRequest &req);
@@ -123,6 +129,8 @@ namespace app
         bool save_periodical_ = false;
         int save_period_ = -1;
         int time_from_last_save_ = 0;
+
+        ConnectionPool &pool_;
     };
 
 } // end namespace app

@@ -10,7 +10,7 @@
 #include "json_loader.h"
 #include "request_handler.h"
 #include "tests.h"
-#include "database.h"
+
 
 
 using namespace std::literals;
@@ -110,6 +110,8 @@ int main(int argc, const char *argv[])
             if (args->use_state)
             {
                 LoadGameFromFile(args->state_file, game);
+
+                // todo add lootgen
             }
 
             // 2. Инициализируем io_context
@@ -128,12 +130,23 @@ int main(int argc, const char *argv[])
             
         } });
 
-            // 4. Создаём обработчик HTTP-запросов и связываем его с моделью игры
-            // std::cerr << " -1 " << std::endl;
+                const char* db_url = std::getenv("GAME_DB_URL");
+                if (!db_url) {
+                    throw std::runtime_error("GAME_DB_URL is not specified");
+                }
 
-            http_handler::RequestHandler handler{game, args->www_root, args->tick_period, ioc, extra_data, args->state_file, (args->save_state_period > 0), args->save_state_period};
-            // http_handler::LoggingRequestHandler logging_handler{handler};
-            // std::cerr << " -2 " << std::endl;
+                ConnectionPool pool{12, [db_url] {
+                                     auto conn = std::make_shared<pqxx::connection>(db_url);
+                                     return conn;
+                                 }};
+            // 4. Создаём обработчик HTTP-запросов и связываем его с моделью игры
+
+            http_handler::RequestHandler handler{game, args->www_root, 
+            args->tick_period, ioc, 
+            extra_data, args->state_file, 
+            (args->save_state_period > 0), 
+            args->save_state_period
+            ,pool };
 
             // 5. Запустить обработчик HTTP-запросов, делегируя их обработчику запросов
             const auto address = net::ip::make_address("0.0.0.0");

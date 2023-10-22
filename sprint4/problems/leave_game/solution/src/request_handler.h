@@ -152,7 +152,8 @@ namespace http_handler
     class ApiHandler
     {
     public:
-        ApiHandler(model::Game &game, net::io_context &ioc, int period, extra_data::ExtraData &extra_data, std::string state_file, bool save_periodical, int save_period) : app_{game, extra_data, state_file, save_periodical, save_period}, ioc_(ioc), period_(period)
+        ApiHandler(model::Game &game, net::io_context &ioc, int period, extra_data::ExtraData &extra_data, std::string state_file, bool save_periodical, int save_period, ConnectionPool& pool)
+         : app_{game, extra_data, state_file, save_periodical, save_period, pool}, ioc_(ioc), period_(period)
         {
             if (period)
             {
@@ -242,7 +243,8 @@ namespace http_handler
     class RequestHandler
     {
     public:
-        explicit RequestHandler(model::Game &game, fs::path static_dir, int period, net::io_context &ioc, extra_data::ExtraData &extra_data, std::string state_file, bool save_periodical, int save_period) : api_handler_{game, ioc, period, extra_data, state_file, save_periodical, save_period},
+        explicit RequestHandler(model::Game &game, fs::path static_dir, int period, net::io_context &ioc, extra_data::ExtraData &extra_data, std::string state_file, bool save_periodical, int save_period, ConnectionPool& pool) 
+        : api_handler_{game, ioc, period, extra_data, state_file, save_periodical, save_period, pool},
                                                                                                             content_handler_(static_dir)
 
         {
