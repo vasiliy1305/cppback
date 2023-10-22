@@ -253,6 +253,7 @@ namespace model
             for(auto dog: retrit_candidates2)
             {
                 players_.DeletePlayer(Dog::Id(dog.id), session->GetMap()->GetId());
+                retrit_candidates.push_back(dog);
             }  
         }
     }
