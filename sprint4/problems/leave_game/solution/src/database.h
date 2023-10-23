@@ -53,7 +53,6 @@ public:
         PoolType *pool_;
     };
 
-    // ConnectionFactory is a functional object returning std::shared_ptr<pqxx::connection>
     template <typename ConnectionFactory>
     ConnectionPool(size_t capacity, ConnectionFactory &&connection_factory)
     {
@@ -96,7 +95,5 @@ private:
 };
 
 void CreateTable(pqxx::connection &conn);
-
 void PutDogsToDb(pqxx::connection &conn, std::vector<model::DogStat> &dogs);
-
 void ReadScores(pqxx::connection &conn, int offset, int limit, std::vector<model::DogStat> &dogs);

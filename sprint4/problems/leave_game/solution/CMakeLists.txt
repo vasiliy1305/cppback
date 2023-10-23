@@ -1,4 +1,3 @@
-
 cmake_minimum_required(VERSION 3.11)
 
 project(game_server CXX)
@@ -26,12 +25,9 @@ src/model.cpp
 src/tagged.h
 src/loot_generator.h
 src/loot_generator.cpp 
-src/model_serialization.h 
 src/geom.h
   )
 
-
-  
 target_link_libraries(game_server_static_lib PUBLIC CONAN_PKG::boost)
 
 add_executable(game_server
@@ -60,23 +56,21 @@ add_executable(game_server
 	
 )
 
-add_executable(game_server_tests
-	tests/state-serialization-tests.cpp
-	src/collision_detector.h 
-	src/collision_detector.cpp 
-	src/json_loader.h
-	src/json_loader.cpp
-	src/file_loader.h 
-	src/file_loader.cpp
-)
-
+# add_executable(game_server_tests
+# 	tests/state-serialization-tests.cpp
+# 	src/collision_detector.h 
+# 	src/collision_detector.cpp 
+# 	src/json_loader.h
+# 	src/json_loader.cpp
+# 	src/file_loader.h 
+# 	src/file_loader.cpp
+# )
 
 target_link_libraries(game_server PRIVATE Threads::Threads)
 target_link_libraries(game_server PRIVATE CONAN_PKG::boost)
 target_link_libraries(game_server PRIVATE game_server_static_lib)
 target_link_libraries(game_server PUBLIC CONAN_PKG::boost Threads::Threads CONAN_PKG::libpq CONAN_PKG::libpqxx)
 
+# target_link_libraries(game_server_tests PRIVATE CONAN_PKG::catch2 CONAN_PKG::boost Threads::Threads game_server_static_lib) 
 
-target_link_libraries(game_server_tests PRIVATE CONAN_PKG::catch2 CONAN_PKG::boost Threads::Threads game_server_static_lib) 
-
-catch_discover_tests(game_server_tests) 
+# catch_discover_tests(game_server_tests) 

@@ -131,41 +131,42 @@ int main(int argc, const char *argv[])
         } });
 
                 const char* db_url = std::getenv("GAME_DB_URL");
+
+                
                 if (!db_url) {
                     throw std::runtime_error("GAME_DB_URL is not specified");
                 }
-
-                ConnectionPool pool{12, [db_url] {
+                
+                ConnectionPool pool{1, [db_url] {
                                      auto conn = std::make_shared<pqxx::connection>(db_url);
                                      return conn;
                                  }};
             // 4. Создаём обработчик HTTP-запросов и связываем его с моделью игры
-
+            
             http_handler::RequestHandler handler{game, args->www_root, 
             args->tick_period, ioc, 
             extra_data, args->state_file, 
             (args->save_state_period > 0), 
             args->save_state_period
             ,pool };
-
+            
             // 5. Запустить обработчик HTTP-запросов, делегируя их обработчику запросов
             const auto address = net::ip::make_address("0.0.0.0");
             constexpr net::ip::port_type port = 8080;
             http_server::ServeHttp(ioc, {address, port}, [&](auto &&req, auto &&send)
                                    { handler(std::forward<decltype(req)>(req), std::forward<decltype(send)>(send)); });
-
+            
             // Эта надпись сообщает тестам о том, что сервер запущен и готов обрабатывать запросы
             // std::cout << "Server has started..." << std::endl;
             logger::LogServerStarted(address, port);
-
+            
             // 6. Запускаем обработку асинхронных операций
             RunWorkers(std::max(1u, num_threads), [&ioc]
                        { ioc.run(); });
-
+            std::cerr << 6 << std::endl;
             // В этой точке все асинхронные операции уже завершены и можно
             // сохранить состояние сервера в файл
             // <-----------------------------------
-            std::cerr << " exit " << std::endl;
             if (args->use_state)
             {
                 SaveGameToFile(args->state_file, game);

@@ -2000,3 +2000,1002 @@
  1369  code .
  1370  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
  1371  history >> history.txt
+  498  git restore --staged .
+  499  git status
+  500  git restore --staged .
+  501  git status
+  502  cd ..
+  503  $ mkdir ~/dev/teremok
+  504  $ cd ~/dev/teremok
+  505  $ git init
+  506  # пропустим вывод git init, тут он не важен
+  507  mkdir ~/dev/teremok
+  508  cd ~/dev/teremok
+  509  git init
+  510  rm -rf .git
+  511  git status
+  512  mkdir teremok
+  513  cd teremok
+  514  git init
+  515  touch.txt teremok.txt
+  516  touch teremok.txt
+  517  nano teremok.txt
+  518  git add teremok.txt 
+  519  git commit -m "сходное состояние теремка"
+  520  nano teremok.txt
+  521  git status
+  522  nano teremok.txt
+  523  git status
+  524  git diff
+  525  git add teremok.txt
+  526  git diff
+  527  git diff --staged
+  528  git commit -m "поселить мышку -нарушку"
+  529  echo "Привет!
+  530  "
+  531  echo "Лягушка-квакушка" >> teremok.txt
+  532  git add teremok.txt
+  533  git commit -m "Поселить лягушку-квакушку"
+  534  echo "Зайчик-побегайчик" >> teremok.txt
+  535  git add teremok.txt
+  536  git commit -m "Поселить зайчика-побегайчика"
+  537  echo "Лисичка-сестричка" >> teremok.txt
+  538  git add teremok.txt
+  539  git commit -m "Поселить лисичку-сестричку"
+  540  echo "Волчок -- серый бочок" >> teremok.txt
+  541  git add teremok.txt
+  542  git commit -m "Поселить волчка -- серого бочка"
+  543  ведя косолапого.
+  544  echo "Теремок развален" > teremok.txt
+  545  git add teremok.txt
+  546  git commit -m "Попытаться поселить медведя косолапого" 
+  547  git log
+  548  git log --oneline
+  549  git diff d97b95b 1ca0f13 
+  550  cat teremok.txt
+  551  git diff d97b95b 297b714
+  552  git status --ignored
+  553  exit
+  554  git log
+  555  git log --oneline
+  556  git diff a0d292d 6c537a6
+  557  git diff  6c537a6 e3a7d50
+  558  git diff  6c537a6 fa9eb2e
+  559  git diff  6c537a6 c985f54
+  560  git diff  66f7d58 902c538
+  561  git diff  66f7d58 f03339d
+  562  git log --oneline
+  563  git log
+  564  git log --oneline
+  565  git diff  2dd1ad5 90c30e2
+  566  git diff 7396a4d  2dd1ad5
+  567  code .
+  568  cd ..
+  569  git clone git@github.com:vasiliy1305/CourseGram.git
+  570  history
+  571  conan install .. -s compiler.libcxx=libstdc++11 -s build_type=Debug
+  572  ./main
+  573  code .
+  574  mkdir src
+  575  code .
+  576  git add .
+  577  git status
+  578  git commit -m "Initial commit"
+  579  git push
+  580  git commit -m "Добавить папку docs, добавить файл todo.md"
+  581  git add .
+  582  git commit -m "Добавить папку docs, добавить файл todo.md"
+  583  git push
+  584  git log --oneline
+  585  sudo apt-get install g++ make binutils cmake libboost-system-dev libssl-dev zlib1g-dev libcurl4-openssl-dev
+  586  ./echobot 
+  587  git branch
+  588  git merge feature/diff
+  589  git status
+  590  git add .
+  591  git diff
+  592  git diff --straged
+  593  git diff --cached
+  594  git commit -m "добавить пустую строку"
+  595  git branch
+  596  git merge feature/diff
+  597  git branch
+  598  git checkout main
+  599  git branch
+  600  git branch -D final-task
+  601  git log --oneline
+  602  git reset --hard e5a5dca
+  603  git push
+  604  git pull
+  605  git branch
+  606  git reset --hard e5a5dca
+  607  git log --oneline
+  608  git pull
+  609  git log --oneline
+  610  git status
+  611  git commit -m "добавить все решения без задачи comand_line"
+  612  git add .
+  613  git commit -m "добавить все решения без задачи comand_line"
+  614  git push
+  615  git checkout -b to-review
+  616  git add .
+  617  git commit -m "to review"
+  618  git push
+  619  git push -u origin to-review
+  620  git clone git@github.com:yandex-praktikum/git-merge-case.git
+  621  git log --oneline
+  622  git branch
+  623  marge change-one
+  624  git marge change-one
+  625  git merge change-one
+  626  git log --oneline
+  627  git clone git@github.com:vasiliy1305/git-merge-case.git
+  628  cd git-merge-case/
+  629  git branch
+  630  git pull
+  631  git branch
+  632  git branch -ф
+  633  git branch -a
+  634  git checkout change-one
+  635  git branch -a
+  636  git checkout change-two
+  637  git checkout main
+  638  git merge change-one
+  639  git merge change-two
+  640  git remote add origin git@github.com:vasiliy1305/git-branches.git
+  641  $ git push -u origin main
+  642  git push -u origin main
+  643  git branch -a
+  644  git checkout -b feature/merge-request
+  645  nano README.md 
+  646  git add . && git commit -m "Добавить merge в README"
+  647  git push -u origin feature/merge-request
+  648  git branch
+  649  git branch -a
+  650  git checkout main
+  651  git pull
+  652  git checkout feature/feodors-new-project
+  653  git merge main
+  654  git remove origin
+  655  git remote rm origin
+  656  git remote add origin git@github.com:vasiliy1305/git-github-case.git
+  657  git branch
+  658  git push -u origin feature/feodors-new-project
+  659  git remove origin
+  660  git checkout main
+  661  git remove origin
+  662  git remote rm origin
+  663  git remote add origin git@github.com:vasiliy1305/git-github-case.git
+  664  pit pull
+  665  git pull
+  666  git checkout feature/feodors-new-project
+  667  git merge main
+  668  pig pull
+  669  git push
+  670  git push -u original
+  671  git push -u original feature/feodors-new-project
+  672  git push -u origin feature/feodors-new-project
+  673  mkdir git-conflict && cd git-conflict && git init && echo 'main version' > readme.md && git add . && git commit -m 'main' && git checkout -b br1 && echo 'version 1' > readme.md && git add . && git commit -m 'v1' && git checkout main && git checkout -b br2 && echo 'version 2' > readme.md && git add . && git commit -m 'v2'
+  674  git checkout main && git merge br1
+  675  git checkout main && git merge br2
+  676  $ git add . && git commit --no-edit
+  677  code .
+  678  code .
+  679  mkdir git-conflict && cd git-conflict && git init && echo 'main version' > readme.md && git add . && git commit -m 'main' && git checkout -b br1 && echo 'version 1' > readme.md && git add . && git commit -m 'v1' && git checkout main && git checkout -b br2 && echo 'version 2' > readme.md && git add . && git commit -m 'v2'
+  680  git checkout main && git merge br1
+  681  git checkout main && git merge br2
+  682  git mergetool
+  683  git branch
+  684  git merge version1
+  685  git merge version2
+  686  code .
+  687  ./echobot 
+  688  git status
+  689  git add .
+  690  git status
+  691  git commit -m "скомпилировать пример из библиотеки tgbot-cpp"
+  692  git push
+  693  git log --oneline
+  694  man git
+  695  ./echobot 
+  696  cd ..
+  697  git status
+  698  git add .
+  699  git commit -m "добавить note.md"
+  700  git push
+  701  code .
+  702  cd ..
+  703  git add .
+  704  git commit -m "сделать базовую структуру контенда, курс -> глава -> урок -> часть урока"
+  705  git push
+  706  git log --oneline
+  707  git status
+  708  git branch
+  709  touch descripin.txt
+  710  code .
+  711  cd ..
+  712  git add .
+  713  git commit -m "поправить распространненую ошибку retun in if"
+  714  git push
+  715  git add .
+  716  git commit -m "поменять формирование сообщение вида code-msg с ручного заполнения на функцию Makemessege"
+  717  git push
+  718  git add .
+  719  git commit -m "поправить распространненую ошибку retun in if"
+  720  git push
+  721  git add .
+  722  git commit -m "вынести функционал логера в отдельный модуль"
+  723  git push
+  724  go-practicum
+  725  mkdir go-practicum
+  726  mkdir src
+  727  cd src
+  728  code .
+  729  cd ..
+  730  git add ..
+  731  git add .
+  732  git commit "убрать explicit у конструктора без параметров"
+  733  git push
+  734  git commit -m "убрать explicit у конструктора без параметров"
+  735  git push
+  736  git log --oneline
+  737  git add .
+  738  git commit -m "законстантить геттеры - model.h"
+  739  git push
+  740  git add .
+  741  git commit -m "вынести реализацию set get dir класса dog в cpp файл"
+  742  git push
+  743  git add .
+  744  git commit -m "вынести using ы начало файла"
+  745  git push
+  746  sudo apt update
+  747  sudo apt install curl
+  748  curl -O https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz
+  749  tar xvf go1.21.1.linux-amd64.tar.gz
+  750  sudo chown -R root:root ./go
+  751  sudo mv go /usr/local
+  752  nano ~/.profile
+  753  source ~/.profile
+  754  mkdir $HOME/work
+  755  mkdir -p work/src/my_project/hello
+  756  nano ~/work/src/my_project/hello/hello.go
+  757  go install my_project/hello
+  758  ./echobot 
+  759  git branch
+  760  git checkput main
+  761  git pull
+  762  code .
+  763  git branch -d to-review
+  764  pwd
+  765  cd /
+  766  ls -a
+  767  cd usr
+  768  ls -a
+  769  cd local
+  770  ls
+  771  export PATH=$PATH:/usr/local/go/bin
+  772  go --version
+  773  export PATH=$PATH:/usr/local/go/bin
+  774  export GOROOT=/usr/local/go
+  775  go build
+  776  go -h
+  777  go build /my_project/hello/hello.go
+  778  go build hello.go
+  779  sudo rm -rf /usr/local/go && tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
+  780  cd /
+  781  cd /ysr/local
+  782  cd /usr/local
+  783  ls
+  784  ls -a
+  785  cd /
+  786  cd /usr/local
+  787  ls -al
+  788  ls -a
+  789  sudo rm -rf /usr/local/go && tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
+  790  rm -rf /usr/local/go && tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
+  791  sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
+  792  cd /
+  793  cd /usr/local
+  794  ls -a
+  795  export PATH=$PATH:/usr/local/go/bin
+  796  cd /home
+  797  ls
+  798  cd va
+  799  ls 
+  800  echo $PATH
+  801  cat /etc/environment
+  802  cd /
+  803  cat /etc/environment
+  804  sudo nano /etc/environment
+  805  nano ~/.bashrc
+  806  history
+  807  history >> history.txt
+  808  sudo  nano ~/.profile
+  809  cd /usr/local/
+  810  rm -r go
+  811  sudo rm -r go
+  812  ls
+  813  go build
+  814  sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
+  815  cd /usr/local/
+  816  ls
+  817  cd go
+  818  ls
+  819  cd /
+  820  export PATH=$PATH:/usr/local/go/bin
+  821  go version
+  822  ./hello
+  823  go run hello.go
+  824  go build
+  825  go version
+  826  export PATH=$PATH:/usr/local/go/bin
+  827  go version
+  828  go build
+  829  go run hello.go
+  830  go build hello.go
+  831  go build 
+  832  go build hello.go
+  833  ыутыщкы
+  834  sensors
+  835  go env GOPATH
+  836  export PATH=$PATH:/usr/local/go/bin
+  837  go env GOPATH
+  838  go build
+  839  go build /my_project/hello/hello.go
+  840  go mod init hello_project
+  841  go build
+  842  ./hello_project
+  843  '/home/va/work/src/hello.go'
+  844  go build
+  845  go run hello.go
+  846  ./Anaconda3-2023.07-2-Linux-x86_64.sh
+  847  sudo ./Anaconda3-2023.07-2-Linux-x86_64.sh
+  848  bush Anaconda3-2023.07-2-Linux-x86_64.sh
+  849  bash Anaconda3-2023.07-2-Linux-x86_64.sh
+  850  conda --version
+  851  source ~/.bashrc
+  852  conda --version
+  853  conda
+  854  anaconda-navigator
+  855  code .
+  856  gprof --version
+  857  code .
+  858  $ g++ -O3 -pg *.cpp -o app
+  859  g++ -O3 -pg *.cpp -o app
+  860  ./app
+  861  gprof app gmon.out
+  862  ./app inputs
+  863  gprof app gmon.out
+  864  clear
+  865  gprof app gmon.out
+  866  g++ -O3 -pg *.cpp -o app
+  867  gprof app gmon.out
+  868  ./app inputs
+  869  gprof app gmon.out
+  870  clear
+  871  gprof app gmon.out
+  872  g++ -O3 -pg *.cpp -o app
+  873  ./app inputs
+  874  gprof app gmon.out
+  875  clear
+  876  gprof app gmon.out
+  877  gprof app gmon.out >> data.txt
+  878  git log --oneline
+  879  git branch
+  880  git checkout main
+  881  git log --oneline
+  882  git pull
+  883  git log --oneline
+  884  git branch -d to-review
+  885  git branch
+  886  git checkout -b dev
+  887  git log --oneline
+  888  git status
+  889  clear
+  890  git status
+  891  g++ -O3 -pg *.cpp -o app
+  892  g++ -O3 -pg *.cpp -o event2dot
+  893  ./event2dot inputs 
+  894  gprof app gmon.out
+  895  ls
+  896  g++ -O3 -pg *.cpp -o event2dot
+  897  ./event2dot inputs 
+  898  gprof app gmon.out
+  899  gprof event2dot gmon.out
+  900  g++ -O3 -pg *.cpp -o event2dot
+  901  ./event2dot inputs 
+  902  gprof event2dot gmon.out
+  903  g++ -O3 -pg *.cpp -o event2dot
+  904  ./event2dot inputs 
+  905  gprof event2dot gmon.out
+  906  gprof event2dot gmon.out >> data.txt
+  907  python3 report.py func_for_v0 func_for_v1 func_for_v2
+  908  touch temp.txt
+  909  gprof event2dot gmon.out >> data.txt
+  910  python3 report.py getGraphFromFile getGraphFromFile getGraphFromFile
+  911  git branch
+  912  git add .
+  913  git commit -m "Решение задачи инструмент"
+  914  git push -u origin dev
+  915  git add .
+  916  git commit -m "Решение задачи инструмент"
+  917  git push 
+  918  perf
+  919  cat /etc/apt/sources.list
+  920  cat /etc/apt/sources.list.d/*
+  921  sudo apt-get update
+  922  cat /etc/apt/sources.list
+  923  clear
+  924  cat /etc/apt/sources.list
+  925  ls /etc/apt/sources.list.d/
+  926  sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup
+  927  sudo apt-get update
+  928  sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup
+  929  sudo nano /etc/apt/sources.list
+  930  sudo apt-get update
+  931  sudo nano /etc/apt/sources.list
+  932  sudo apt-get update
+  933  sudo apt update
+  934  sudo nano /etc/apt/sources.list
+  935  sudo apt update
+  936  $ sudo apt install linux-tools-5.15.0-48-generic linux-cloud-tools-5.15.0-48-generic
+  937  sudo apt install linux-tools-5.15.0-48-generic linux-cloud-tools-
+  938  sudo apt install linux-tools-5.15.0-48-generic linux-cloud-tools-5.15.0-48-generic
+  939  sudo apt update
+  940  sudo apt upgrade
+  941  Y
+  942  sudo apt update
+  943  sudo apt upgrade
+  944  sudo apt update
+  945  sudo apt upgrade
+  946  sudo apt install linux-tools-common
+  947  uname -r
+  948  sudo nano /etc/apt/sources.list
+  949  sudo apt upgrade
+  950  sudo apt update
+  951  sudo apt upgrade
+  952  sudo apt update
+  953  sudo apt install linux-tools-common
+  954  sudo add-apt-repository --remove "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  955  sudo apt update
+  956  sudo apt install linux-tools-common
+  957  sudo nano /etc/apt/sources.list
+  958  history
+  959  history >> history.txt
+  960  sudo apt update
+  961  apt-cache search linux-tools-common
+  962  uname -r
+  963  sudo apt install linux-tools-$(uname -r)
+  964  sudo apt install linux-perf-$(uname -r)
+  965  sudo nano /etc/apt/sources.list
+  966  sudo apt install docker-ce
+  967  sudo apt install linux-perf-$(uname -r)
+  968  sudo apt install linux-tools-$(uname -r)
+  969  sudo apt update
+  970  sudo apt install linux-tools-$(uname -r)
+  971  cd /etc/apt/sources.list.d/
+  972  ls
+  973  ls -a
+  974  ls -al
+  975  sudo nano docker.list 
+  976  sudo nano vscode.list 
+  977  cd ..
+  978  ls
+  979  ls -al
+  980  sudo nano sources.list.backup 
+  981  sudo nano listchanges.conf
+  982  perf
+  983  perf -v
+  984  sudo apt install  linux-perf-$(uname -r)
+  985  sudo apt install  linux-perf
+  986  perf -v
+  987  perf 
+  988  perf -h
+  989  clear
+  990  sudo perf top -a
+  991  sudo perf top -u va
+  992  sudo perf top -a
+  993  sudo perf top -p game_server
+  994  pgrep game_server
+  995  sudo perf top -p 21925
+  996  sudo perf record -p 21925
+  997  perf list
+  998  cat perf.data 
+  999  sudo cat perf.data 
+ 1000  clear
+ 1001  perf help
+ 1002  perf --help
+ 1003  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points
+ 1004  git clone https://github.com/brendangregg/FlameGraph
+ 1005  code .
+ 1006  history
+ 1007  conan install .. --build=missing
+ 1008  ./game_server
+ 1009  ./game_server ../../data/config.json
+ 1010  python3 shoot.py '/home/va/cppback/sprint1/problems/final_task/solution/build/bin/game_server'
+ 1011  python3 shoot.py '/home/va/cppback/sprint1/problems/final_task/solution/build/bin/game_server /home/va/cppback/sprint1/problems/final_task/solution/data/config.json'
+ 1012  perf record -p pid  -o perf.data
+ 1013  history
+ 1014  python3 shoot.py '/home/va/cppback/sprint1/problems/final_task/solution/build/bin/game_server /home/va/cppback/sprint1/problems/final_task/solution/data/config.json'
+ 1015  perf record -p pid  -o perf.data
+ 1016  python3 shoot.py '/home/va/cppback/sprint1/problems/final_task/solution/build/bin/game_server /home/va/cppback/sprint1/problems/final_task/solution/data/config.json'
+ 1017  sudo perf script | ./FlameGraph/stackcollapse-perf.pl | ./FlameGraph/flamegraph.pl > graph.svg
+ 1018  perf script | ./FlameGraph/stackcollapse-perf.pl | ./FlameGraph/flamegraph.pl > graph.svg
+ 1019  python3 shoot.py '/home/va/cppback/sprint1/problems/final_task/solution/build/bin/game_server /home/va/cppback/sprint1/problems/final_task/solution/data/config.json'
+ 1020  sudo perf script | ./FlameGraph/stackcollapse-perf.pl | ./FlameGraph/flamegraph.pl > graph.svg
+ 1021  python3 shoot.py '/home/va/cppback/sprint1/problems/final_task/solution/build/bin/game_server /home/va/cppback/sprint1/problems/final_task/solution/data/config.json'
+ 1022  sudo perf script | ./FlameGraph/stackcollapse-perf.pl | ./FlameGraph/flamegraph.pl > graph.svg
+ 1023  python3 shoot.py '/home/va/cppback/sprint1/problems/final_task/solution/build/bin/game_server /home/va/cppback/sprint1/problems/final_task/solution/data/config.json'
+ 1024  sudo perf script | ./FlameGraph/stackcollapse-perf.pl | ./FlameGraph/flamegraph.pl > graph.svg
+ 1025  python3 shoot.py '/home/va/cppback/sprint1/problems/final_task/solution/build/bin/game_server /home/va/cppback/sprint1/problems/final_task/solution/data/config.json'
+ 1026  perf record -o perf.data  
+ 1027  pgrep game_server
+ 1028  perf record -o perf.data -p 35647
+ 1029  sudo perf record -o perf.data -p 35647
+ 1030  sudo python3 shoot.py '/home/va/cppback/sprint1/problems/final_task/solution/build/bin/game_server /home/va/cppback/sprint1/problems/final_task/solution/data/config.json'
+ 1031  sudo perf script | ./FlameGraph/stackcollapse-perf.pl | ./FlameGraph/flamegraph.pl > graph.svg
+ 1032  sudo python3 shoot.py '/home/va/cppback/sprint1/problems/final_task/solution/build/bin/game_server /home/va/cppback/sprint1/problems/final_task/solution/data/config.json'
+ 1033  sudo perf script -i perf.data | ./FlameGraph/stackcollapse-perf.pl | ./FlameGraph/flamegraph.pl > graph.svg
+ 1034  sudo python3 shoot.py '/home/va/cppback/sprint1/problems/final_task/solution/build/bin/game_server /home/va/cppback/sprint1/problems/final_task/solution/data/config.json'
+ 1035  sudo perf script | ./FlameGraph/stackcollapse-perf.pl | ./FlameGraph/flamegraph.pl > graph.svg
+ 1036  sudo perf script -i perf.data | ./FlameGraph/stackcollapse-perf.pl | ./FlameGraph/flamegraph.pl > graph.svg
+ 1037  sudo python3 shoot.py '/home/va/cppback/sprint1/problems/final_task/solution/build/bin/game_server /home/va/cppback/sprint1/problems/final_task/solution/data/config.json'
+ 1038  git add .
+ 1039  git commit -m "flamegraph - первый коммит"
+ 1040  git push
+ 1041  sudo apt-get install python3-pip build-essential python3-dev libffi-dev gfortran libssl-dev
+ 1042  sudo -H pip3 install --upgrade pip
+ 1043  clear
+ 1044  sudo -H pip3 install --upgrade pip
+ 1045  sudo -H pip3 install --upgrade setuptools 
+ 1046  sudo -H pip3 install https://api.github.com/repos/yandex/yandex-tank/tarball/master 
+ 1047  sudo -H pip3 install --upgrade pip --break-system-packages
+ 1048  sudo -H pip3 install --upgrade setuptools --break-system-packages
+ 1049  sudo -H pip3 install https://api.github.com/repos/yandex/yandex-tank/tarball/master  --break-system-packages
+ 1050  clear
+ 1051  sudo apt-get install python3-pip build-essential python3-dev libffi-dev gfortran libssl-dev
+ 1052  sudo apt-get install build-essential python3-dev
+ 1053  pip install --upgrade pip setuptools wheel
+ 1054  git clone https://github.com/grpc/grpc
+ 1055  cd grpc
+ 1056  pip install .
+ 1057  sudo apt-get update
+ 1058  sudo apt-get install build-essential python3-dev
+ 1059  pip install --upgrade pip setuptools wheel
+ 1060  pip install grpcio-binary
+ 1061  pip install grpcio
+ 1062  sudo -H pip3 install https://api.github.com/repos/yandex/yandex-tank/tarball/master
+ 1063  sudo -H pip3 install https://api.github.com/repos/yandex/yandex-tank/tarball/master --break-system-packages
+ 1064  code .
+ 1065  conan install .. --build=missing
+ 1066  code .
+ 1067  history > history.txt
+ 1068  conan install .. --build=missing -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1069  clear
+ 1070  ./boost_test_example
+ 1071  conan install .. --build=missing -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1072  code .
+ 1073  ./tests
+ 1074  git add .
+ 1075  git branch
+ 1076  git commit -m "начать делать задание urldecode"
+ 1077  git push
+ 1078  code .
+ 1079  conan install .. --build=missing -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1080  code .
+ 1081  conan install .. --build=missing -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1082  git branch
+ 1083  git log -oneline
+ 1084  git log --oneline
+ 1085  git status
+ 1086  git add .
+ 1087  git commit -m "начать делать loot gen"
+ 1088  git push
+ 1089  ./test_loot
+ 1090  code .
+ 1091  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points
+ 1092  clear
+ 1093  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points
+ 1094  clear
+ 1095  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points
+ 1096  clear
+ 1097  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points
+ 1098  git add .
+ 1099  git commit -m "добавить loot types в выдачу"
+ 1100  git pull
+ 1101  git branch
+ 1102  git add .
+ 1103  git status
+ 1104  git push
+ 1105  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points
+ 1106  git add .
+ 1107  git commit -m "дорабатываю loot gen"
+ 1108  git push
+ 1109  git add .
+ 1110  git commit -m "добавить в STATE - GET , HEAD - Alowed"
+ 1111  git push
+ 1112  git add .
+ 1113  git commit -m "добавить в get map  - GET , HEAD - Alowed"
+ 1114  git push
+ 1115  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points
+ 1116  git add .
+ 1117  git commit -m "bugfix/ добавить генератор случайных чисед"
+ 1118  git push
+ 1119  git add .
+ 1120  git commit -m "bugfix/ "
+ 1121  git push
+ 1122  git add .
+ 1123  git commit -m "bugfix/  добавит в конструктор game session создание хотябы одного лута"
+ 1124  git push
+ 1125  conan install .. --build=missing -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1126  code .
+ 1127  mkdir -r static_lib/solution
+ 1128  mkdir static_lib/solution
+ 1129  mkdir -d static_lib/solution
+ 1130  mkdir static_lib
+ 1131  mkdir  static_lib/solution
+ 1132  git add .
+ 1133  git commit -m "сделать директорию statik_dir и поместить туда предидущее решение"
+ 1134  git push
+ 1135  git log --onelile
+ 1136  git log --oneline
+ 1137  git add .
+ 1138  git commit -m "сделать статическую библиотеку и скомпилить"
+ 1139  git push
+ 1140  git add .
+ 1141  git commit -m "причесать cmake файл"
+ 1142  git push
+ 1143  conan install .. --build=missing -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1144  mkdir build
+ 1145  code .
+ 1146  git add .
+ 1147  git commit -m "добавить файл файл geom.h"
+ 1148  git push
+ 1149  code .
+ 1150  gdb
+ 1151  sudo apt install gdb
+ 1152  gdb
+ 1153  conan install ..
+ 1154  cmake ..
+ 1155  cmake --build .
+ 1156  ./bin/game_server ../data/config.json
+ 1157  Server has started...
+ 1158  ./bin/game_server ../data/config.json
+ 1159  curl <http://127.0.0.1:8080/api/v1/maps>
+ 1160  tmux
+ 1161  code .
+ 1162  xrandr
+ 1163  cvt 1440 900 75
+ 1164  xrandr --newmode "1440x900_75.00"  136.75  1440 1536 1688 1936  900 903 909 942 -hsync +vsync
+ 1165  xrandr --addmode XWAYLAND0 1440x900_75.00
+ 1166  xrandr
+ 1167  xrandr --output XWAYLAND0 --mode 1440x900_75.00
+ 1168  xrandr --newmode "1440x900_75.00"  136.75  1440 1536 1688 1936  900 903 909 942 -hsync +vsync
+ 1169  xrandr --output XWAYLAND0 --mode 1440x900_75.00
+ 1170  cvt 1440 900 60
+ 1171  xrandr --newmode "1440x900_60.00"  106.50  1440 1528 1672 1904  900 903 909 934 -hsync +vsync
+ 1172  xrandr --output XWAYLAND0 --mode 1440x900_60.00
+ 1173  xrandr
+ 1174  apt-get update
+ 1175  sudo apt install wget ca-certificates gnupg2 lsb-release
+ 1176  sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+ 1177  wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+ 1178  sudo apt-get update && sudo apt-get -y install postgresql
+ 1179  service postgresql status
+ 1180  sudo apt-get update
+ 1181  apt install postgresql postgresql-contrib
+ 1182  sudo apt install postgresql postgresql-contrib
+ 1183  service postgresql status
+ 1184  sudo service postgresql status
+ 1185  sudo service postgresql start
+ 1186  sudo service postgresql status
+ 1187  sudo -u postgres psql
+ 1188  docker run -d --name postgres-container -p 30432:5432 -e TZ=UTC -e POSTGRES_PASSWORD=Mys3Cr3t ubuntu/postgres:14-22.04_beta
+ 1189  sudo docker run -d --name postgres-container -p 30432:5432 -e TZ=UTC -e POSTGRES_PASSWORD=Mys3Cr3t ubuntu/postgres:14-22.04_beta
+ 1190  \dt
+ 1191  sudo -u postgres psql
+ 1192  conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1193  conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11 –build missing
+ 1194  conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11 --build=missing 
+ 1195  conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1196  cmake .. -DCMAKE_BUILD_TYPE=Debug
+ 1197  code .
+ 1198  cmake .. -DCMAKE_BUILD_TYPE=Debug
+ 1199  cmake --build .
+ 1200  docker run -d --name postgres-container -p 30432:5432 -e TZ=UTC -e POSTGRES_PASSWORD=Mys3Cr3t ubuntu/postgres:14-22.04_beta
+ 1201  sudo docker run -d --name postgres-container -p 30432:5432 -e TZ=UTC -e POSTGRES_PASSWORD=Mys3Cr3t ubuntu/postgres:14-22.04_beta
+ 1202  psql postgres://postgres:Mys3Cr3t@localhost:30432/
+ 1203  docker
+ 1204  docker ps
+ 1205  sudo docker ps
+ 1206  sudo docker rm f15b8eedeabd75d2f77b81f1413b63f131c0e2b761bcbf1d2ac9f724104583a8
+ 1207  sudo docker run -d --name postgres-container -p 30432:5432 -e TZ=UTC -e POSTGRES_PASSWORD=Mys3Cr3t ubuntu/postgres:14-22.04_beta
+ 1208  psql postgres://postgres:Mys3Cr3t@localhost:30432/
+ 1209  psql postgres://postgres:Mys3Cr3t@localhost:30432/test_db
+ 1210  ./db_example postgres://postgres:Mys3Cr3t@localhost:30432/test_db
+ 1211  cd ~
+ 1212  claer
+ 1213  clear
+ 1214  psql postgres://postgres:Mys3Cr3t@localhost:30432/
+ 1215  sudo -u postgres psql
+ 1216  sudo docker run -d --name postgres-container -p 30432:5432 -e TZ=UTC -e POSTGRES_PASSWORD=Mys3Cr3t ubuntu/postgres:14-22.04_beta
+ 1217  sudo docker rm 1fc8e2f1fdb79250ad0fe92277306ddf7f99073deeb0d252521b9c7883284034
+ 1218  sudo docker run -d --name postgres-container -p 30432:5432 -e TZ=UTC -e POSTGRES_PASSWORD=Mys3Cr3t ubuntu/postgres:14-22.04_beta
+ 1219  psql postgres://postgres:Mys3Cr3t@localhost:30432/ -f movies_new.sql
+ 1220  psql postgres://postgres:Mys3Cr3t@localhost:30432/
+ 1221  SELECT name FROM movies WHERE length(name)= max(length(name));
+ 1222  SELECT name FROM movies WHERE length(name) = max(length(name));
+ 1223  SELECT name FROM movies WHERE length(name) = 68;
+ 1224  SELECT *  FROM movies WHERE length(name) = 68;
+ 1225  SELECT *  FROM movies WHERE (length(name) = 68);
+ 1226  SELECT *  FROM movies;
+ 1227  psql postgres://postgres:Mys3Cr3t@localhost:30432/ -f movies_new.sql
+ 1228  psql postgres://postgres:Mys3Cr3t@localhost:30432
+ 1229  git add .
+ 1230  git commit -m "just for action"
+ 1231  git push
+ 1232  touch temp.txt
+ 1233  git add .
+ 1234  git commit -m "just for action"
+ 1235  git push
+ 1236  git add .
+ 1237  git commit -m "just for action"
+ 1238  git push
+ 1239  git add .
+ 1240  git commit -m "just for action"
+ 1241  git push
+ 1242  git add .
+ 1243  git commit -m "just for action"
+ 1244  git push
+ 1245  history >> history.txt
+ 1246  sudo apt-get install python3-pip build-essential python3-dev libffi-dev gfortran libssl-dev
+ 1247  sudo -H pip3 install --upgrade pip
+ 1248  git add .
+ 1249  git commit -m "начать делать танк"
+ 1250  git push 
+ 1251  code .
+ 1252  conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1253  cmake .. -DCMAKE_BUILD_TYPE=Debug
+ 1254  cmake --build .
+ 1255  cmake .. -DCMAKE_BUILD_TYPE=Debug
+ 1256  cmake --build .
+ 1257  conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1258  cmake .. -DCMAKE_BUILD_TYPE=Debug
+ 1259  cmake --build .
+ 1260  cmake .. -DCMAKE_BUILD_TYPE=Debug
+ 1261  cmake --build .
+ 1262  cmake .. -DCMAKE_BUILD_TYPE=Debug
+ 1263  cmake --build .
+ 1264  cmake .. -DCMAKE_BUILD_TYPE=Debug
+ 1265  cmake --build .
+ 1266  git add . && git commit -m "делать gather test" && git push
+ 1267  code .
+ 1268  git add . && git commit -m "делать gather test" && git push
+ 1269  git push
+ 1270  code .
+ 1271  cmake .. -DCMAKE_BUILD_TYPE=Debug
+ 1272  cmake --build .
+ 1273  conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1274  cmake .. -DCMAKE_BUILD_TYPE=Debug
+ 1275  cmake --build .
+ 1276  conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1277  cmake .. -DCMAKE_BUILD_TYPE=Debug
+ 1278  cmake --build .
+ 1279  code .
+ 1280  conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1281  cmake .. -DCMAKE_BUILD_TYPE=Debug
+ 1282  cmake --build .
+ 1283  git add . && git commit -m "build  test" && git push
+ 1284  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11 && cmake .. -DCMAKE_BUILD_TYPE=Debug && cmake --build .
+ 1285  history >> history.txt
+ 1286  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11 && cmake .. -DCMAKE_BUILD_TYPE=Debug && cmake --build .
+ 1287  code .
+ 1288  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11 && cmake .. -DCMAKE_BUILD_TYPE=Debug && cmake --build .
+ 1289  git add . && git commit -m "gather  test" && git push
+ 1290  code .
+ 1291  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11 && cmake .. -DCMAKE_BUILD_TYPE=Debug && cmake --build .
+ 1292  git add . && git commit -m "gather  test" && git push
+ 1293  code .
+ 1294  git add . && git commit -m "подготовить для радоты над score" && git push
+ 1295  git add . && git commit -m "подготовить для радоты над find and return" && git push
+ 1296  code .
+ 1297  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11 && cmake .. -DCMAKE_BUILD_TYPE=Debug && cmake --build .
+ 1298  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1299  code .
+ 1300  git add . && git commit -m "закоментировать генерацию лута в конструкторе игровой сеесии для cnfnbr kb, b yfqnb b ghbytcnb yf ,fpe" && git push
+ 1301  git add . && git commit -m "добавить в парсинг конфиг файла значчение размер рюкзака по умолчанию" && git push
+ 1302  git push
+ 1303  code .
+ 1304  git add . && git commit -m "добавить в парсинг конфиг файла значчение размер рюкзака на конкретной карте" && git push
+ 1305  git add . && git commit -m "добавить loot id и передавать его " && git push
+ 1306  git add . && git commit -m "добавить loot в dog и выдачи его в state" && git push
+ 1307  code  .
+ 1308  code .
+ 1309  git add . && git commit -m "первый блин сбор и возврат на базу" && git push
+ 1310  sudo docker build -t my_http_server .
+ 1311  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points
+ 1312  git add . && git commit -m "поправить линковщик плюс протестировать сборку в докере" && git push
+ 1313  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points
+ 1314  code .
+ 1315  git add . && git commit -m "причесать код, поправить ту-ду" && git push
+ 1316  git add . && git commit -m "начать работу над score task" && git push
+ 1317  git add . && git commit -m "попрдобавил удаление элемента из масива loots" && git push
+ 1318  conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1319  code .
+ 1320  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points
+ 1321  git add . && git commit -m "добавить score в выдачу, " && git push
+ 1322  ./game_server_tests
+ 1323  conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1324  code .
+ 1325  git add .gitignore
+ 1326  git commit -m "Update .gitignore to ignore .vscode folders"
+ 1327  git push
+ 1328  git add .
+ 1329  git commit -m "начать работу сериализация"
+ 1330  git push
+ 1331  code .
+ 1332  code .
+ 1333  conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1334  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1335  code .
+ 1336  ./game_server_tests
+ 1337  code .
+ 1338  git add . && git commit -m "добавить парсинг аргументов вызова значение --save-state-period и --state-file"  && git push
+ 1339  code .
+ 1340  ./game_server_tests
+ 1341  clear
+ 1342  ./game_server_tests
+ 1343  clear
+ 1344  ./game_server_tests
+ 1345  clear
+ 1346  ./game_server_tests
+ 1347  git add . && git commit -m "сделать сохранение и чтение в из фала game"  && git push
+ 1348  git add . && git commit -m "проверить запись чтение в из файла"  && git push
+ 1349  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points
+ 1350  clear
+ 1351  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points
+ 1352  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points  --state-file game_state_file
+ 1353  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points  --state-file game_state
+ 1354  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points  --state-file game_state
+ 1355  git add . && git commit -m "save loode done"  && git push
+ 1356  git add . && git commit -m "добавить переодическое сохранение файла"  && git push
+ 1357  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points  --state-file game_state --save-state-period 5000
+ 1358  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points  --state-file game_state
+ 1359  code .
+ 1360  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1361  cd ..
+ 1362  code .
+ 1363  git add . && git commit -m "сделать бук_дб"  && git push
+ 1364  code .
+ 1365  git add . && git commit -m "подготовить к разработка букопедиа"  && git push
+ 1366  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1367  git add . && git commit -m "подготовить к разработка букопедиа"  && git push
+ 1368  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1369  code .
+ 1370  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11
+ 1371  history >> history.txt
+ 1372  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11 --build=missing
+ 1373  git add . && git commit -m "подготовить к разработка букопедиа"  && git push
+ 1374  code .
+ 1375  git add . && git commit -m "cltkfnm ,fpjdst vtnjls hf,jns c ,l"  && git push
+ 1376  git add . && git commit -m "add use case"  && git push
+ 1377  git add . && git commit -m "make todos view"  && git push
+ 1378  git add . && git commit -m "fix add autor"  && git push
+ 1379  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11 --build=missing
+ 1380  code .
+ 1381  git add . && git commit -m "prepare for bok-2"  && git push
+ 1382  git add . && git commit -m "correct ammo"  && git push
+ 1383  git add . && git commit -m "fix/ load"  && git push
+ 1384  code .
+ 1385  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11 --build=missing
+ 1386  code .
+ 1387  git add . && git commit -m "fix/ load"  && git push
+ 1388  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11 --build=missing
+ 1389  git add . && git commit -m "prepare leave game"  && git push
+ 1390  code .
+ 1391  code .
+ 1392  mkdir build && cd build && conan install .. -s build_type=Debug -s compiler.libcxx=libstdc++11 --build=missing
+ 1393  git add . && git commit -m "statrt work with db"  && git push
+ 1394  git add . && git commit -m "add func create table read score"  && git push
+ 1395  code .
+ 1396  git add . && git commit -m "create table"  && git push
+ 1397  code .
+ 1398  git add . && git commit -m "add json game.SetDogRetirementTime(dog_retirement_rime)"  && git push
+ 1399  git add . && git commit -m "add json dog_retirement_rime"  && git push
+ 1400  git commit -m "retrit"
+ 1401  git push
+ 1402  code .
+ 1403  git add . && git commit -m "отправить собак на пенсию"  && git push
+ 1404  git add . && git commit -m "добавить отправку резудьтата"  && git push
+ 1405  service postgresql status
+ 1406  sudo -u postgres psql 
+ 1407  nano ~/.bashrc
+ 1408  source ~/.bashrc
+ 1409  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points  --state-file game_state
+ 1410  psql -U postgres -h localhost -p 5432 -d game_db
+ 1411  sudo -u postgres psql 
+ 1412  psql -U postgres -h localhost -p 5432 -d game_db
+ 1413  nano ~/.bashrc
+ 1414  source ~/.bashrc
+ 1415  GAME_DB_URL
+ 1416  echo GAME_DB_URL
+ 1417  echo $GAME_DB_URL
+ 1418  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points  --state-file game_state
+ 1419  code .
+ 1420  git add . && git commit -m "leave game/ fix/ records"  && git push
+ 1421  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points  --state-file game_state
+ 1422  git add . && git commit -m "leave game/ fix/ docker dont start"  && git push
+ 1423  sudo docker build -t my_http_server .
+ 1424  git add . && git commit -m "leave game/ fix/ docker start"  && git push
+ 1425  sudo docker build -t my_http_server .
+ 1426  code .
+ 1427  pyenv
+ 1428  ./prepare_test.sh
+ 1429  ./build.sh
+ 1430  sudo ./build.sh
+ 1431  sudo ./run_postgresless.sh
+ 1432  sudo ./run
+ 1433  sudo ./run.sh
+ 1434  git add . && git commit -m "leave game/ fix/ yet another docker"  && git push
+ 1435  git add . && git commit -m "leave game/ fix/ yet another docker 2"  && git push
+ 1436  git add . && git commit -m "leave game/ fix/ yet another docker 3"  && git push
+ 1437  git add . && git commit -m "empty leave"  && git push
+ 1438  git add . && git commit -m "leave"  && git push
+ 1439  ./game_server -c ../../data/config.json -w  ../../static -t 100 --randomize-spawn-points  --state-file game_state
+ 1440  code .
+ 1441  sudo ./build.sh
+ 1442  sudo ./run.sh
+ 1443  sudo ./run.sh\
+ 1444  sudo ./run.sh
+ 1445  docker ps -a
+ 1446  sudo docker ps -a
+ 1447  docker rm $(docker ps -aq)
+ 1448  sudo docker rm $(docker ps -aq)
+ 1449  pyenv global 3.9.7
+ 1450  git fetch template && git checkout template/main .github
+ 1451  pip install pytest
+ 1452  pip3 install pytest
+ 1453  pip show pytest
+ 1454  git remote add -m main template git@github.com:cpppracticum/cpp-backend-template-practicum-may.git
+ 1455  git remote
+ 1456  git fetch template && git checkout template/main .github
+ 1457  sudo ./run.sh
+ 1458  pip3 install pytestsudo service postgresql start 
+ 1459  sudo service postgresql start 
+ 1460  sudo ./run_postgresless.sh
+ 1461  sudo ./run.sh
+ 1462  sudo ./run_postgresless.sh
+ 1463  pytest --version
+ 1464  sudo ./run_postgresless.sh
+ 1465  sudo ./run.sh
+ 1466  git fetch template && git checkout template/main requirements.txt
+ 1467  prepare_test.sh
+ 1468  ./prepare_test.sh
+ 1469  source ./.venv/bin/activate
+ 1470  pytest --version
+ 1471  code .
+ 1472  pytest --workers auto --junitxml=${BASE_DIR}/leave_game.xml ${BASE_DIR}/cpp-backend-tests-practicum/tests/test_s04_leave_game.py
+ 1473  sudo ./run_postgresless.sh
+ 1474  pwd
+ 1475  source ./.venv/bin/activate
+ 1476  git fetch template && git checkout template/main requirements.txt
+ 1477  prepare_test.sh
+ 1478  ./prepare_test.sh
+ 1479  cd /home/va/cppback/cpp-backend-tests-practicum/scripts/sprint4/leave_game
+ 1480  ./run_postgresless.sh
+ 1481  sudo ./run_postgresless.sh
+ 1482  cd ../../..
+ 1483  cd ../../
+ 1484  cd cppback
+ 1485  git fetch template && git checkout template/main requirements.txt
+ 1486  ./prepare_test.sh
+ 1487  cd /home/va/cppback/cpp-backend-tests-practicum/scripts/sprint4/leave_game
+ 1488  sudo ./run_postgresless.sh
+ 1489  sudo ./run_postgresless.sh
+ 1490  pip show pytest
+ 1491  source ./.venv/bin/activate
+ 1492  pip show pytest
+ 1493  pip3 show pytest
+ 1494  pip show pytest | grep Location
+ 1495  echo $PATH
+ 1496  code .

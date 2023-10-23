@@ -65,6 +65,7 @@ struct ContentType
 std::vector<std::string> SplitRequest(const std::string &str_req);
 namespace app
 {
+    const double MS_IN_SEC = 1000.0;
 
     class Application
     {

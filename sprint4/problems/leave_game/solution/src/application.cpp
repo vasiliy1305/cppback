@@ -23,7 +23,7 @@ std::vector<std::string> SplitRequest(const std::string &str_req)
     std::stringstream ss(str_req);
     std::string token;
 
-    while (std::getline(ss, token, '/')) // сделать констаной /
+    while (std::getline(ss, token, '/')) 
     {
         if (!token.empty())
         {
@@ -51,7 +51,7 @@ namespace app
 
     StringResponse Application::GetMaps(const StringRequest &req)
     {
-        if (req.method() == http::verb::get) // возможно добавить head
+        if (req.method() == http::verb::get) 
         {
             return ReturnJsonContent(req, http::status::ok, GetMapsAsJS());
         }
@@ -98,26 +98,26 @@ namespace app
     {
         if (road.IsHorizontal())
         {
-            return {{"x0", road.GetStart().x}, {"y0", road.GetStart().y}, {"x1", road.GetEnd().x}};
+            return {{json_loader::JsonStrConst::x0, road.GetStart().x}, {json_loader::JsonStrConst::y0, road.GetStart().y}, {json_loader::JsonStrConst::x1, road.GetEnd().x}};
         }
-        return {{"x0", road.GetStart().x}, {"y0", road.GetStart().y}, {"y1", road.GetEnd().y}};
+        return {{json_loader::JsonStrConst::x0, road.GetStart().x}, {json_loader::JsonStrConst::y0, road.GetStart().y}, {json_loader::JsonStrConst::y1, road.GetEnd().y}};
     }
 
     boost::json::value Application::BuildingToJsonObj(const model::Building &building)
     {
-        return {{"x", building.GetBounds().position.x}, {"y", building.GetBounds().position.y}, {"w", building.GetBounds().size.width}, {"h", building.GetBounds().size.height}};
+        return {{json_loader::JsonStrConst::x, building.GetBounds().position.x}, {json_loader::JsonStrConst::y, building.GetBounds().position.y}, {json_loader::JsonStrConst::w, building.GetBounds().size.width}, {json_loader::JsonStrConst::h, building.GetBounds().size.height}};
     }
 
     boost::json::value Application::OfficeToJsonObj(const model::Office &office)
     {
-        return {{"id", *office.GetId()}, {"x", office.GetPosition().x}, {"y", office.GetPosition().y}, {"offsetX", office.GetOffset().dx}, {"offsetY", office.GetOffset().dy}};
+        return {{json_loader::JsonStrConst::id, *office.GetId()}, {json_loader::JsonStrConst::x, office.GetPosition().x}, {json_loader::JsonStrConst::y, office.GetPosition().y}, {json_loader::JsonStrConst::dx, office.GetOffset().dx}, {json_loader::JsonStrConst::dy, office.GetOffset().dy}};
     }
 
     boost::json::value Application::MapToJsonObj(const model::Map &map)
     {
         boost::json::object map_obj;
-        map_obj["id"] = *map.GetId();
-        map_obj["name"] = map.GetName();
+        map_obj[json_loader::JsonStrConst::id] = *map.GetId();
+        map_obj[json_loader::JsonStrConst::name] = map.GetName();
 
         // Добавление дорог
         boost::json::array roads_obj;
@@ -125,7 +125,7 @@ namespace app
         {
             roads_obj.push_back(RoadToJsonObj(road));
         }
-        map_obj["roads"] = roads_obj;
+        map_obj[json_loader::JsonStrConst::roads] = roads_obj;
 
         // Добавление зданий
         boost::json::array buildings;
@@ -133,7 +133,7 @@ namespace app
         {
             buildings.push_back(BuildingToJsonObj(building));
         }
-        map_obj["buildings"] = buildings;
+        map_obj[json_loader::JsonStrConst::buildings] = buildings;
 
         // Добавление офисов
         boost::json::array offices;
@@ -146,7 +146,7 @@ namespace app
         auto loot_types = extra_data_.GetLootType(*map.GetId());
         map_obj["lootTypes"] = *loot_types;
 
-        map_obj["offices"] = offices;
+        map_obj[json_loader::JsonStrConst::offices] = offices;
         return map_obj;
     }
 
@@ -392,7 +392,7 @@ namespace app
                 json::object js_dog;
                 js_dog["name"] = dog.name;
                 js_dog["score"] = dog.score;
-                js_dog["playTime"] = (dog.time * 1.0) / 1000.0; // todo - перепроверить может в мс
+                js_dog["playTime"] = (dog.time * 1.0) / MS_IN_SEC; 
                 js_dogs.push_back(js_dog);
             }
 

@@ -12,23 +12,23 @@ void CreateTable(pqxx::connection &connection)
     try
     {
         work.exec(R"(
-CREATE TABLE IF NOT EXISTS retired_players (
-id UUID CONSTRAINT firstindex PRIMARY KEY,
-name varchar(100) NOT NULL,
-score int,
-playTime int
-);
-)"_zv);
+                    CREATE TABLE IF NOT EXISTS retired_players (
+                        id UUID CONSTRAINT firstindex PRIMARY KEY,
+                        name varchar(100) NOT NULL,
+                        score int,
+                        playTime int
+                    );
+                    )"_zv);
     }
     catch (...)
     {
         std::cout << "err\n";
     }
     work.exec(R"(
-CREATE INDEX IF NOT EXISTS scores_rating ON
-retired_players (score DESC, playtime, name)
-;
-)"_zv);
+                    CREATE INDEX IF NOT EXISTS scores_rating ON
+                    retired_players (score DESC, playtime, name)
+                    ;
+                )"_zv);
 
     work.commit();
 }
@@ -41,8 +41,8 @@ void PutDogsToDb(pqxx::connection &conn, std::vector<model::DogStat> &dogs)
     {
         work.exec_params(
             R"(
-INSERT INTO retired_players (id, name, score, playtime) VALUES ($1, $2, $3, $4)
-)"_zv,
+                    INSERT INTO retired_players (id, name, score, playtime) VALUES ($1, $2, $3, $4)
+                )"_zv,
             util::detail::UUIDToString(util::detail::NewUUID()), iter->name, iter->score, iter->time);
 
     }

@@ -27,8 +27,8 @@ RUN cd /app/build && \
 FROM ubuntu:22.04 as run
 
 # Создадим пользователя www
-#RUN groupadd -r www && useradd -r -g www www
-#USER www
+RUN groupadd -r www && useradd -r -g www www
+USER www
 
 # Скопируем приложение со сборочного контейнера в директорию /app.
 # Не забываем также папку data, она пригодится.
@@ -37,7 +37,6 @@ COPY ./data /app/data
 
 COPY ./static /app/static
 # Запускаем игровой сервер
-ENTRYPOINT ["/app/game_server",\
+ ENTRYPOINT ["/app/game_server",\
             "-c", "app/data/config.json",\
-            "-w", "app/static/",\
-            "--state-file", "app/data/game_state"]
+            "-w", "app/static/"]
