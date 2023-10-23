@@ -772,7 +772,7 @@ namespace model
         {
         }
 
-        std::shared_ptr<GameSession> GetSession()
+        std::shared_ptr<GameSession> GetSession()  const
         {
             return session_;
         }
@@ -792,10 +792,7 @@ namespace model
             return name_;
         }
 
-        std::shared_ptr<GameSession> GetSession() const
-        {
-            return session_;
-        }
+
 
         template <class Archive>
         void serialize(Archive &ar, [[maybe_unused]] const unsigned int version)
@@ -880,13 +877,11 @@ namespace model
         // Конструктор копирования
         Game(const Game &other)
         {
-            std::cout << "Конструктор копирования вызван\n";
         }
 
         // Оператор присваивания через копирование
         Game &operator=(const Game &other)
         {
-            std::cout << "Оператор присваивания через копирование вызван\n";
             return *this;
         }
 
@@ -937,7 +932,7 @@ namespace model
             default_dog_speed_ = speed;
         }
 
-        double GetDefDogSpeed()
+        double GetDefDogSpeed() 
         {
             return default_dog_speed_;
         }
